@@ -1,0 +1,44 @@
+﻿
+@import "../css/_variables.less";
+@import "../css/_common.less";
+.theme(common);
+
+.core-menu {
+    .box-sizing;
+    .unselectable;
+    position: fixed;
+    z-index: 1000;
+    overflow-x: hidden;
+    overflow-y: auto;
+    color: #000;
+    background: @menuBackground;
+
+    > *:not([data-disabled=true]):not(.core-disabled):hover {
+        background: @menuSelectedBackground;
+    }
+
+    > *[data-selected=true] {
+        background: @menuSelectedBackground;
+    }
+}
+
+.core-menu > * {
+    display: block;
+    white-space: nowrap;
+    padding: 2px;
+    min-height: 16x;
+    max-height: 16px;
+}
+
+.menu(@theme) {
+    .theme(@theme);
+
+    .@{theme} .core-menu {
+        border: @baseBorderSize solid @outlineColor;
+    }
+}
+
+.menu(dark);
+.menu(medium-dark);
+.menu(light);
+.menu(medium-light);

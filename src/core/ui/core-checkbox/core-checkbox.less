@@ -1,0 +1,49 @@
+﻿
+@import "../css/_variables.less";
+@import "../css/_common.less";
+.theme(common);
+
+.core-checkbox {
+    .box-sizing;
+    min-width: 16px;
+    min-height: 16px;
+    max-width: 16px;
+    max-height: 16px;
+    border-radius: @baseBorderRadius;
+    line-height: 1;
+}
+
+.core-checkbox[data-focused=true] {
+    outline: none;
+    border-bottom: @baseBorderSize solid @outlineColor;
+}
+
+.core-checkbox > input {
+    display: none;
+}
+
+.checkbox(@theme) {
+    .theme(@theme);
+    @import "../core-button/_button-states.less";
+
+    .@{theme} .core-checkbox {
+        .button-up;
+
+        &[data-pressed=true] {
+            .button-down;
+        }
+
+        &[data-disabled=true] {
+            .button-disabled;
+
+            & > .core-icon {
+                color: @textDisabledColor !important;
+            }
+        }
+    }
+}
+
+.checkbox(dark);
+.checkbox(medium-dark);
+.checkbox(light);
+.checkbox(medium-light);

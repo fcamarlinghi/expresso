@@ -1,0 +1,30 @@
+﻿
+@import "../css/_variables.less";
+@import "../css/_common.less";
+.theme(common);
+
+.core-menu-separator {
+    .box-sizing;
+    .unselectable;
+    min-height: 4px !important;
+    max-height: 4px !important;
+    margin: 4px 0 2px 0 !important;
+    padding: 0 !important;
+
+    &[data-visible=false] {
+        display: none;
+    }
+}
+
+.core-menu-separator(@theme) {
+    .theme(@theme);
+
+    .@{theme} .core-menu-separator {
+        border-top: 1px solid @baseBorderColor;
+    }
+}
+
+.core-menu-separator(dark);
+.core-menu-separator(medium-dark);
+.core-menu-separator(light);
+.core-menu-separator(medium-light);

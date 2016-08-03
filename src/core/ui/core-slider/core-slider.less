@@ -1,0 +1,75 @@
+﻿
+@import "../css/_variables.less";
+@import "../css/_common.less";
+.theme(common);
+
+.core-slider {
+    .box-sizing;
+    .unselectable;
+
+    .thumb() {
+        -webkit-appearance: none;
+        width: 0;
+        height: 0;
+        padding-top: 8px;
+        border-style: solid;
+        border-width: 0 7px 9px 7px;
+        border-radius: @baseBorderRadius;
+    }
+
+    .track() {
+        padding: 0;
+        -webkit-appearance: none;
+        height: 3px;
+        min-height: 3px;
+        outline: none;
+    }
+
+    // Webkit uses base styling as track styling
+    // Different than i.e. Firefox that needs a pseudo-element for track (::-moz-range-track)
+    .track();
+
+    &:focus {
+        .track();
+    }
+
+    &::-webkit-slider-thumb {
+        .thumb();
+    }
+
+    &:disabled::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        display: none;
+    }
+}
+
+.slider(@theme) {
+    .@{theme} .core-slider {
+        .theme(@theme);
+
+        .track() {
+            background: @btnBorderColor;
+        }
+
+        // Webkit uses base styling as track styling
+        .track();
+
+        &:disabled {
+            .track();
+        }
+
+        &:focus {
+            .track();
+        }
+
+        &::-webkit-slider-thumb {
+            border-color: transparent transparent @rangeInputThumbBackground transparent;
+            box-shadow: @rangeInputThumbBoxShadow;
+        }
+    }
+}
+
+.slider(dark);
+.slider(medium-dark);
+.slider(light);
+.slider(medium-light);

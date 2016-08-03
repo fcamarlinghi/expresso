@@ -1,0 +1,28 @@
+﻿
+@import "../css/_variables.less";
+@import "../css/_common.less";
+.theme(common);
+
+.core-menu-item {
+    .box-sizing;
+    .unselectable;
+
+    &[data-visible=false] {
+        display: none;
+    }
+}
+
+.core-menu-item(@theme) {
+    .theme(@theme);
+
+    .@{theme} .core-menu-item {
+        &[data-disabled=true] {
+            color: @textDisabledColor;
+        }
+    }
+}
+
+.core-menu-item(dark);
+.core-menu-item(medium-dark);
+.core-menu-item(light);
+.core-menu-item(medium-light);

@@ -1,0 +1,51 @@
+﻿
+@import "../css/_variables.less";
+@import "../css/_common.less";
+.theme(common);
+
+.core-icon-button {
+    .box-sizing;
+    padding: @basePadding;
+    margin: 0 @baseMargin @baseMargin 0;
+    border: @baseBorderSize solid transparent;
+}
+
+
+.core-icon-button[data-toolbar=true] {
+    padding: @basePadding @basePadding * 2;
+    margin: 0;
+    border-radius: 0;
+    min-width: 30px;
+    min-height: 26px;
+}
+
+.core-icon-button > .core-icon {
+    display: block;
+    margin-top: -@basePadding * 0.5;
+}
+
+.icon-button(@theme) {
+    .theme(@theme);
+    @import "../core-button/_button-states.less";
+
+    .@{theme} .core-icon-button {
+        &:not(:disabled):not(:active):not([data-active=true]):hover {
+            background: @btnBackgroundActiveAlt !important;
+            border: @baseBorderSize solid @btnBorderColor !important;
+        }
+
+        &:not(:disabled):active,
+        &[data-active=true] {
+            .button-down;
+        }
+
+        &:disabled {
+            color: @textDisabledColor;
+        }
+    }
+}
+
+.icon-button(dark);
+.icon-button(medium-dark);
+.icon-button(light);
+.icon-button(medium-light);

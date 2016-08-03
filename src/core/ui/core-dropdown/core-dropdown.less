@@ -1,0 +1,42 @@
+﻿
+@import "../css/_variables.less";
+@import "../css/_common.less";
+.theme(common);
+
+.core-dropdown {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+
+    .core-button-base {
+        margin: 0;
+        padding: 0 0 0 @basePadding;
+        cursor: default;
+        min-height: 20px !important;
+    }
+}
+
+.dropdown(@theme) {
+    .theme(@theme);
+    @import "../core-button/_button-states.less";
+
+    .@{theme} .core-dropdown {
+        .core-button-base {
+            .button-up;
+
+            &:not(:disabled):active,
+            &[data-active=true] {
+                .button-down;
+            }
+
+            &:disabled {
+                .button-disabled;
+            }
+        }
+    }
+}
+
+.dropdown(dark);
+.dropdown(medium-dark);
+.dropdown(light);
+.dropdown(medium-light);

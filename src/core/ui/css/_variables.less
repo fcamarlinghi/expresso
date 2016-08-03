@@ -1,0 +1,181 @@
+﻿
+// Common definitions
+.theme(common) {
+    // Common definitions
+    @basePadding: 4px;
+    @baseMargin: 4px;
+    @baseBorderSize: 1px;
+    @baseBorderRadius: 2px;
+
+    // Typography
+    @fontsFolder: "fonts";
+    @baseFontFamily: Tahoma;
+    @baseFontSize: 10px;
+    @baseLineHeight: 11px;
+    @baseFont: @baseFontSize~'/'@baseLineHeight @baseFontFamily;
+    @baseLetterSpacing: 0;
+
+    // Menus
+    @menuBackground: #f2f2f2;
+    @menuSelectedBackground: #91c9f7;
+}
+
+// Dark theme
+.theme(dark) {
+    // General
+    @bodyBackground: #323232;
+    @textColor: #a3a3a3;
+    @textTitleColor: #cccccc;
+    @textDisabledColor: #848484;
+    @linkColor: #cdcdcd;
+    @linkColorHover: #dedede;
+    @baseBorderColor: #212121;
+    @baseBorderColorLight: #2b2b2b;
+    @outlineColor: #0f64d2;
+
+    // Buttons
+    @btnTextColor: #d6d6d6;
+    @btnBackground: #292929;
+    @btnBackgroundActive: #1f1f1f;
+    @btnBackgroundActiveAlt: #2d2d2d;
+    @btnBackgroundDisabled: #414141;
+    @btnBorderColor: #474747;
+
+    // Text Inputs
+    @txtInputBorderColor: #666666;
+    @txtInputBorderColorDisabled: #3e3e3e;
+
+    // Range Sliders
+    @rangeInputThumbBackground: #f0f0f0;
+    @rangeInputThumbBoxShadow: 0 2px 0 #212121;
+
+    // Scrollbars
+    @scrollBackground: #292929;
+    @scrollContainerBackground: #2b2b2b;
+    @scrollThumbBackground: #474747;
+    @scrollArrowUpImage: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAMAAADz0U65AAAANlBMVEX///8AAADS0tIAAAAAAAAAAAAODg4AAAB+fn6goKB8fHwAAAA2NjYQEBA0NDTW1tbW1tbW1tb0IbomAAAAEXRSTlMAAP0EeQVbG9bn1RmXXZW9vE54KaEAAAAtSURBVHheZca3DQAgDARAB3L+/ZdFdoXEVUcPjkHZM2vy5ILWLUMgy7IBHPpdHjAA4xW2aPcAAAAASUVORK5CYII=') /*../images/dark/scrollbar-arrows-up.png*/ no-repeat center;
+    @scrollArrowDownImage: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIBAMAAAA2IaO4AAAAMFBMVEX///8AAAAAAADU1NQAAAAAAADW1tbOzs7W1tbOzs7T09PR0dHW1tbW1tbW1tbW1tYFwS8TAAAAD3RSTlMAALP6hYQkwybEfoEGrQfl+zarAAAAJElEQVQIHWOAgCAlBwaG+v8TGBiSPzcwMEj9FmBgkLknwAAHAJZtBsjmOnC2AAAAAElFTkSuQmCC') /*../images/dark/scrollbar-arrows-down.png*/ no-repeat center;
+    @scrollArrowLeftImage: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAMAAADz0U65AAAANlBMVEX///8AAAAAAAAAAAAAAAAsLCysrKwMDAx8fHzS0tIAAADV1dXW1tbW1tbV1dXW1tbW1tbW1tbOIWRVAAAAEXRSTlMAAIUFWLrrfdn9G64GfPkkvE3LYGgAAAArSURBVAjXY2BAAEZGLiYwg5mFlQ3MYOfgFAQzuAUFIQweXj5BqGJ+ASS9ABt0AOEn/hCTAAAAAElFTkSuQmCC') /*../images/dark/scrollbar-arrows-left.png*/ no-repeat center;
+    @scrollArrowRightImage: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAMAAADz0U65AAAANlBMVEX///8AAAAAAAAAAAAsLCwAAAAAAACsrKzS0tJ8fHwMDAzV1dXV1dXW1tbW1tbW1tbW1tbW1taga8nuAAAAEXRSTlMAAIUbulgF6/3Zfa75fAa8JEqIgCcAAAArSURBVAjXY2BAACZmRkYwg52FlQ3MEOTg5IIwBAW5IQweXj4wg18AqhgCABuaAOGNPJQ/AAAAAElFTkSuQmCC') /*../images/dark/scrollbar-arrows-right.png*/ no-repeat center;
+    @scrollArrowBackgroundActive: #1a1a1a;
+}
+
+// Medium Dark theme
+.theme(medium-dark) {
+    // General
+    @bodyBackground: #535353;
+    @textColor: #e1e1e1;
+    @textTitleColor: #ffffff;
+    @textDisabledColor: #6d6d6d;
+    @linkColor: #cdcdcd;
+    @linkColorHover: #dedede;
+    @baseBorderColor: #383838;
+    @baseBorderColorLight: #474747;
+    @outlineColor: #0f64d2;
+
+    // Buttons
+    @btnTextColor: #e1e1e1;
+    @btnBackground: #474747;
+    @btnBackgroundActive: #383838;
+    @btnBackgroundActiveAlt: #474747;
+    @btnBackgroundDisabled: #646464;
+    @btnBorderColor: #636363;
+
+    // Text Inputs
+    @txtInputBorderColor: #7a7a7a;
+    @txtInputBorderColorDisabled: #666666;
+
+    // Range Sliders
+    @rangeInputThumbBackground: #f0f0f0;
+    @rangeInputThumbBoxShadow: 0 2px 0 #212121;
+
+    // Scrollbars
+    @scrollBackground: #3e3e3e;
+    @scrollContainerBackground: #4d4d4d;
+    @scrollThumbBackground: #757575;
+    @scrollArrowUpImage: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAMAAADz0U65AAAANlBMVEX///8AAAD6+voAAAAAAAAAAAAREREAAACWlpa/v7+UlJQAAABAQEATExM+Pj7///////////8fOc2qAAAAEXRSTlMAAP0EeQVbG9bn1RmXXZW9vE54KaEAAAAtSURBVHheZca3DQAgDARAB3L+/ZdFdoXEVUcPjkHZM2vy5ILWLUMgy7IBHPpdHjAA4xW2aPcAAAAASUVORK5CYII=') no-repeat center;
+    @scrollArrowDownImage: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIBAMAAAA2IaO4AAAAMFBMVEX///8AAAAAAAD9/f0AAAAAAAD////29vb////29vb7+/v5+fn///////////////8oaDWPAAAAD3RSTlMAALP6hYQkwybEfoEGrQfl+zarAAAAJElEQVQIHWOAgCAlBwaG+v8TGBiSPzcwMEj9FmBgkLknwAAHAJZtBsjmOnC2AAAAAElFTkSuQmCC') no-repeat center;
+    @scrollArrowLeftImage: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAMAAADz0U65AAAANlBMVEX///8AAAAAAAAAAAAAAAA0NDTNzc0ODg6UlJT6+voAAAD+/v7////////+/v7///////////9IBBsEAAAAEXRSTlMAAIUFWLrrfdn9G64GfPkkvE3LYGgAAAArSURBVAjXY2BAAEZGLiYwg5mFlQ3MYOfgFAQzuAUFIQweXj5BqGJ+ASS9ABt0AOEn/hCTAAAAAElFTkSuQmCC') no-repeat center;
+    @scrollArrowRightImage: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAMAAADz0U65AAAANlBMVEX///8AAAAAAAAAAAA0NDQAAAAAAADNzc36+vqUlJQODg7+/v7+/v7///////////////////+buoK0AAAAEXRSTlMAAIUbulgF6/3Zfa75fAa8JEqIgCcAAAArSURBVAjXY2BAACZmRkYwg52FlQ3MEOTg5IIwBAW5IQweXj4wg18AqhgCABuaAOGNPJQ/AAAAAElFTkSuQmCC') no-repeat center;
+    @scrollArrowBackgroundActive: #303030;
+}
+
+// Light theme
+.theme(light) {
+    // General
+    @bodyBackground: #f0f0f0;
+    @textColor: #303030;
+    @textTitleColor: #000000;
+    @textDisabledColor: #909090;
+    @linkColor: #444444;
+    @linkColorHover: #666666;
+    @baseBorderColor: #cccccc;
+    @baseBorderColorLight: #dedede;
+    @outlineColor: #1e76e3;
+
+    // Buttons
+    @btnTextColor: #303030;
+    @btnBackground: #fff;
+    @btnBackgroundActive: #bfbfbf;
+    @btnBackgroundActiveAlt: #fafafa;
+    @btnBackgroundDisabled: #e9e9e9;
+    @btnBorderColor: #a8a8a8;
+
+    // Text Inputs
+    @txtInputBorderColor: #888888;
+    @txtInputBorderColorDisabled: #dedede;
+
+    // Range Sliders
+    @rangeInputThumbBackground: #faffff;
+    @rangeInputThumbBoxShadow: 0 2px 0 #a4a4a4;
+
+    // Scrollbars
+    @scrollBackground: #e3e3e3;
+    @scrollContainerBackground: #e8e8e8;
+    @scrollThumbBackground: #bdbdbd;
+    @scrollArrowUpImage: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIBAMAAAA2IaO4AAAAKlBMVEX///////8BAQH///8CAgIAAAAAAAAAAAAAAAAEBAQEBAQAAAACAgIAAAAe4Jy3AAAADXRSTlMAWflCf60mBwbAvyR9YzIaSgAAACJJREFUCNdjYEAA9gggwXIHSCRd2sDAMPfuAgYGQ0EDsBwAWaIFsLOtCYoAAAAASUVORK5CYII=') no-repeat center;
+    @scrollArrowDownImage: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIBAMAAAA2IaO4AAAALVBMVEX///////////8CAgIAAAAAAACcnJxERERCQkLf398lJSXb29uYmJj///8AAABYusuBAAAADnRSTlMADQL6vL1dqaowyjJePHeMKkYAAAAjSURBVAjXY2BAAL93AQwMyY8PMDCIvxBgYOBcDRRjugSRAwB2XgYqDylEIAAAAABJRU5ErkJggg==') no-repeat center;
+    @scrollArrowLeftImage: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAMAAADz0U65AAAAM1BMVEX///8AAAAAAAAAAAAAAAAAAAABAQHn5+dFRUUCAgL///////+srKwcHBz///////8AAAB8fhDXAAAAEHRSTlMAJgd++L2uQar6Aitv0w1C+IOaCwAAACxJREFUeF5txkcOACAQw8AsvZP/vxZpc8UXD/5Z9oWY6CikUFsXxlwb6lzgARIhAMl8enBWAAAAAElFTkSuQmCC') no-repeat center;
+    @scrollArrowRightImage: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAMAAADz0U65AAAAM1BMVEX///8AAAAAAAAAAAAAAAAAAAABAQECAgJFRUXn5+ccHBysrKz///////////////8AAAAS0AYfAAAAEHRSTlMAJr34fgeu+qpB028rAkINpa0WtAAAAChJREFUCNdjYMACmBihDAFmFlYIQ0CADcJg5+AEM7i4eXjBDD5+EAkAEqcAyZdI8WYAAAAASUVORK5CYII=') no-repeat center;
+    @scrollArrowBackgroundActive: #d9d9d9;
+}
+
+// Medium Light theme
+.theme(medium-light) {
+    // General
+    @bodyBackground: #b8b8b8;
+    @textColor: #252525;
+    @textTitleColor: #000000;
+    @textDisabledColor: #797979;
+    @linkColor: #444444;
+    @linkColorHover: #666666;
+    @baseBorderColor: #b8b8b8;
+    @baseBorderColorLight: #adadad;
+    @outlineColor: #1473e6;
+
+    // Buttons
+    @btnTextColor: #252525;
+    @btnBackground: #cccccc;
+    @btnBackgroundActive: #808080;
+    @btnBackgroundActiveAlt: #c7c7c7;
+    @btnBackgroundDisabled: #cfcfcf;
+    @btnBorderColor: #9e9e9e;
+
+    // Text Inputs
+    @txtInputBorderColor: #9e9e9e;
+    @txtInputBorderColorDisabled: #adadad;
+
+    // Range Sliders
+    @rangeInputThumbBackground: #ffffff;
+    @rangeInputThumbBoxShadow: 0 2px 0 #9e9e9e;
+
+    // Scrollbars
+    @scrollBackground: #ababab;
+    @scrollContainerBackground: #b0b0b0;
+    @scrollThumbBackground: #858585;
+    @scrollArrowUpImage: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIBAMAAAA2IaO4AAAAKlBMVEX///////8BAQH///8CAgIAAAAAAAAAAAAAAAAEBAQEBAQAAAACAgIAAAAe4Jy3AAAADXRSTlMAWflCf60mBwbAvyR9YzIaSgAAACJJREFUCNdjYEAA9gggwXIHSCRd2sDAMPfuAgYGQ0EDsBwAWaIFsLOtCYoAAAAASUVORK5CYII=') no-repeat center;
+    @scrollArrowDownImage: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIBAMAAAA2IaO4AAAALVBMVEX///////////8CAgIAAAAAAACcnJxERERCQkLf398lJSXb29uYmJj///8AAABYusuBAAAADnRSTlMADQL6vL1dqaowyjJePHeMKkYAAAAjSURBVAjXY2BAAL93AQwMyY8PMDCIvxBgYOBcDRRjugSRAwB2XgYqDylEIAAAAABJRU5ErkJggg==') no-repeat center;
+    @scrollArrowLeftImage: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAMAAADz0U65AAAAM1BMVEX///8AAAAAAAAAAAAAAAAAAAABAQHn5+dFRUUCAgL///////+srKwcHBz///////8AAAB8fhDXAAAAEHRSTlMAJgd++L2uQar6Aitv0w1C+IOaCwAAAChJREFUCNdjYMAKGFnBFBMziwCYwSYgAGGwc3BCGFzcPLxQxXz8DAwAEiEAyTTXnJ4AAAAASUVORK5CYII=') no-repeat center;
+    @scrollArrowRightImage: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAMAAADz0U65AAAAM1BMVEX///8AAAAAAAAAAAAAAAAAAAABAQECAgJFRUXn5+ccHBysrKz///////////////8AAAAS0AYfAAAAEHRSTlMAJr34fgeu+qpB028rAkINpa0WtAAAAChJREFUCNdjYMACmBihDAFmFlYIQ0CADcJg5+AEM7i4eXjBDD5+EAkAEqcAyZdI8WYAAAAASUVORK5CYII=') no-repeat center;
+    @scrollArrowBackgroundActive: #a1a1a1;
+}

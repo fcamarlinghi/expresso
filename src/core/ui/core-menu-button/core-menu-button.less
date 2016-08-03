@@ -1,0 +1,24 @@
+﻿
+@import "../css/_variables.less";
+@import "../css/_common.less";
+.theme(common);
+
+.core-menu-button > .core-icon.menu-icon {
+    position: absolute;
+    right: 2px;
+    bottom: 0px;
+    font-size: 8px;
+}
+
+.menu-button(@theme) {
+    .theme(@theme);
+
+    .@{theme} .core-menu-button > .core-icon.menu-icon {
+        color: darken(@textColor, 20%);
+    }
+}
+
+.menu-button(dark);
+.menu-button(medium-dark);
+.menu-button(light);
+.menu-button(medium-light);

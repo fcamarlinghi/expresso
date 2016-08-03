@@ -1,0 +1,61 @@
+﻿
+@import "../css/_variables.less";
+@import "../css/_common.less";
+.theme(common);
+
+// Used as a base for all buttons and button-like controls (dropdown, combobox, etc.)
+.core-button-base {
+    .unselectable;
+    .box-sizing;
+    margin: 0 @baseMargin @baseMargin 0;
+    display: inline-block;
+    vertical-align: middle;
+    outline: none;
+    font: @baseFont;
+    letter-spacing: @baseLetterSpacing;
+    min-height: 20px;
+    max-height: 20px;
+    min-width: 24px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    background: transparent;
+    text-align: left;
+
+    &:focus {
+        outline: none;
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+    }
+}
+
+.core-button {
+    padding: @basePadding @basePadding * 2;
+    margin: 0 @baseMargin @baseMargin 0;
+    border-radius: @baseBorderRadius;
+}
+
+.button(@theme) {
+    .theme(@theme);
+    @import "_button-states.less";
+
+    .@{theme} .core-button {
+        .button-up;
+
+        &:not(:disabled):active,
+        &[data-active=true] {
+            .button-down;
+        }
+
+        &:disabled {
+            .button-disabled;
+        }
+    }
+}
+
+.button(dark);
+.button(medium-dark);
+.button(light);
+.button(medium-light);

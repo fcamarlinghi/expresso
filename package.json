@@ -1,0 +1,35 @@
+{
+  "name": "expresso",
+  "version": "1.0.0",
+  "license": "Apache-2.0",
+  "private": true,
+  "dependencies": {
+    "bluebird": "2.x",
+    "extend": "latest",
+    "fast.js": "latest",
+    "path-is-absolute": "latest",
+    "ractive": "latest",
+    "ractive-events-tap": "latest",
+    "sanitize-filename ": "latest"
+  },
+  "devDependencies": {
+    "webpack": "latest",
+    "css-loader": "latest",
+    "json-loader": "latest",
+    "less": "latest",
+    "less-loader": "latest",
+    "raw-loader": "latest",
+    "extract-text-webpack-plugin": "latest",
+    "babel-loader": "latest",
+    "babel-core": "latest",
+    "babel-preset-es2015": "latest",
+    "cpy": "latest",
+    "rimraf": "latest",
+    "yuicompressor": "latest",
+    "htmlclean": "latest"
+  },
+  "scripts": {
+    "exporter:debug": "node bin/build.js exporter debug",
+    "exporter:release": "node bin/build.js exporter release"
+  }
+}

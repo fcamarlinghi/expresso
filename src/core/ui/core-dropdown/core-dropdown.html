@@ -1,0 +1,17 @@
+﻿<div class="core-field core-dropdown {{css}}" style="{{style}}" tabindex="{{tabindex}}" role="listbox" data-disabled="{{disabled}}">
+    <div class="core-layout horizontal center core-button-base" data-active="{{open}}" decorator="core-tooltip" tooltip="{{tooltip}}" on-tap="openMenu">
+        <div class="flex">{{label}}</div>
+        <core-icon icon="arrow-down6" disabled="{{disabled}}"></core-icon>
+    </div>
+    <core-menu visible="{{open}}">
+        {{#options}}
+            {{# { optionlabel: this[labelkey], optionvalue: this[valuekey], selectedvalue: ~/value } }}
+                {{#if optionlabel === '---' }}
+                <core-menu-separator></core-menu-separator>
+                {{else}}
+                <core-menu-item value="{{optionvalue}}" selected="{{optionvalue === selectedvalue}}" on-tap="select">{{optionlabel}}</core-menu-item>
+                {{/if}}
+            {{/}}
+        {{/options}}
+    </core-menu>
+</div>

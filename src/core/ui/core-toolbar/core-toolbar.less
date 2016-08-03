@@ -1,0 +1,35 @@
+﻿@import "../css/_variables.less";
+@import "../css/_common.less";
+.theme(common);
+
+.core-toolbar {
+    .box-sizing;
+    .unselectable;
+    display: block;
+    min-height: 25px !important;
+    max-height: 25px !important;
+    width: 100%;
+    padding-right: 20px;
+
+    &[data-vertical=true] {
+        min-width: 32px;
+        width: inherit;
+        max-width: 32px;
+        min-height: inherit;
+        height: 100%;
+        max-height: inherit;
+    }
+}
+
+.toolbar(@theme) {
+    .@{theme} .core-toolbar {
+        .theme(@theme);
+        background: @bodyBackground;
+        border-top: 1px solid @baseBorderColorLight;
+    }
+}
+
+.toolbar(dark);
+.toolbar(medium-dark);
+.toolbar(light);
+.toolbar(medium-light);

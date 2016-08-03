@@ -1,0 +1,47 @@
+﻿
+@import "../css/_variables.less";
+@import "../css/_common.less";
+.theme(common);
+
+.core-numberbox {
+    .box-sizing;
+    font: @baseFont;
+    letter-spacing: @baseLetterSpacing;
+    text-shadow: none;
+    min-height: 20px;
+    max-height: 20px;
+    padding: @basePadding;
+    -webkit-user-select: text !important;
+    user-select: text !important;
+    border: 0;
+    background: transparent;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.numberbox(@theme) {
+    .@{theme} {
+        .theme(@theme);
+
+        .core-numberbox {
+            color: @btnTextColor;
+            border-bottom: @baseBorderSize solid @txtInputBorderColor;
+
+            &:focus {
+                border-bottom: @baseBorderSize solid @outlineColor;
+            }
+
+            &:disabled {
+                color: @textDisabledColor;
+                border-bottom: @baseBorderSize solid @baseBorderColorLight;
+            }
+        }
+    }
+}
+
+.numberbox(dark);
+.numberbox(medium-dark);
+.numberbox(light);
+.numberbox(medium-light);

@@ -1,0 +1,51 @@
+﻿
+@import "../css/_variables.less";
+@import "../css/_common.less";
+.theme(common);
+
+.core-combobox {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+
+    .core-button-base {
+        margin: 0;
+        padding: 0;
+        cursor: default;
+        border-radius: @baseBorderRadius;
+    }
+
+    .core-icon {
+        width: 20px;
+        text-align: center;
+    }
+
+    input {
+        border: 0 !important;
+    }
+}
+
+.combobox(@theme) {
+    .theme(@theme);
+    @import "../core-button/_button-states.less";
+
+    .@{theme} .core-combobox {
+        .core-button-base {
+            .button-up;
+
+            &:not(:disabled):active,
+            &[data-active=true] {
+                .button-down;
+            }
+
+            &:disabled {
+                .button-disabled;
+            }
+        }
+    }
+}
+
+.combobox(dark);
+.combobox(medium-dark);
+.combobox(light);
+.combobox(medium-light);

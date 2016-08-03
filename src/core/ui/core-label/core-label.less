@@ -1,0 +1,26 @@
+﻿
+@import "../css/_variables.less";
+@import "../css/_common.less";
+.theme(common);
+
+.core-label {
+    .box-sizing();
+    .unselectable();
+}
+
+.label(@theme) {
+    .theme(@theme);
+
+    .@{theme} .core-label {
+        color: @btnTextColor;
+
+        &[data-disabled="true"] {
+            color: @textDisabledColor;
+        }
+    }
+}
+
+.label(dark);
+.label(medium-dark);
+.label(light);
+.label(medium-light);

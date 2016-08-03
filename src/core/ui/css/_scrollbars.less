@@ -1,0 +1,108 @@
+﻿
+@import "_common.less";
+@import "_variables.less";
+.theme(common);
+
+// Scrollbars
+.scrollbar {
+    &.horizontal {
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }
+
+    &.vertical {
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
+    // Scrollbar body
+    &::-webkit-scrollbar {
+        height: 15px;
+        width: 15px;
+    }
+}
+
+.scrollbar(@theme) {
+    .theme(@theme);
+
+    .@{theme} .scrollbar {
+
+        // Container with scrollbar
+        & {
+            background: @scrollContainerBackground !important;
+        }
+
+        // Scrollbar body
+        &::-webkit-scrollbar-track:vertical {
+            background: @scrollBackground;
+        }
+
+        &::-webkit-scrollbar-track:horizontal {
+            background: @scrollBackground;
+        }
+
+        // Scrollbar thumb
+        &::-webkit-scrollbar-thumb {
+        }
+
+        &::-webkit-scrollbar-thumb:vertical,
+        &::-webkit-scrollbar-thumb:vertical:hover {
+            background: @scrollThumbBackground;
+        }
+
+        &::-webkit-scrollbar-thumb:horizontal,
+        &::-webkit-scrollbar-thumb:horizontal:hover {
+            background: @scrollThumbBackground;
+        }
+
+        // Scrollbar corner
+        &::-webkit-scrollbar-corner {
+            background: @scrollBackground;
+        }
+
+        // Scrollbar arrow top
+        &::-webkit-scrollbar-button:vertical:start {
+            visibility: visible;
+            background: @scrollArrowUpImage, @scrollBackground;
+        }
+
+        &::-webkit-scrollbar-button:vertical:start:hover {
+            background: @scrollArrowBackgroundActive @scrollArrowUpImage;
+        }
+
+        // Scrollbar arrow bottom
+        &::-webkit-scrollbar-button:vertical:end {
+            visibility: visible;
+            background: @scrollBackground;
+            background: @scrollArrowDownImage, @scrollBackground;
+        }
+
+        &::-webkit-scrollbar-button:vertical:end:hover {
+            background: @scrollArrowBackgroundActive @scrollArrowDownImage;
+        }
+
+        // Scrollbar arrow left
+        &::-webkit-scrollbar-button:horizontal:start {
+            visibility: visible;
+            background: @scrollArrowLeftImage, @scrollBackground;
+        }
+
+        &::-webkit-scrollbar-button:horizontal:start:hover {
+            background: @scrollArrowBackgroundActive @scrollArrowLeftImage;
+        }
+        // Scrollbar arrow right
+        &::-webkit-scrollbar-button:horizontal:end {
+            visibility: visible;
+            background: @scrollArrowRightImage, @scrollBackground;
+        }
+
+        &::-webkit-scrollbar-button:horizontal:end:hover {
+            background: @scrollArrowBackgroundActive @scrollArrowRightImage;
+        }
+    }
+}
+
+.scrollbar(dark);
+.scrollbar(medium-dark);
+.scrollbar(light);
+.scrollbar(medium-light);

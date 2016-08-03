@@ -1,0 +1,37 @@
+﻿
+@import "../css/_variables.less";
+@import "../css/_common.less";
+.theme(common);
+
+.core-colorbox {
+    padding: 0;
+    min-height: 20px;
+    height: 20px;
+    min-width: 20px;
+    width: 20px;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.colorbox(@theme) {
+    .@{theme} {
+        .theme(@theme);
+
+        .core-colorbox {
+            border: @baseBorderSize solid @btnBorderColor;
+
+            &:disabled {
+                filter: grayscale(1);
+                //background: @baseBorderColorLight;
+                border: @baseBorderSize solid @baseBorderColorLight;
+            }
+        }
+    }
+}
+
+.colorbox(dark);
+.colorbox(medium-dark);
+.colorbox(light);
+.colorbox(medium-light);

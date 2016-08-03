@@ -1,0 +1,21 @@
+﻿@import "../css/_variables.less";
+@import "../css/_common.less";
+.theme(common);
+
+.core-tooltip {
+    .box-sizing();
+    .unselectable();
+    padding: @basePadding / 2 @basePadding;
+    border: @baseBorderSize solid #000;
+    display: none;
+    background: #ffffcc;
+    font: @baseFont;
+    font-size: 10px;
+    letter-spacing: 0;
+    text-shadow: none;
+    cursor: default;
+    color: #000;
+    position: fixed;
+    z-index: 1000;
+    //white-space: nowrap;
+}

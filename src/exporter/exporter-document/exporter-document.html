@@ -1,0 +1,9 @@
+﻿<div decorator="core-visible:{{visible}}">
+    <div class="core-container core-layout horizontal center" style="border-top:0">
+        <core-textbox css="flex" placeholder="[Select export folder...]" value="{{path}}" tooltip="Export folder"></core-textbox>
+        <core-icon-button icon="folder" tooltip="Select export folder" on-tap="selectGlobalPath"></core-icon-button>
+    </div>
+    {{#targets:targetIndex}}
+    <exporter-target index="{{targetIndex}}" needsuffix="{{targets.length > 1}}" model="{{.}}" layers="{{layers}}"></exporter-target>
+    {{/targets}}
+</div>
