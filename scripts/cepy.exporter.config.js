@@ -47,6 +47,7 @@ const config = Object.freeze({
 
     packaging: {
         output: `release/expresso_exporter_${version}.zxp`,
+        timestampURL: 'https://timestamp.geotrust.com/tsa',
         certificate: require('./distrib/cepy.certificate.js'),
     }
 });
