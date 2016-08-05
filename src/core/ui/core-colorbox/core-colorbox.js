@@ -1,14 +1,14 @@
 ﻿
-var CoreField = require('../core-field/core-field.js'),
-    application = require('../../framework/Application.js'),
-    host = require('./host.jsx');
+const CoreField = require('../core-field/core-field.js'),
+      application = require('../../framework/Application.js'),
+      host = require('./host.jsx');
 
 require('./core-colorbox.less');
 
 /**
  * A custom color field that looks more like the Photoshop one.
  */
-var component = CoreField.extend({
+const component = CoreField.extend({
 
     template: require('./core-colorbox.html'),
 
@@ -69,8 +69,7 @@ var component = CoreField.extend({
         this.set('disabled', true);
 
         // Open Photoshop color picker
-        var params = 'var params = { baseColor: "' + this.get('value') + '" };';
-        application.cep.evalScript(params + host).bind(this).then(function (color)
+        application.cep.evalScript(host, { baseColor: this.get('value') }).bind(this).then(function (color)
         {
             this.set('disabled', false);
 

@@ -1,6 +1,6 @@
 ﻿
 var newColor = null,
-	baseColor = params.baseColor;
+    baseColor = params.baseColor;
 
 try
 {
@@ -15,15 +15,19 @@ try
     }
 
     // Save old foreground color
-    oldColor = app.foregroundColor.rgb.hexValue;
+    const oldColor = app.foregroundColor.rgb.hexValue;
 
     // Set base color as foreground color
     app.foregroundColor.rgb.hexValue = baseColor;
 
     if (app.showColorPicker())
+    {
         newColor = app.foregroundColor.rgb.hexValue;
+    }
     else
+    {
         newColor = baseColor;
+    }
 
     // Reset old foreground color
     app.foregroundColor.rgb.hexValue = oldColor;
