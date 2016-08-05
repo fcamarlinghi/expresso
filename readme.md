@@ -50,7 +50,6 @@ Some of the things I would like to work on in the near future, alongside user-re
 
 ### Core
 * Add first-time wizard to instruct users about how to enable Photoshop Remote Server. Find out if there's a way to enable it automatically (through ExtendScript?). Provide a way for users to select the password they want.
-* Fix issues with laggish tooltips.
 * Break up the codebase into smaller chunks (i.e. *expresso-core*, *expresso-exporter*, *expresso-previewer*) for additional flexibility.
 * Improve performance and usability on the new *core-combobox* (i.e. support for arrow keys).
 * Continue transition to ES2015 for improved code clarity and performance.
