@@ -1,10 +1,10 @@
 ﻿
-var CoreField = require('../core-field/core-field.js'),
-    application = require('../../framework/Application.js');
+const CoreField = require('../core-field/core-field.js'),
+      application = require('../../framework/Application.js');
 
 require('./core-dropdown.less');
 
-var component = CoreField.extend({
+const component = CoreField.extend({
 
     template: require('./core-dropdown.html'),
 
@@ -56,10 +56,10 @@ var component = CoreField.extend({
 
         label: function ()
         {
-            var value = this.get('value'),
-                options = this.get('options'),
-                labelkey = this.get('labelkey'),
-                index = this.valueToIndex(value);
+            const value = this.get('value'),
+                  options = this.get('options'),
+                  labelkey = this.get('labelkey'),
+                  index = this.valueToIndex(value);
 
             if (index > -1)
             {
@@ -133,7 +133,7 @@ var component = CoreField.extend({
         document.body.click();
 
         // Detect some events that might close the menu
-        setTimeout(function (context)
+        setTimeout((context) =>
         {
             context.addEventListeners();
 
@@ -149,7 +149,7 @@ var component = CoreField.extend({
 
     optionsChanged: function (newValue, oldValue)
     {
-        var index = this.valueToIndex(this.get('value'));
+        const index = this.valueToIndex(this.get('value'));
         this.updateSelectedValue(index);
     },
 
@@ -157,8 +157,8 @@ var component = CoreField.extend({
     {
         if (index > -1)
         {
-            var valuekey = this.get('valuekey'),
-                option = this.get('options')[index];
+            const valuekey = this.get('valuekey'),
+                  option = this.get('options')[index];
 
             this.set('value', option[valuekey]);
         }
@@ -171,8 +171,8 @@ var component = CoreField.extend({
     select: function (event)
     {
         // FIXME: there is a bug in Ractive 0.7.3 that prevents us from simply doing: event.context.value
-        var value = event.original.currentTarget.dataset['value'],
-            index = this.valueToIndex(value);
+        const value = event.original.currentTarget.dataset['value'],
+              index = this.valueToIndex(value);
 
         this.updateSelectedValue(index);
         this.closeMenu();
@@ -180,16 +180,15 @@ var component = CoreField.extend({
 
     valueToIndex: function (value)
     {
-        var index = -1,
-            labelkey = this.get('labelkey'),
-            valuekey = this.get('valuekey'),
-            options = this.get('options'),
-            i = 0, l = options.length,
-            option;
+        const labelkey = this.get('labelkey'),
+              valuekey = this.get('valuekey'),
+              options = this.get('options');
 
-        for (; i < l; i++)
+        let index = -1
+
+        for (let i = 0; i < options.length; i++)
         {
-            option = options[i];
+            let option = options[i];
 
             // Filter out separators
             // WARNING: non-strict comparison is needed
@@ -200,7 +199,7 @@ var component = CoreField.extend({
             }
         }
 
-        if (index === -1 && l > 0)
+        if (index === -1 && options.length > 0)
         {
             // If index is invalid and we have options, fall back to first option
             index = 0;
@@ -241,7 +240,7 @@ var component = CoreField.extend({
     {
         if (this.resizeHandle === null)
         {
-            this.resizeHandle = setTimeout(function (context)
+            this.resizeHandle = setTimeout((context) =>
             {
                 context.resizeHandle = null;
                 context.updateDropdown();
@@ -267,16 +266,16 @@ var component = CoreField.extend({
     updateDropdown: function ()
     {
         // Position the menu
-        var menuNode = this.menu.find('div');
+        let menuNode = this.menu.find('div');
 
         // Make sure to remove any max height so we get valid menu bounds
         menuNode.style.maxHeight = '';
 
-        var parentBounds = this.find('div').getBoundingClientRect(),
-            menuBounds = menuNode.getBoundingClientRect();
+        const parentBounds = this.find('div').getBoundingClientRect(),
+              menuBounds = menuNode.getBoundingClientRect();
 
         // Find out optimal menu size and location based on window size
-        var left = parentBounds.left,
+        let left = parentBounds.left,
             top = 0,
             width = parentBounds.width,
             maxHeight = -1;
