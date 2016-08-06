@@ -241,12 +241,12 @@ var component = CoreField.extend({
     {
         if (this.resizeHandle === null)
         {
-            resizeHandle = setTimeout(function (context)
+            this.resizeHandle = setTimeout(function (context)
             {
-                resizeHandle = null;
+                context.resizeHandle = null;
                 context.updateDropdown();
 
-            }, 66, this);
+            }, 50, this);
         }
     },
 
