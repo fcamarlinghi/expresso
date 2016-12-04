@@ -103,6 +103,8 @@ ImageExporter.prototype.createTarget = function ()
  */
 ImageExporter.prototype.run = function (targets)
 {
+    const startTime = performance.now();
+
     var documentInfo = {
         id: -1,
         file: '',
@@ -449,6 +451,9 @@ ImageExporter.prototype.run = function (targets)
 
     }).then(function ()
     {
+        const endTime = (performance.now() - startTime);
+        this.logger.info('Export took', endTime, 'ms.');
+
         // Success!
         return outputs;
 
