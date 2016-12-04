@@ -510,10 +510,13 @@ PhotoshopClient.prototype.sendCommand = function (javascript)
 
 PhotoshopClient.prototype._processReceiveBuffer = function (isNewMessage)
 {
-    // Log when the message started to come in so we can analyze the performance
-    if (isNewMessage && this._receivedBytes > 0)
+    if (!RELEASE)
     {
-        this.messageStartTime = new Date().getTime();
+        // Log when the message started to come in so we can analyze the performance
+        if (isNewMessage && this._receivedBytes > 0)
+        {
+            this.messageStartTime = new Date().getTime();
+        }
     }
 
     // The header hasn't arrived yet: stop here
@@ -545,16 +548,19 @@ PhotoshopClient.prototype._processReceiveBuffer = function (isNewMessage)
     {
         return;
     }
-
-    // Performance evaluation
-    var duration = new Date().getTime() - this.messageStartTime;
-
-    if (duration > 10)
+    
+    if (!RELEASE)
     {
-        var size = this._receivedBytes / 1024,
-            speed = size / (duration / 1000);
+        // Performance evaluation
+        var duration = new Date().getTime() - this.messageStartTime;
 
-        console.info(duration + 'ms to receive ' + round(size, 1) + ' kB (' + round(speed, 1) + ' kB/s)');
+        if (duration > 10)
+        {
+            var size = this._receivedBytes / 1024,
+                speed = size / (duration / 1000);
+
+            console.info(duration + 'ms to receive ' + round(size, 1) + ' kB (' + round(speed, 1) + ' kB/s)');
+        }
     }
 
     // Extract the message
@@ -574,14 +580,21 @@ PhotoshopClient.prototype._processReceiveBuffer = function (isNewMessage)
     this._receivedBytes = remainingBytes;
 
     // Decrypt the message
-    var startTime = new Date().getTime(),
-        bodyBuffer = this._crypto ? this._crypto.decipher(cipheredBody) : cipheredBody;
-
-    duration = new Date().getTime() - startTime;
-
-    if (duration > 10)
+    if (!RELEASE)
     {
-        console.info(duration + 'ms to decrypt buffer');
+        var startTime = new Date().getTime();
+    }
+
+    var bodyBuffer = this._crypto ? this._crypto.decipher(cipheredBody) : cipheredBody;
+    
+    if (!RELEASE)
+    {
+        duration = new Date().getTime() - startTime;
+
+        if (duration > 10)
+        {
+            console.info(duration + 'ms to decrypt buffer');
+        }
     }
 
     // Process message
