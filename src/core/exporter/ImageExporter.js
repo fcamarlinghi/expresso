@@ -259,32 +259,53 @@ ImageExporter.prototype.run = function (targets)
                         maxDimension: 16384,
                     }).then(function (pixmap)
                     {
-                        // If the resulting pixmap is smaller than the document size then the exported layer
-                        // didn't extend to document bounds. In this case padding should be applied to the
-                        // pixmap so it ends up fitting correctly into the exported files
+                        // Eventually apply some processing
+                        let needsProcessing = false;
+
                         if (pixmap.height !== documentInfo.height || pixmap.width !== documentInfo.width)
+                        {
+                            // If the resulting pixmap is smaller than the document size then the exported layer
+                            // didn't extend to document bounds. In this case padding should be applied to the
+                            // pixmap so it ends up fitting correctly into the exported files
+                            needsProcessing = true;
+                        }
+                        else
+                        {
+                            // If the pixmap contains transparent pixels we need to apply a matte color. We check for this now and
+                            // avoid the useless (and expensive!) processing in case the pixmap is fully opaque
+                            for (var i = 0; i < pixmap.pixels.length; i = i + 4)
+                            {
+                                if (pixmap.pixels[i] < 255)
+                                {
+                                    needsProcessing = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (needsProcessing)
                         {
                             const source = pixmap.pixels,
                                   sourceBounds = pixmap.bounds,
                                   sourceRowBytes = pixmap.rowBytes;
 
                             // Create a completely black buffer of document size
-                            var target = new Buffer(pixmapBufferSize);
+                            const target = new Buffer(pixmapBufferSize);
                             target.fill(0);
 
                             // Copy rows from source to target one by one
-                            var targetIndex = ((sourceBounds.top * documentInfo.width) + sourceBounds.left) * 4,
+                            let targetIndex = ((sourceBounds.top * documentInfo.width) + sourceBounds.left) * 4,
                                 rowNum = source.length / sourceRowBytes;
 
-                            for (var row = 0; row < rowNum; row++)
+                            for (let row = 0; row < rowNum; row++)
                             {
-                                var sourceIndex = row * sourceRowBytes,
+                                let sourceIndex = row * sourceRowBytes,
                                     sourceRowEnd = sourceIndex + sourceRowBytes;
 
                                 for (; sourceIndex < sourceRowEnd; sourceIndex = sourceIndex + 4)
                                 {
                                     // Only copy non-clipped pixels
-                                    var alpha = source[sourceIndex];
+                                    const alpha = source[sourceIndex];
 
                                     if (alpha === 255)
                                     {
@@ -294,8 +315,8 @@ ImageExporter.prototype.run = function (targets)
                                     else if (alpha > 0)
                                     {
                                         // Interpolate alpha
-                                        var linearAlpha = alpha / 255,
-                                            i = targetIndex + sourceIndex;
+                                        const linearAlpha = alpha / 255,
+                                              i = targetIndex + sourceIndex;
 
                                         target[i] = alpha;
                                         target[i + 1] = Math.lerp(target[i + 1], source[sourceIndex + 1], linearAlpha);
