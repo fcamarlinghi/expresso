@@ -9,7 +9,7 @@ function parseMenuItemJSON(menu)
 {
     if (!(menu instanceof Array))
     {
-        throw new TypeError('Menu should be an array of objects decribing menu items.');
+        throw new TypeError('Menu should be an array of objects describing menu items.');
     }
 
     var xml = '',

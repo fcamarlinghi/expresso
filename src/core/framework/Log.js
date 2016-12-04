@@ -1,63 +1,52 @@
 ﻿
 'use strict';
 
-var path = require('path'),
-    util = require('util'),
-    fs = require('fs'),
-    extend = require('extend'),
-    sanitize = require('sanitize-filename');
+const path = require('path'),
+      util = require('util'),
+      fs = require('fs'),
+      extend = require('extend'),
+      sanitize = require('sanitize-filename');
 
-/** Converts the passed Date into a log-friendly time string. */
-function dateToString(date)
+/** Gets a log-friendly time string. */
+function getLogDate()
 {
-    function padString(s, places)
-    {
-        var i = places - s.length;
-
-        while (i > 0)
-        {
-            s = '0' + s;
-            i--;
-        }
-
-        return s;
-    }
+    const date = new Date();
 
     return util.format('%s:%s:%s.%s',
-        padString(String(date.getHours()), 2),
-        padString(String(date.getMinutes()), 2),
-        padString(String(date.getSeconds()), 2),
-        padString(String(date.getMilliseconds()), 3)
+        ('00' + date.getHours()).slice(-2),
+        ('00' + date.getMinutes()).slice(-2),
+        ('00' + date.getSeconds()).slice(-2),
+        ('000' + date.getMilliseconds()).slice(-3)
     );
 };
 
 /** Creates the log functions in the specified context. */
 function createLogFunctions(context)
 {
-    var levels = {
+    const levels = {
         'debug': LogLevels.DEBUG,
         'error': LogLevels.ERROR,
         'warn': LogLevels.WARNING,
         'info': LogLevels.INFO,
     };
 
-    for (var name in levels)
+    for (let name in levels)
     {
         if (RELEASE)
         {
             context[name] = (function ()
             {
-                var logName = name;
-                var logLevel = levels[logName];
+                const logName = name,
+                      logLevel = levels[logName];
 
                 return function ()
                 {
                     if (logLevel.priority <= context.logLevel.priority)
                     {
-                        var args = Array.prototype.slice.call(arguments);
+                        const args = Array.prototype.slice.call(arguments);
                         args[0] = args[0].replace(/%o/g, '%j');
 
-                        var text = util.format('%s [%s] [%s] %s \r\n', dateToString(new Date()), context.category, logName.toUpperCase(), util.format.apply(context, args));
+                        const text = util.format('%s [%s] [%s] %s \r\n', getLogDate(), context.category, logName.toUpperCase(), util.format.apply(context, args));
                         context.logManager._write(text);
                     }
                 }
@@ -86,7 +75,7 @@ function createLogFunctions(context)
 /**
  * Log levels.
  */
-var LogLevels = Object.create(null, {
+const LogLevels = Object.create(null, {
 
     'NONE': {
         value: { css: 'color:#000', priority: 0 },
@@ -125,18 +114,21 @@ var LogLevels = Object.create(null, {
  */
 function LogManager(application, options)
 {
-    var parsed = extend({
+    let parsed = extend({
         filename: 'application.log',
         encoding: 'utf8',
     }, options);
 
+    // Check that we have a valid log filename
     if (typeof parsed.filename !== 'string' || !parsed.filename.length)
     {
         throw new Error('Invalid log filename: ' + parsed.filename);
     }
 
-    // Check that we have a valid log filename
-    if (!sanitize(parsed.filename).length)
+    // Sanitize the filename
+    parsed.filename = sanitize(parsed.filename);
+
+    if (!parsed.filename.length)
     {
         throw new Error('Invalid log filename: ' + parsed.filename);
     }
@@ -174,17 +166,19 @@ LogManager.prototype._write = function _write(text)
  */
 function Logger(logManager, options)
 {
-    var parsed = extend({
+    let parsed = extend({
         category: null,
         css: 'color:#000',
         logLevel: RELEASE ? LogLevels.INFO : LogLevels.DEBUG,
     }, options);
 
     if (typeof parsed.category !== 'string' || !parsed.category.length)
+    {
         throw new Error('Invalid log category: ' + parsed.category);
+    }
 
     // Initialize properties
-    var _logLevel = parsed.logLevel;
+    let _logLevel = parsed.logLevel;
 
     Object.defineProperties(this, {
 
