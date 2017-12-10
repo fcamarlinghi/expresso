@@ -10,7 +10,7 @@
     "path-is-absolute": "latest",
     "ractive": "latest",
     "ractive-events-tap": "latest",
-    "sanitize-filename ": "latest"
+    "sanitize-filename": "latest"
   },
   "devDependencies": {
     "webpack": "latest",
