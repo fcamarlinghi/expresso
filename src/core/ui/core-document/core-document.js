@@ -278,7 +278,7 @@ var component = CoreBase.extend({
         }
 
         // We're interested in all layer sets
-        application.photoshop.getDocumentInfo(this.get('documentId'), {
+        return application.photoshop.getDocumentInfo(this.get('documentId'), {
 
             compInfo: false,
             imageInfo: false,
@@ -295,7 +295,7 @@ var component = CoreBase.extend({
             var layers = [{ id: -1, index: -1, name: 'None' }, { name: '---' }];
             parseLayers(document.layers, layers, 1);
             this.merge('layers', layers, { compare: 'id' });
-
+            return this.get('layers');
         });
     },
 
