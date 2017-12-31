@@ -11,7 +11,7 @@ const config = Object.freeze({
         'exporter': {
             source: 'build/exporter',
             products: ['photoshop'],
-            families: ['CC2015'],
+            families: 'CC2015',
             bundle: {
                 id: 'com.expresso.exporter',
             },

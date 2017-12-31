@@ -105,7 +105,7 @@ const run = function (mode)
         // Generate ZXP file if needed
         if (mode === 'release')
         {
-            return packager.release(false);
+            return packager.pack(false);
         }
     });
 };
