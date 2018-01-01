@@ -1,9 +1,8 @@
 ﻿
-var CoreField = require('../core-field/core-field.js');
+import CoreField from '../core-field/core-field.js';
+import './core-button.less';
 
-require('./core-button.less');
-
-var component = CoreField.extend({
+export default CoreField.extend({
 
     template: require('./core-button.html'),
 
@@ -63,5 +62,3 @@ var component = CoreField.extend({
     },
 
 });
-
-module.exports = component;

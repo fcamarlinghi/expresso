@@ -1,5 +1,5 @@
 ﻿<div class="core-field core-combobox {{css}}" style="{{style}}" tabindex="{{tabindex}}" role="combobox" data-disabled="{{disabled}}">
-    <div class="core-layout horizontal center core-button-base" data-active="{{open}}" decorator="core-tooltip" tooltip="{{tooltip}}" on-tap="openMenu">
+    <div class="core-layout horizontal center core-button-base" data-active="{{open}}" as-core-tooltip="tooltip" on-tap="openMenu">
         <input type="text" class="core-textbox flex" disabled="{{disabled}}" on-input="{{#open}}searchInput{{/}}" on-focus="openMenu" />
         <core-icon icon="arrow-down6" disabled="{{disabled}}"></core-icon>
     </div>

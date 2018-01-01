@@ -1,9 +1,8 @@
 ﻿
-var CoreBase = require('../core-base/core-base.js');
+import CoreBase from '../core-base/core-base.js';
+import './core-field.less';
 
-require('./core-field.less');
-
-var component = CoreBase.extend({
+export default CoreBase.extend({
 
     data: {
 
@@ -81,5 +80,3 @@ var component = CoreBase.extend({
     },
 
 });
-
-module.exports = component;

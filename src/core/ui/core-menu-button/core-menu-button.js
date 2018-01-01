@@ -1,9 +1,8 @@
 ﻿
-var CoreIconButton = require('../core-icon-button/core-icon-button.js');
+import CoreIconButton from '../core-icon-button/core-icon-button.js';
+import './core-menu-button.less';
 
-require('./core-menu-button.less');
-
-var component = CoreIconButton.extend({
+export default CoreIconButton.extend({
 
     template: require('./core-menu-button.html'),
 
@@ -103,5 +102,3 @@ var component = CoreIconButton.extend({
     },
 
 });
-
-module.exports = component;

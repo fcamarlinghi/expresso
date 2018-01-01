@@ -1,14 +1,13 @@
 ﻿
-const CoreField = require('../core-field/core-field.js'),
-      application = require('../../framework/Application.js'),
-      host = require('./host.jsx');
-
-require('./core-colorbox.less');
+import CoreField from '../core-field/core-field.js';
+import application from '../../framework/Application.js';
+import host from './host.jsx';
+import './core-colorbox.less';
 
 /**
  * A custom color field that looks more like the Photoshop one.
  */
-const component = CoreField.extend({
+export default CoreField.extend({
 
     template: require('./core-colorbox.html'),
 
@@ -90,5 +89,3 @@ const component = CoreField.extend({
     },
 
 });
-
-module.exports = component;

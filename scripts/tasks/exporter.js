@@ -62,7 +62,7 @@ const run = function (mode)
             });
 
             // Run the compiler
-            let compiler = webpack(webpackConfig),
+            const compiler = webpack(webpackConfig),
                 callback = (err, stats) =>
                 {
                     if (err)
@@ -80,7 +80,23 @@ const run = function (mode)
                     }
                     else
                     {
-                        process.stdout.write(stats.toString('minimal'));
+                        if (stats.hasErrors() || stats.hasWarnings())
+                        {
+                            const info = stats.toJson();
+                            if (stats.hasErrors())
+                            {
+                                console.error(info.errors);
+                            }
+                            if (stats.hasWarnings())
+                            {
+                                console.warn(info.warnings);
+                            }
+                        }
+
+                        process.stdout.write(stats.toString({
+                            chunks: false,
+                            colors: true,
+                        }));
                         process.stdout.write('\n\n');
 
                         if (mode === 'release')
@@ -107,7 +123,8 @@ const run = function (mode)
         {
             return packager.pack(false);
         }
-    });
+    })
+    .catch(err => { throw err; });
 };
 
 module.exports = {

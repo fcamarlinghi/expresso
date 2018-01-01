@@ -1,9 +1,8 @@
 ﻿
-var CoreField = require('../core-field/core-field.js');
+import CoreField from '../core-field/core-field.js';
+import './core-checkbox.less';
 
-require('./core-checkbox.less');
-
-var component = CoreField.extend({
+export default CoreField.extend({
 
     template: require('./core-checkbox.html'),
 
@@ -109,6 +108,3 @@ var component = CoreField.extend({
     },
 
 });
-
-
-module.exports = component;

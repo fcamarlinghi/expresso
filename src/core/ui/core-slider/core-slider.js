@@ -1,12 +1,9 @@
 ﻿
-var CoreNumberBox = require('../core-numberbox/core-numberbox.js');
+import CoreNumberBox from '../core-numberbox/core-numberbox.js';
+import './core-slider.less';
 
-require('./core-slider.less');
-
-var component = CoreNumberBox.extend({
+export default CoreNumberBox.extend({
 
     template: require('./core-slider.html'),
 
 });
-
-module.exports = component;

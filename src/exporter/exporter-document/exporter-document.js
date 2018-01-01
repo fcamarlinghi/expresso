@@ -1,21 +1,20 @@
 ﻿
-'use strict';
+import Ractive from 'ractive';
+import nodePath from 'path';
+import fs from 'fs';
 
-var Ractive = require('ractive'),
-    application = require('core').application,
-    nodePath = require('path'),
-    fs = require('fs'),
-    Promise = require('bluebird');
+import { application } from 'core';
+import ExporterTarget from '../exporter-target/exporter-target.js';
 
 /**
  * Exporter document.
  */
-var component = Ractive.components['core-document'].extend({
+export default Ractive.components['core-document'].extend({
 
     template: require('./exporter-document.html'),
 
     components: {
-        'exporter-target': require('../exporter-target/exporter-target.js'),
+        'exporter-target': ExporterTarget,
     },
 
     data: function ()
@@ -436,5 +435,3 @@ var component = Ractive.components['core-document'].extend({
     },
 
 });
-
-module.exports = component;

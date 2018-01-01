@@ -1,9 +1,6 @@
 ﻿
-'use strict';
-
-var Promise = require('bluebird'),
-    CoreBase = require('../core-base/core-base.js'),
-    application = require('../../framework/Application.js');
+import CoreBase from '../core-base/core-base.js';
+import application from '../../framework/Application.js';
 
 function parseLayers(inlayers, outlayers, padding)
 {
@@ -30,7 +27,7 @@ function parseLayers(inlayers, outlayers, padding)
  * Base class for Expresso documents, which wrap Photoshop documents
  * adding all the functionality we need.
  */
-var component = CoreBase.extend({
+export default CoreBase.extend({
 
     data: function ()
     {
@@ -294,11 +291,9 @@ var component = CoreBase.extend({
         {
             var layers = [{ id: -1, index: -1, name: 'None' }, { name: '---' }];
             parseLayers(document.layers, layers, 1);
-            this.merge('layers', layers, { compare: 'id' });
+            this.set('layers', layers, { compare: 'id', shuffle: true });
             return this.get('layers');
         });
     },
 
 });
-
-module.exports = component;

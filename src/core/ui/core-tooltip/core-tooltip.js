@@ -1,5 +1,5 @@
 ﻿
-require('./core-tooltip.less');
+import './core-tooltip.less';
 
 /** HTML element. */
 let tip = document.createElement('div');
@@ -7,14 +7,11 @@ tip.setAttribute('class', 'core-tooltip');
 tip.setAttribute('role', 'tooltip');
 document.body.appendChild(tip);
 
-const decorator = function (node, content)
-{
-    /** Gets the tooltip text for this node. */
-    function getTooltipText()
-    {
-        return node.tooltip || node.getAttribute('tooltip') || content;
-    };
+/** Tooltip show timeout (in ms). */
+export const timeout = 500;
 
+export default function (node, content)
+{
     /** Id of the last tooltip timeout. @private */
     let lastTimeoutId = null;
 
@@ -34,7 +31,7 @@ const decorator = function (node, content)
         // Start with a single line tooltip
         tip.style.display = 'block';
         tip.style.whiteSpace = 'nowrap';
-        tip.innerText = getTooltipText();
+        tip.innerText = content;
 
         // Position the tooltip
         let targetBounds = node.getBoundingClientRect(),
@@ -105,8 +102,7 @@ const decorator = function (node, content)
             }
 
             // No need to show empty tooltips
-            const text = getTooltipText();
-            if (typeof text !== 'string' || text.length === 0)
+            if (typeof content !== 'string' || content.length === 0)
             {
                 return;
             }
@@ -114,10 +110,10 @@ const decorator = function (node, content)
             // Set tooltip timeout
             targetMousePos.x = event.pageX;
             targetMousePos.y = event.pageY;
-            lastTimeoutId = setTimeout(show, decorator.timeout);
+            lastTimeoutId = setTimeout(show, timeout);
 
             // Register mouse movement while waiting to show the tooltip
-            if (decorator.timeout > 100)
+            if (timeout > 100)
             {
                 node.addEventListener('mousemove', handlers.mouseMoveHandler);
             }
@@ -180,8 +176,3 @@ const decorator = function (node, content)
         }
     };
 };
-
-/** Tooltip show timeout (in ms). */
-decorator.timeout = 500;
-
-module.exports = decorator;

@@ -1,10 +1,11 @@
 ﻿
-const CoreField = require('../core-field/core-field.js'),
-      application = require('../../framework/Application.js');
+import CoreField from '../core-field/core-field.js';
+import application from '../../framework/Application.js';
+import './core-dropdown.less';
 
-require('./core-dropdown.less');
+export const separator = '---';
 
-const component = CoreField.extend({
+export default CoreField.extend({
 
     template: require('./core-dropdown.html'),
 
@@ -192,7 +193,7 @@ const component = CoreField.extend({
 
             // Filter out separators
             // WARNING: non-strict comparison is needed
-            if (option[labelkey] !== component.separator && option[valuekey] == value)
+            if (option[labelkey] !== separator && option[valuekey] == value)
             {
                 index = i;
                 break;
@@ -313,7 +314,3 @@ const component = CoreField.extend({
     },
 
 });
-
-component.separator = '---';
-
-module.exports = component;

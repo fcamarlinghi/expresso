@@ -1,14 +1,12 @@
 ﻿
-'use strict';
-
-var extend = require('extend'),
-    path = require('path'),
-    Ractive = require('ractive');
+import extend from 'extend';
+import path from 'path';
+import Ractive from 'ractive';
 
 /**
  * Manages settings.
  */
-function Settings(application, options)
+export default function Settings(application, options)
 {
     var parsed = extend({
         filename: 'settings.json',
@@ -177,5 +175,3 @@ Settings.prototype.save = function save()
 
     return result;
 };
-
-module.exports = Settings;

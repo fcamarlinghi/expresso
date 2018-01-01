@@ -1,13 +1,9 @@
 ﻿
-'use strict';
+import Ractive from 'ractive';
+import application from '../../framework/Application.js';
+import './core-panel.less';
 
-var Ractive = require('ractive'),
-    Promise = require('bluebird'),
-    application = require('../../framework/Application.js');
-
-require('./core-panel.less');
-
-var component = Ractive.extend({
+export default Ractive.components['core-panel'] = Ractive.extend({
 
     // Append to document body by default
     el: document.body,
@@ -215,7 +211,7 @@ var component = Ractive.extend({
             if (!newDocument.fragment.rendered)
             {
                 var div = window.document.createElement('div');
-                this.nodes.documents.appendChild(div);
+                this.find('#documents').appendChild(div);
                 newDocument.render(div);
             }
 
@@ -288,5 +284,3 @@ var component = Ractive.extend({
     },
 
 });
-
-module.exports = component;

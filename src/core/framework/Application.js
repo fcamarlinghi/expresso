@@ -5,13 +5,13 @@ const LogManager = require('./Log.js').LogManager,
       Theme = require('./Theme.js'),
       CEP = require('./CEP'),
       FileSystem = require('./FileSystem.js'),
-      Settings = require('./Settings.js'),
       Photoshop = require('../photoshop/Photoshop.js'),
-      ImageExporter = require('../exporter/ImageExporter.js'),
+      ImageExporter = require('../exporter/ImageExporter.js');
 
-      Promise = require('bluebird'),
-      path = require('path'),
-      sanitize = require('sanitize-filename');
+import Settings from './Settings.js';
+
+import path from 'path';
+import sanitize from 'sanitize-filename';
 
 /** Gets log directory path. */
 function getLogDirectory(info)

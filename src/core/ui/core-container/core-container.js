@@ -1,9 +1,8 @@
 ﻿
-var CoreBase = require('../core-base/core-base.js');
+import CoreBase from '../core-base/core-base.js';
+import './core-container.less';
 
-require('./core-container.less');
-
-var component = CoreBase.extend({
+export default CoreBase.extend({
 
     template: require('./core-container.html'),
 
@@ -19,5 +18,3 @@ var component = CoreBase.extend({
     },
 
 });
-
-module.exports = component;

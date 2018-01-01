@@ -10,7 +10,7 @@
     <core-icon-button icon="disk" tooltip="Export single target" on-tap="exportTarget"></core-icon-button>
 </core-container>
 
-<div class="core-container exporter-target target-details" decorator="core-visible:{{expanded}}">
+<div class="core-container exporter-target target-details" as-core-visible="expanded">
     <div class="core-container">
         {{#if channelsLocked === true}}
         <div class="core-layout horizontal center">

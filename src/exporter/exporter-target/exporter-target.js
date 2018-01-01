@@ -1,22 +1,19 @@
 ﻿
-'use strict';
-
-var Ractive = require('ractive'),
-    Promise = require('bluebird'),
-    application = require('core').application;
-
-require('./exporter-target.less');
+import Ractive from 'ractive';
+import { application } from 'core';
+import CoreBase from 'core/ui/core-base/core-base.js';
+import './exporter-target.less';
 
 /** Image scalings supported by the exporter. */
-var targetScalings = [{ value: 2, label: '200%' }, { value: 1, label: '100%' }, { value: 0.5, label: '50%' }, { value: 0.25, label: '25%' }, { value: 0.125, label: '12.5%' }],
+const targetScalings = [{ value: 2, label: '200%' }, { value: 1, label: '100%' }, { value: 0.5, label: '50%' }, { value: 0.25, label: '25%' }, { value: 0.125, label: '12.5%' }];
 
-    /** Image formats supported by the exporter. */
-    targetFormats = [{ value: 'tga', label: 'TGA' }, { value: 'png', label: 'PNG' }, { value: 'jpg', label: 'JPG' }, { value: 'tiff', label: 'TIFF' }, { value: 'psd', label: 'PSD' }],
+/** Image formats supported by the exporter. */
+const targetFormats = [{ value: 'tga', label: 'TGA' }, { value: 'png', label: 'PNG' }, { value: 'jpg', label: 'JPG' }, { value: 'tiff', label: 'TIFF' }, { value: 'psd', label: 'PSD' }];
 
-    /** Image channels supported by the exporter. */
-    targetChannels = ['Red', 'Green', 'Blue', 'Alpha'];
+/** Image channels supported by the exporter. */
+const targetChannels = ['Red', 'Green', 'Blue', 'Alpha'];
 
-var component = Ractive.components['core-base'].extend({
+export default CoreBase.extend({
 
     template: require('./exporter-target.html'),
 
@@ -158,5 +155,3 @@ var component = Ractive.components['core-base'].extend({
     },
 
 });
-
-module.exports = component;

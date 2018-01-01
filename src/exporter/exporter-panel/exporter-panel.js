@@ -1,16 +1,13 @@
 ﻿
-'use strict';
-
-const Ractive = require('ractive'),
-      application = require('core').application,
-      ExporterDocument = require('../exporter-document/exporter-document.js');
-
-require('./exporter-panel.less');
+import Ractive from 'ractive';
+import { application } from 'core';
+import ExporterDocument from '../exporter-document/exporter-document.js';
+import './exporter-panel.less';
 
 /**
  * The Expresso Exporter panel.
  */
-const component = Ractive.components['core-panel'].extend({
+export default Ractive.components['core-panel'].extend({
 
     partials: {
 
@@ -141,5 +138,3 @@ const component = Ractive.components['core-panel'].extend({
     },
 
 });
-
-module.exports = component;

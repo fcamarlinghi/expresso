@@ -1,0 +1,6 @@
+{
+    "presets": [
+        ["env", { "targets": { "chrome": "41" } }]
+    ],
+    "plugins": ["transform-strict-mode"]
+}

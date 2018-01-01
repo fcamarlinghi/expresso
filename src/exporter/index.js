@@ -1,6 +1,4 @@
 ﻿
-'use strict';
-
 /**
  * 
  * Exporter Panel entry point.
@@ -8,8 +6,8 @@
  */
 
 // Create the Exporter application and panel
-var Core = require('core'),
-    ExporterPanel = require('./exporter-panel/exporter-panel.js');
+import * as Core from 'core';
+import ExporterPanel from './exporter-panel/exporter-panel.js';
 
 Core.application.create('Exporter', 'Expresso', VERSION).then(function (application)
 {
@@ -19,4 +17,4 @@ Core.application.create('Exporter', 'Expresso', VERSION).then(function (applicat
 });
 
 // Re-export the "core" module, so we can access its API
-module.exports = Core;
+export default Core;

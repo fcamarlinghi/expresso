@@ -1,7 +1,7 @@
 ﻿
-var Ractive = require('ractive');
+import Ractive from 'ractive';
 
-var component = Ractive.extend({
+export default Ractive.extend({
         
     lazy: true,
 
@@ -28,5 +28,3 @@ var component = Ractive.extend({
     },
 
 });
-
-module.exports = component;

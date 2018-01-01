@@ -1,10 +1,10 @@
 ﻿
-var CoreField = require('../core-field/core-field.js'),
-    realms = ['integer', 'real'];
+import CoreField from '../core-field/core-field.js';
+import './core-numberbox.less';
 
-require('./core-numberbox.less');
+export const realms = ['integer', 'real'];
 
-var component = CoreField.extend({
+export default CoreField.extend({
 
     template: require('./core-numberbox.html'),
 
@@ -102,5 +102,3 @@ var component = CoreField.extend({
     },
 
 });
-
-module.exports = component;

@@ -1,9 +1,8 @@
 ﻿
-var CoreBase = require('../core-base/core-base.js');
+import CoreBase from '../core-base/core-base.js';
+import './core-menu-item.less';
 
-require('./core-menu-item.less');
-
-var component = CoreBase.extend({
+export default CoreBase.extend({
 
     template: require('./core-menu-item.html'),
 
@@ -40,5 +39,3 @@ var component = CoreBase.extend({
     },
 
 });
-
-module.exports = component;

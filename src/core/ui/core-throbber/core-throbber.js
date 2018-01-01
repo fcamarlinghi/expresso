@@ -1,12 +1,9 @@
 ﻿
-'use strict';
+import CoreBase from '../../ui/core-base/core-base.js';
+import CoreVisible from '../../ui/core-visible/core-visible.js';
+import './core-throbber.less';
 
-var CoreBase = require('../../ui/core-base/core-base.js'),
-    CoreVisible = require('../../ui/core-visible/core-visible.js');
-
-require('./core-throbber.less');
-
-var component = CoreBase.extend({
+export default CoreBase.extend({
 
     template: require('./core-throbber.html'),
 
@@ -64,9 +61,9 @@ var component = CoreBase.extend({
     onrender: function ()
     {
         this._super();
-        this.imageElement = this.nodes.image;
-        this.spinnerElement = this.nodes.spinner;
-        this.messageElement = this.nodes.message;
+        this.imageElement = this.find('#image');
+        this.spinnerElement = this.find('#spinner');
+        this.messageElement = this.find('#message');
     },
 
     onunrender: function ()
@@ -102,5 +99,3 @@ var component = CoreBase.extend({
     },
 
 });
-
-module.exports = component;

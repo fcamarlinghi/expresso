@@ -1,9 +1,8 @@
 ﻿
-var CoreDropdown = require('../core-dropdown/core-dropdown.js');
+import CoreDropdown from '../core-dropdown/core-dropdown.js';
+import './core-combobox.less';
 
-require('./core-combobox.less');
-
-var component = CoreDropdown.extend({
+export default CoreDropdown.extend({
 
     template: require('./core-combobox.html'),
 
@@ -190,5 +189,3 @@ var component = CoreDropdown.extend({
     },
 
 });
-
-module.exports = component;

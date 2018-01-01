@@ -1,9 +1,8 @@
 ﻿
-var CoreBase = require('../core-base/core-base.js');
+import CoreBase from '../core-base/core-base.js';
+import './core-toolbar.less';
 
-require('./core-toolbar.less');
-
-var component = CoreBase.extend({
+export default CoreBase.extend({
 
     template: require('./core-toolbar.html'),
 
@@ -39,5 +38,3 @@ var component = CoreBase.extend({
     },
 
 });
-
-module.exports = component;

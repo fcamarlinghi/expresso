@@ -21,18 +21,17 @@ const getConfig = function (mode)
 
         resolve: {
             alias: {
-                'core': path.resolve('src/core/index.js'),
+                'core': path.resolve('src/core'),
             },
         },
 
         module: {
-            loaders: [
-                { test: /\.js$/, loader: 'babel?presets[]=es2015', exclude: /(node_modules)/ },
-                { test: /\.html$/, loader: path.resolve(__dirname, 'webpack.loader.ractive.js') },
-                { test: /\.json$/, loader: 'json' },
-                { test: /\.jsx$/, loader: path.resolve(__dirname, 'webpack.loader.jsx.js') },
-                { test: /\.fx$/, loader: 'raw' },
-                { test: /\.less$/, loader: ExtractTextPlugin.extract('css-loader?minimize!less-loader') }
+            rules: [
+                { test: /\.js$/, use: 'babel-loader', exclude: /(node_modules)/ },
+                { test: /\.html$/, use: path.resolve(__dirname, 'webpack.loader.ractive.js') },
+                { test: /\.jsx$/, use: path.resolve(__dirname, 'webpack.loader.jsx.js') },
+                { test: /\.fx$/, use: 'raw-loader' },
+                { test: /\.less$/, use: ExtractTextPlugin.extract(['css-loader?minimize', 'less-loader']) }
             ],
         },
 
@@ -40,6 +39,9 @@ const getConfig = function (mode)
             // NOTE: order matters! Plugin definitions might be overridden later on during the build process
             new webpack.DefinePlugin({}),
             new ExtractTextPlugin('[name]/[name].css'),
+            new webpack.ProvidePlugin({
+                Promise: 'bluebird'
+            }),
         ],
 
     };
@@ -50,10 +52,10 @@ const getConfig = function (mode)
         // Debug
         extend(true, config, {
             watch: true,
-            debug: true,
-            devtool: '#source-map',
+            devtool: 'source-map',
         });
 
+        config.plugins.push(new webpack.LoaderOptionsPlugin({debug: true})); // REVIEW: useful?
         config.plugins[0].definitions.RELEASE = false;
     }
     else

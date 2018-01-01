@@ -1,7 +1,7 @@
 ﻿
-require('./core-visible.less');
+import './core-visible.less';
 
-var decorator = function (node, content)
+export default function (node, content)
 {
     node.classList.toggle('core-hidden', !Boolean.toBoolean(content));
 
@@ -12,5 +12,3 @@ var decorator = function (node, content)
         }
     }
 };
-
-module.exports = decorator;

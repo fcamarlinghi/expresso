@@ -18,5 +18,9 @@ else
     // And run it with the specified mode
     task.run(mode)
         .then(process.exit)
-        .catch(process.exit);
+        .catch(err =>
+        {
+            console.error(err.toString());
+            process.exit(1);
+        });
 }
