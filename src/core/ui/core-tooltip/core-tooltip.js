@@ -34,23 +34,26 @@ export default function (node, content)
         tip.innerText = content;
 
         // Position the tooltip
-        let targetBounds = node.getBoundingClientRect(),
+        const targetBounds = node.getBoundingClientRect(),
             tipBounds = tip.getBoundingClientRect();
 
-        if (tipBounds.width > window.innerWidth / 2)
+        let tipHeight = tipBounds.height,
+            tipWidth = tipBounds.width;
+
+        if (tipWidth > window.innerWidth / 2)
         {
             // Break to multiple lines if too long
             tip.style.whiteSpace = 'normal';
-            tipBounds.width = window.innerWidth / 2;
+            tipWidth = window.innerWidth / 2;
         }
 
         let x = targetMousePos.x + window.scrollX + 15,
             y = targetBounds.top + targetBounds.height + window.scrollY;
 
         // Check if outside viewport
-        if (x + tipBounds.width >= window.innerWidth)
+        if (x + tipWidth >= window.innerWidth)
         {
-            const x2 = targetMousePos.x + window.scrollX - tipBounds.width - 5;
+            const x2 = targetMousePos.x + window.scrollX - tipWidth - 5;
 
             if (x2 > 0)
             {
@@ -58,9 +61,9 @@ export default function (node, content)
             }
         }
 
-        if (y + tipBounds.height >= window.innerHeight)
+        if (y + tipHeight >= window.innerHeight)
         {
-            y = targetBounds.top + window.scrollY - tipBounds.height;
+            y = targetBounds.top + window.scrollY - tipHeight;
         }
 
         // Update position
