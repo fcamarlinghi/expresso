@@ -22,6 +22,7 @@ const getConfig = function (mode)
         resolve: {
             alias: {
                 'core': path.resolve('src/core'),
+                'ractive': 'ractive/runtime.js',
             },
         },
 
@@ -40,7 +41,7 @@ const getConfig = function (mode)
             new webpack.DefinePlugin({}),
             new ExtractTextPlugin('[name]/[name].css'),
             new webpack.ProvidePlugin({
-                Promise: 'bluebird'
+                Promise: 'bluebird',
             }),
         ],
 
