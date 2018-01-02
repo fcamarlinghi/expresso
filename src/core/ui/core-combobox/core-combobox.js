@@ -1,5 +1,5 @@
 ﻿
-import CoreDropdown from '../core-dropdown/core-dropdown.js';
+import CoreDropdown, { separator } from '../core-dropdown/core-dropdown.js';
 import './core-combobox.less';
 
 export default CoreDropdown.extend({
@@ -94,14 +94,14 @@ export default CoreDropdown.extend({
         }
 
         // Evaluate query
-        var query = this.searchbox.value.trim(),
+        const query = this.searchbox.value.trim(),
             visiblekey = this.get('visiblekey'),
             options = this.get('options');
 
         if (!searching || query.length === 0)
         {
             // Show everything
-            for (var i = 0; i < options.length; i++)
+            for (let i = 0; i < options.length; i++)
             {
                 options[i][visiblekey] = true;
             }
@@ -109,15 +109,16 @@ export default CoreDropdown.extend({
         else
         {
             // Filter out the results
-            var labelkey = this.get('labelkey'),
+            const labelkey = this.get('labelkey'),
                 paddingkey = this.get('paddingkey'),
-                regex = new RegExp(query, 'gi'),
-                parents = [];
+                regex = new RegExp(query, 'gi');
 
-            for (var i = 0; i < options.length; i++)
+            let parents = [];
+
+            for (let i = 0; i < options.length; i++)
             {
-                var option = options[i];
-                option[visiblekey] = (option[labelkey] !== component.separator) && (option[labelkey].search(regex) > -1);
+                let option = options[i];
+                option[visiblekey] = (option[labelkey] !== separator) && (option[labelkey].search(regex) > -1);
 
                 // Remember the parents of this option so they get shown as-well
                 if (parents.length === 0 || parents[parents.length - 1][paddingkey] < option[paddingkey])

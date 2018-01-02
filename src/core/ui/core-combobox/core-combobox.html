@@ -1,26 +1,26 @@
 ﻿<div class="core-field core-combobox {{css}}" style="{{style}}" tabindex="{{tabindex}}" role="combobox" data-disabled="{{disabled}}">
     <div class="core-layout horizontal center core-button-base" data-active="{{open}}" as-core-tooltip="tooltip" on-tap="openMenu">
-        <input type="text" class="core-textbox flex" disabled="{{disabled}}" on-input="{{#open}}searchInput{{/}}" on-focus="openMenu" />
+        <input type="text" class="core-textbox flex" disabled="{{disabled}}" {{#if open}}on-input="searchInput"{{/if}} on-focus="openMenu" />
         <core-icon icon="arrow-down6" disabled="{{disabled}}"></core-icon>
     </div>
     <core-menu visible="{{open}}">
-        {{#options}}
-            {{# 
-                { 
-                    optionlabel: this[labelkey],
-                    optionvalue: this[valuekey],
-                    optionvisible: this[visiblekey],
-                    optionpadding: this[paddingkey],
-                    optionpadding_style: this[paddingkey] * this[paddingkey] * 2,
-                    selectedvalue: ~/value
-                } 
+        {{#each options as option}}
+            {{#with
+                option[labelkey] as label,
+                option[valuekey] as value,
+                option[visiblekey] as visible,
+                (option[paddingkey] * option[paddingkey] * 2) as padding,
+                (~/value === option[valuekey]) as selected
             }}
-                {{#if optionlabel === '---' }}
-                <core-menu-separator visible="{{optionvisible}}"></core-menu-separator>
+                {{#if label === '---' }}
+                    <core-menu-separator visible="{{visible}}"></core-menu-separator>
                 {{else}}
-                <core-menu-item value="{{optionvalue}}" selected="{{optionvalue === selectedvalue}}" visible="{{optionvisible}}" on-tap="select" style="padding-left:{{optionpadding_style}}px">{{#if optionpadding > 1}}<core-icon icon="arrow2"></core-icon>{{/if}}{{optionlabel}}</core-menu-item>
+                    <core-menu-item value="{{value}}" selected="{{selected}}" visible="{{visible}}" on-tap="select" style="padding-left:{{padding}}px">
+                        {{#if padding > 2}}<core-icon icon="arrow2"></core-icon>{{/if}}
+                        {{label}}
+                    </core-menu-item>
                 {{/if}}
-            {{/}}
-        {{/options}}
+            {{/with}}
+        {{/each}}
     </core-menu>
 </div>
