@@ -1,5 +1,4 @@
 ﻿
-import Ractive from 'ractive';
 import { application } from 'core';
 import CoreBase from 'core/ui/core-base/core-base.js';
 import './exporter-target.less';
@@ -13,6 +12,9 @@ const targetFormats = [{ value: 'tga', label: 'TGA' }, { value: 'png', label: 'P
 /** Image channels supported by the exporter. */
 const targetChannels = ['Red', 'Green', 'Blue', 'Alpha'];
 
+/**
+ * A single export target.
+ */
 export default CoreBase.extend({
 
     template: require('./exporter-target.html'),
@@ -34,7 +36,7 @@ export default CoreBase.extend({
             targetChannels: targetChannels,
 
             /**
-             * Map data.
+             * Target data.
              * @type Object
              * @default null
              */
@@ -53,105 +55,82 @@ export default CoreBase.extend({
 
     },
 
-    /**
-     * Called on component initialization.
-     * @private
-     */
-    oninit: function ()
-    {
-        this._super();
-
-        this.on('selectLocalPath', this.selectLocalPath);
-        this.on('exportTarget', this.exportTarget);
-        this.on('deleteTarget', this.deleteTarget);
-    },
-
-    /**
-     * Called when component is destroyed.
-     * @private
-     */
-    onteardown: function ()
-    {
-        this.off('selectLocalPath');
-        this.off('exportTarget');
-        this.off('deleteTarget');
-
-        this._super();
-    },
-
-    /**
-     * Exports a single target.
-     * @private
-     */
-    exportTarget: function ()
-    {
-        return this.parent.exportTarget(this.get('index'));
-    },
-
-    /**
-     * Selects local export path.
-     * @private
-     */
-    selectLocalPath: function ()
-    {
-        if (this.get('model.pathLocked'))
+    on: {
+        
+        /**
+         * Exports a single target.
+         * @private
+         */
+        exportTarget: function ()
         {
-            return Promise.resolve();
-        }
-        else
+            return this.parent.exportTarget(this.get('index'));
+        },
+
+        /**
+         * Selects local export path.
+         * @private
+         */
+        selectLocalPath: function ()
         {
-            return Promise.bind(this).then(function ()
+            if (this.get('model.pathLocked'))
             {
-                // Get document path
-                return application.photoshop.getDocumentPath();
-
-            }).then(function (documentPath)
+                return Promise.resolve();
+            }
+            else
             {
-                // Get open folder parameters
-                var initialPath = this.get('model.path'),
-                    parsedDocumentPath = documentPath !== null ? require('path').dirname(documentPath) : null;
-
-                return {
-                    title: 'Select export folder...',
-                    initialPath: !String.isEmpty(initialPath) ? initialPath : parsedDocumentPath,
-                    basePath: parsedDocumentPath,
-                    convertToRelative: application.settings.get('useRelativePaths'),
-                };
-
-            }).then(function (params)
-            {
-                // Let user select the new export path
-                return application.fs.showOpenFolderDialog(params.title, params.initialPath, params.basePath, params.convertToRelative);
-
-            }).then(function (exportPath)
-            {
-                if (!String.isEmpty(exportPath))
+                return Promise.bind(this).then(function ()
                 {
-                    this.set('model.path', exportPath);
-                }
+                    // Get document path
+                    return application.photoshop.getDocumentPath();
 
-            }).catch(function (error)
-            {
-                const msg = `Error while selecting local export path. ${error.message}`;
-
-                if (RELEASE)
+                }).then(function (documentPath)
                 {
-                    application.cep.alert(msg);
-                }
+                    // Get open folder parameters
+                    var initialPath = this.get('model.path'),
+                        parsedDocumentPath = documentPath !== null ? require('path').dirname(documentPath) : null;
 
-                application.logger.error(msg);
+                    return {
+                        title: 'Select export folder...',
+                        initialPath: !String.isEmpty(initialPath) ? initialPath : parsedDocumentPath,
+                        basePath: parsedDocumentPath,
+                        convertToRelative: application.settings.get('useRelativePaths'),
+                    };
 
-            });
-        }
+                }).then(function (params)
+                {
+                    // Let user select the new export path
+                    return application.fs.showOpenFolderDialog(params.title, params.initialPath, params.basePath, params.convertToRelative);
+
+                }).then(function (exportPath)
+                {
+                    if (!String.isEmpty(exportPath))
+                    {
+                        this.set('model.path', exportPath);
+                    }
+
+                }).catch(function (error)
+                {
+                    const msg = `Error while selecting local export path. ${error.message}`;
+
+                    if (RELEASE)
+                    {
+                        application.cep.alert(msg);
+                    }
+
+                    application.logger.error(msg);
+
+                });
+            }
+        },
+
+        /**
+         * Deletes a target.
+         * @private
+         */
+        deleteTarget: function ()
+        {
+            this.parent.splice('targets', this.get('index'), 1);
+        },
+
     },
-
-    /**
-     * Deletes a target.
-     * @private
-     */
-    deleteTarget: function ()
-    {
-        this.parent.get('targets').splice(this.get('index'), 1);
-    },
-
 });

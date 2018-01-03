@@ -12,7 +12,7 @@ import ExporterPanel from './exporter-panel/exporter-panel.js';
 Core.application.create('Exporter', 'Expresso', VERSION).then(function (application)
 {
     // Create the UI
-    var ui = new ExporterPanel();
+    const ui = new ExporterPanel();
     application.extend({ ui: { get: function () { return ui; } } });
 });
 

@@ -1,34 +1,29 @@
 ﻿
-'use strict';
-
-var Promise = require('bluebird');
+const noop = function () {};
 
 /**
  * Barebone Deferred implementation.
- *
- * NOTE: for the moment depends on Bluebird supporting the '_progress'
- * method on Promises, which was deprecated in version 3.0.
  */
-function Deferred()
+export default class Deferred
 {
-    var resolve, reject;
-
-    var promise = new Promise(function ()
+    constructor()
     {
-        resolve = arguments[0];
-        reject = arguments[1];
-    });
+        let _progressed = noop;
 
-    this.resolve = resolve;
-    this.reject = reject;
-    this.promise = promise;
-    this.notify = function (value)
-    {
-        promise._progress(value);
-    };
-};
-
-Deferred.prototype = Object.create(null);
-Deferred.constructor = Deferred;
-
-module.exports = Deferred;
+        this.resolve = null;
+        this.reject = null;
+        this.promise = new Promise((resolve, reject) =>
+        {
+            this.resolve = resolve;
+            this.reject = reject;
+        });
+        this.progressed = (func) => { _progressed = (typeof func === 'function') ? func : noop; return this.promise; };
+        this.notify = (value) =>
+        {
+            if (_progressed)
+            {
+                _progressed(value);
+            }
+        };
+    }
+}

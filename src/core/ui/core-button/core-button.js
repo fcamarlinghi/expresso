@@ -34,31 +34,23 @@ export default CoreField.extend({
 
     },
 
-    oninit: function ()
-    {
-        this._super();
-        this.on('tap', this.tap);
+    on: {
+
+        tap: function (event)
+        {
+            if (!this.get('disabled') && this.get('toggleable'))
+            {
+                var active = !this.get('active');
+                this.set('active', active);
+                this.fire('toggle', active);
+            }
+        },
+
     },
 
-    onteardown: function ()
-    {
-        this.off('tap');
-        this._super();
-    },
-
-    getField: function ()
+    cacheFieldElement: function ()
     {
         this.field = this.find('button');
-    },
-
-    tap: function (event)
-    {
-        if (!this.get('disabled') && this.get('toggleable'))
-        {
-            var active = !this.get('active');
-            this.set('active', active);
-            this.fire('toggle', active);
-        }
     },
 
 });

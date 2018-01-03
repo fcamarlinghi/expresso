@@ -54,7 +54,9 @@ export default CoreField.extend({
     focusAction: function ()
     {
         if (this.get('disabled'))
+        {
             return;
+        }
 
         if (!this.get('pressed'))
         {
@@ -67,7 +69,9 @@ export default CoreField.extend({
     blurAction: function ()
     {
         if (this.get('disabled'))
+        {
             return;
+        }
 
         this.set('focused', false);
     },
@@ -75,7 +79,9 @@ export default CoreField.extend({
     downAction: function (e)
     {
         if (this.get('disabled'))
+        {
             return;
+        }
 
         this.set('pressed', true);
         this.set('focused', false);
@@ -84,7 +90,9 @@ export default CoreField.extend({
     clickAction: function (e)
     {
         if (this.get('disabled'))
+        {
             return;
+        }
 
         // HACK: when core-checkbox is wrapped into a <label>
         // we need to filter the location clicked by the user
@@ -102,7 +110,9 @@ export default CoreField.extend({
     upAction: function (e)
     {
         if (this.get('disabled'))
+        {
             return;
+        }
 
         this.set('pressed', false);
     },

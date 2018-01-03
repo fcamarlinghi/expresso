@@ -22,12 +22,10 @@
  * 
  */
 
-'use strict';
-
-var crypto = require('crypto');
+import { createDecipheriv, createCipheriv, pbkdf2 } from 'crypto';
 
 // Constants
-var SALT = 'Adobe Photoshop',
+const SALT = 'Adobe Photoshop',
     NUM_ITERATIONS = 1000,
     ALGORITHM = 'des-ede3-cbc',
     KEY_LENGTH = 24,
@@ -36,26 +34,30 @@ var SALT = 'Adobe Photoshop',
 /**
  * PhotoshopCrypto
  */
-function PhotoshopCrypto(derivedKey)
+class PhotoshopCrypto
 {
-    this._derivedKey = derivedKey;
+    constructor(derivedKey)
+    {
+        this._derivedKey = derivedKey;
+    }
+
+    decipher(buf)
+    {
+        const d = createDecipheriv(ALGORITHM, this._derivedKey, IV);
+        return new Buffer(d.update(buf, 'binary', 'binary') + d.final('binary'), 'binary');
+    }
+
+    cipher(buf)
+    {
+        const c = createCipheriv(ALGORITHM, this._derivedKey, IV);
+        return new Buffer(c.update(buf, 'binary', 'binary') + c.final('binary'), 'binary');
+    }
+
 }
 
-PhotoshopCrypto.prototype.decipher = function (buf)
+export function createPhotoshopCrypto(password, callback)
 {
-    var d = crypto.createDecipheriv(ALGORITHM, this._derivedKey, IV);
-    return new Buffer(d.update(buf, 'binary', 'binary') + d.final('binary'), 'binary');
-};
-
-PhotoshopCrypto.prototype.cipher = function (buf)
-{
-    var c = crypto.createCipheriv(ALGORITHM, this._derivedKey, IV);
-    return new Buffer(c.update(buf, 'binary', 'binary') + c.final('binary'), 'binary');
-};
-
-function createPhotoshopCrypto(password, callback)
-{
-    crypto.pbkdf2(password, SALT, NUM_ITERATIONS, KEY_LENGTH, function (err, derivedKey)
+    pbkdf2(password, SALT, NUM_ITERATIONS, KEY_LENGTH, 'sha1', function (err, derivedKey)
     {
         if (err)
         {
@@ -67,9 +69,3 @@ function createPhotoshopCrypto(password, callback)
         }
     });
 }
-
-module.exports = {
-
-    createPhotoshopCrypto: createPhotoshopCrypto
-
-};

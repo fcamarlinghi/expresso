@@ -4,7 +4,7 @@ import application from '../../framework/Application.js';
 
 function parseLayers(inlayers, outlayers, padding)
 {
-    for (var i = 0; i < inlayers.length; i++)
+    for (let i = 0; i < inlayers.length; i++)
     {
         if (inlayers[i].type === 'layerSection')
         {
@@ -21,7 +21,7 @@ function parseLayers(inlayers, outlayers, padding)
             }
         }
     }
-};
+}
 
 /**
  * Base class for Expresso documents, which wrap Photoshop documents
@@ -117,7 +117,9 @@ export default CoreBase.extend({
     modelUpdated: function (newValue, oldValue, keyPath)
     {
         if (!this.loaded)
+        {
             return;
+        }
 
         if (this.saveHandle !== null)
         {
@@ -134,11 +136,15 @@ export default CoreBase.extend({
      */
     load: function ()
     {
-        var jsx = require('./host/getXMPMetadata.jsx');
+        const jsx = require('./host/getXMPMetadata.jsx');
 
-        return Promise.bind(this).then(function ()
+        return Promise.try(() =>
         {
-            var params = {
+            // Do not listen to model changes while loading data
+            // (since the loading operation itself will trigger an update)
+            this.loaded = false;
+
+            const params = {
                 namespace: 'http://minifloppy.it/Expresso/1.0/',
                 prefix: 'expresso',
                 key: this.get('key'),
@@ -146,7 +152,7 @@ export default CoreBase.extend({
 
             return application.cep.evalScript(jsx, params);
 
-        }).then(function (data)
+        }).then(data =>
         {
             if (String.isEmpty(data))
             {
@@ -160,13 +166,13 @@ export default CoreBase.extend({
             // Parse data (deserialize may return a promise)
             return this.deserialize(data);
 
-        }).then(function (data)
+        }).then(data =>
         {
-            // So that we start listening to model changes
+            // Start listening to model changes
             this.loaded = true;
             this.fire('loaded', this);
 
-        }).catch(function (error)
+        }).catch(error =>
         {
             const msg = `Error while loading document data. ${error.message}`;
 
@@ -186,9 +192,9 @@ export default CoreBase.extend({
      */
     save: function ()
     {
-        var jsx = require('./host/setXMPMetadata.jsx');
+        const jsx = require('./host/setXMPMetadata.jsx');
 
-        return Promise.bind(this).then(function ()
+        return Promise.try(() =>
         {
             if (this.saveHandle !== null)
             {
@@ -196,7 +202,7 @@ export default CoreBase.extend({
                 this.saveHandle = null;
             }
 
-            var params = {
+            const params = {
                 namespace: 'http://minifloppy.it/Expresso/1.0/',
                 prefix: 'expresso',
                 key: this.get('key'),
@@ -205,12 +211,12 @@ export default CoreBase.extend({
 
             return application.cep.evalScript(jsx, params).then(function () { return params.data; });
 
-        }).then(function (data)
+        }).then(data =>
         {
             application.logger.debug('Saved XMP:', data);
             this.fire('saved', this);
 
-        }).catch(function (error)
+        }).catch(error =>
         {
             const msg = `Error while saving document data. ${error.message}`;
 
@@ -226,7 +232,8 @@ export default CoreBase.extend({
 
     /** 
      * Serializes document data (called when document is being saved).
-     * @private
+     * Should be overridden in derived classes.
+     * @protected
      */
     serialize: function ()
     {
@@ -235,7 +242,8 @@ export default CoreBase.extend({
 
     /** 
      * Deserializes document data (called when document data has been loaded).
-     * @private
+     * Should be overridden in derived classes.
+     * @protected
      */
     deserialize: function (data)
     {
@@ -287,9 +295,9 @@ export default CoreBase.extend({
             getCompLayerSettings: false,
             getDefaultLayerFX: false
 
-        }).bind(this).then(function (document)
+        }).then(document =>
         {
-            var layers = [{ id: -1, index: -1, name: 'None' }, { name: '---' }];
+            let layers = [{ id: -1, index: -1, name: 'None' }, { name: '---' }];
             parseLayers(document.layers, layers, 1);
             this.set('layers', layers, { compare: 'id', shuffle: true });
             return this.get('layers');

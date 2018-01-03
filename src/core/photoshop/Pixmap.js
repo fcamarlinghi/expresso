@@ -22,26 +22,22 @@
  * 
  */
 
-'use strict';
-
 /**
  * A raw image buffer received from Photoshop.
  */
-function Pixmap(buffer)
+export default class Pixmap
 {
-    this.format = buffer.readUInt8(0);
-    this.width = buffer.readUInt32BE(1);
-    this.height = buffer.readUInt32BE(5);
-    this.rowBytes = buffer.readUInt32BE(9);
-    this.colorMode = buffer.readUInt8(13);
-    this.channelCount = buffer.readUInt8(14);
-    this.bitsPerChannel = buffer.readUInt8(15);
-    this.pixels = buffer.slice(16, 16 + this.width * this.height * this.channelCount);
-    this.bytesPerPixel = this.bitsPerChannel / (8 * this.channelCount);
-    this.padding = this.rowBytes - (this.width * this.channelCount);
+    constructor(buffer)
+    {
+        this.format = buffer.readUInt8(0);
+        this.width = buffer.readUInt32BE(1);
+        this.height = buffer.readUInt32BE(5);
+        this.rowBytes = buffer.readUInt32BE(9);
+        this.colorMode = buffer.readUInt8(13);
+        this.channelCount = buffer.readUInt8(14);
+        this.bitsPerChannel = buffer.readUInt8(15);
+        this.pixels = buffer.slice(16, 16 + this.width * this.height * this.channelCount);
+        this.bytesPerPixel = this.bitsPerChannel / (8 * this.channelCount);
+        this.padding = this.rowBytes - (this.width * this.channelCount);
+    }
 }
-
-Pixmap.prototype = Object.create(null);
-Pixmap.constructor = Pixmap;
-
-module.exports = Pixmap;

@@ -1,8 +1,8 @@
 ﻿
-var Promise = require('bluebird'),
-    EventEmitter = require('events').EventEmitter,
-    extend = require('extend'),
-    LogLevels = require('./Log.js').LogLevels;
+var LogLevels = require('./Log.js').LogLevels;
+
+import { EventEmitter } from 'events';
+import extend from 'extend';
 
 // Utilities
 function parseMenuItemJSON(menu)
@@ -82,7 +82,7 @@ function parseMenuItemJSON(menu)
     }
 
     return xml;
-};
+}
 
 function parseMenuJSON(menu)
 {
@@ -92,7 +92,7 @@ function parseMenuJSON(menu)
     }
 
     return '<Menu>' + parseMenuItemJSON(menu.menu) + '</Menu>';
-};
+}
 
 /**
  * Utility class that wraps most CEP and CSInterface methods and adds new ones.
@@ -122,7 +122,7 @@ function CEP(application)
         this.logger.warn('Please use the "unload" event, fired by "Core.application.cep" instead of calling "registerExtensionUnloadCallback" directly.');
 
     }.bind(this);
-};
+}
 
 // Prototype
 CEP.constructor = CEP;
@@ -541,7 +541,7 @@ CEP.prototype.updateContextMenuItem = function (menuItemID, enabled, checked)
 /**
  * Registers an interest in the specified key events so they are routed
  * to the extension before being sent to the host application.
- * @param {Object} ...args Key event descriptors, @see CSInterface.prototype.registerKeyEventsInterest for details.
+ * @param {...Object} args Key event descriptors, @see CSInterface.prototype.registerKeyEventsInterest for details.
  */
 CEP.prototype.registerKeyEventsInterest = function ()
 {
@@ -554,7 +554,7 @@ CEP.prototype.registerKeyEventsInterest = function ()
         shouldUpdate = false;
 
     // Get valid events from arguments
-    for (var i = 0; i < arguments.length; i++)
+    for (let i = 0; i < arguments.length; i++)
     {
         if (typeof arguments[i] === 'object')
         {
@@ -570,7 +570,7 @@ CEP.prototype.registerKeyEventsInterest = function ()
         }
     }
 
-    for (var i = 0; i < events.length; i++)
+    for (let i = 0; i < events.length; i++)
     {
         var event = events[i],
             alreadyRegistered = false;
@@ -621,7 +621,7 @@ CEP.prototype.unregisterKeyEventsInterest = function ()
         shouldUpdate = false;
 
     // Get valid events from arguments
-    for (var i = 0; i < arguments.length; i++)
+    for (let i = 0; i < arguments.length; i++)
     {
         if (typeof arguments[i] === 'object')
         {
@@ -637,7 +637,7 @@ CEP.prototype.unregisterKeyEventsInterest = function ()
         }
     }
 
-    for (var i = 0; i < events.length; i++)
+    for (let i = 0; i < events.length; i++)
     {
         var event = events[i];
 

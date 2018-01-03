@@ -53,7 +53,7 @@ export default CoreField.extend({
         this._super();
     },
 
-    getField: function ()
+    cacheFieldElement: function ()
     {
         this.field = this.find('div');
     },

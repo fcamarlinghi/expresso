@@ -51,18 +51,18 @@ export default CoreBase.extend({
     onrender: function ()
     {
         this._super();
-        this.getField();
-    },
-
-    getField: function ()
-    {
-        this.field = this.find('input');
+        this.cacheFieldElement();
     },
 
     onunrender: function ()
     {
         this.field = null;
         this._super();
+    },
+
+    cacheFieldElement: function ()
+    {
+        this.field = this.find('input');
     },
 
     updateTabIndex: function ()

@@ -70,7 +70,9 @@ export default CoreField.extend({
         this.observe('realm', function (newValue)
         {
             if (realms.indexOf(newValue) < 0)
+            {
                 throw new TypeError('Invalid realm: ' + newValue);
+            }
 
             // Convert current value to new type
             this.updateValue(this.get('value'), this.get('value'), 'value');
@@ -82,9 +84,13 @@ export default CoreField.extend({
         if (value !== undefined && value !== null)
         {
             if (this.get('realm') === 'integer')
+            {
                 value = value | 0;
+            }
             else
+            {
                 value = +value.toFixed(this.get('precision'));
+            }
 
             this.set(keypath, value);
         }
@@ -93,12 +99,16 @@ export default CoreField.extend({
     keydownAction: function (e)
     {
         if (this.get('disabled') || this.get('readonly'))
+        {
             return;
+        }
 
         e.original.stopPropagation();
 
         if (e.original.keyCode === 13)
+        {
             this.field.blur();
+        }
     },
 
 });

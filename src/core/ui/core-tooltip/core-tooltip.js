@@ -69,7 +69,7 @@ export default function (node, content)
         // Update position
         tip.style.left = `${x}px`;
         tip.style.top = `${y}px`;
-    };
+    }
 
     /** Hides the tool tip for the specified element. @private */
     function hide()
@@ -89,7 +89,7 @@ export default function (node, content)
             tip.style.left = '0px';
             tip.style.top = '0px';
         }
-    };
+    }
 
     let handlers = {
 
@@ -178,4 +178,4 @@ export default function (node, content)
             node.removeEventListener('click', handlers.clickHandler);
         }
     };
-};
+}

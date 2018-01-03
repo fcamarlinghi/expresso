@@ -97,7 +97,7 @@ export default CoreField.extend({
         this.observe('options', this.optionsChanged, { init: false });
     },
 
-    getField: function ()
+    cacheFieldElement: function ()
     {
         this.field = this.find('div.core-button-base');
         this.menu = this.findComponent('core-menu');

@@ -77,7 +77,7 @@ export default CoreDropdown.extend({
         });
     },
 
-    getField: function ()
+    cacheFieldElement: function ()
     {
         this._super();
         this.searchbox = this.find('input');

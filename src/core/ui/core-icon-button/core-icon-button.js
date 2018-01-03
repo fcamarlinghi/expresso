@@ -17,7 +17,7 @@ export default CoreButton.extend({
 
         /**
          * Icon used when the button is in the 'active' state,
-         * used the standard icon if not specified.
+         * fallback to the standard icon if not specified.
          * @type String
          * @default ''
          */
@@ -25,7 +25,7 @@ export default CoreButton.extend({
 
         /**
          * Icon used when the button is in the 'disabled' state,
-         * used the standard icon if not specified.
+         * fallback to the standard icon if not specified.
          * @type String
          * @default ''
          */
@@ -38,33 +38,29 @@ export default CoreButton.extend({
          */
         toolbar: false,
 
-        currentIcon: '',
-
     },
 
-    oninit: function ()
-    {
-        this._super();
+    computed:{
 
-        // No need to init for every single property
-        this.observe('disabled active icon iconactive icondisabled', this.updateIcon, { init: false });
-        this.updateIcon();
-    },
+        currentIcon: function ()
+        {
+            const disabledIcon = this.get('icondisabled'),
+                activeIcon = this.get('iconactive'),
+                disabled = this.get('disabled'),
+                active = (this.field === document.activeElement) || this.get('active');
+    
+            let icon = this.get('icon');
+            if (disabled && disabledIcon.length)
+            {
+                icon = disabledIcon;
+            }
+            else if (active && activeIcon.length)
+            {
+                icon = activeIcon;
+            }
+            return icon;
+        }
 
-    updateIcon: function ()
-    {
-        var icon = this.get('icon'),
-            disabledIcon = this.get('icondisabled'),
-            activeIcon = this.get('iconactive'),
-            disabled = this.get('disabled'),
-            active = this.field === document.activeElement || this.get('active');
-
-        if (disabled && disabledIcon.length)
-            icon = disabledIcon;
-        else if (active && activeIcon.length)
-            icon = activeIcon;
-
-        this.set('currentIcon', icon);
     },
 
 });

@@ -15,6 +15,46 @@ export default Ractive.components['core-panel'].extend({
 
     },
 
+    on: {
+
+        /**
+         * Called when the "Add Target" button is pressed.
+         * @private
+         */
+        addTarget: function ()
+        {
+            if (this.get('hasActiveDocument'))
+            {
+                this.get('activeDocument').addTarget();
+            }
+        },
+
+        /**
+         * Called when the "Export All" button is pressed.
+         * @private
+         */
+        exportAll: function ()
+        {
+            if (this.get('hasActiveDocument'))
+            {
+                this.get('activeDocument').exportAll();
+            }
+        },
+
+        /**
+         * Called when the "Export Enabled" button is pressed.
+         * @private
+         */
+        exportEnabled: function ()
+        {
+            if (this.get('hasActiveDocument'))
+            {
+                this.get('activeDocument').exportEnabled();
+            }
+        },
+
+    },
+
     /**
      * Called on component initialization.
      * @private
@@ -67,21 +107,6 @@ export default Ractive.components['core-panel'].extend({
                 }
             }
         });
-
-        // Event handlers
-        this.on('addTarget', this.addTarget);
-        this.on('exportAll', this.exportAll);
-        this.on('exportEnabled', this.exportEnabled);
-    },
-
-    /**
-     * Called when component is destroyed.
-     * @private
-     */
-    onteardown: function ()
-    {
-        this.off();
-        this._super();
     },
 
     /** 
@@ -98,43 +123,6 @@ export default Ractive.components['core-panel'].extend({
             },
 
         });
-    },
-
-    /**
-     * Called when the "Add Target" button is pressed.
-     * @private
-     */
-    addTarget: function ()
-    {
-        if (this.get('hasActiveDocument'))
-        {
-            this.get('activeDocument').addTarget();
-        }
-    },
-
-
-    /**
-     * Called when the "Export All" button is pressed.
-     * @private
-     */
-    exportAll: function ()
-    {
-        if (this.get('hasActiveDocument'))
-        {
-            this.get('activeDocument').exportAll();
-        }
-    },
-
-    /**
-     * Called when the "Export Enabled" button is pressed.
-     * @private
-     */
-    exportEnabled: function ()
-    {
-        if (this.get('hasActiveDocument'))
-        {
-            this.get('activeDocument').exportEnabled();
-        }
     },
 
 });

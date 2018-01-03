@@ -52,6 +52,60 @@ export default Ractive.components['core-document'].extend({
         }
     },
 
+    on: {
+
+        /**
+         * Selects the global export path.
+         * @private
+         */
+        selectGlobalPath: function ()
+        {
+            return Promise.try(() =>
+            {
+                // Get document path
+                return application.photoshop.getDocumentPath();
+
+            }).then(documentPath =>
+            {
+                // Get open folder parameters
+                var initialPath = this.get('path'),
+                    parsedDocumentPath = (documentPath !== null) ? nodePath.dirname(documentPath) : null;
+
+                return {
+                    title: 'Select export folder...',
+                    initialPath: String.isEmpty(initialPath) ? parsedDocumentPath : initialPath,
+                    basePath: parsedDocumentPath,
+                    convertToRelative: application.settings.get('useRelativePaths'),
+                };
+
+            }).then(params =>
+            {
+                // Let user select the new export path
+                return application.fs.showOpenFolderDialog(params.title, params.initialPath, params.basePath, params.convertToRelative);
+
+            }).then(exportPath =>
+            {
+                if (!String.isEmpty(exportPath))
+                {
+                    this.set('path', exportPath);
+                }
+
+            }).catch(error =>
+            {
+                const msg = `Error while selecting global export path. ${error.message}`;
+
+                if (RELEASE)
+                {
+                    application.cep.alert(msg);
+                }
+
+                application.logger.error(msg);
+
+            });
+        },
+
+    },
+
     /**
      * Called on component initialization.
      * @private
@@ -59,7 +113,6 @@ export default Ractive.components['core-document'].extend({
     oninit: function ()
     {
         this._super();
-        this.on('selectGlobalPath', this.selectGlobalPath);
 
         // Observe model changes
         this.observe('path targets.*', this.modelUpdated, { init: false });
@@ -68,7 +121,7 @@ export default Ractive.components['core-document'].extend({
 
     /** 
      * Serializes document data (called when document is being saved).
-     * @private
+     * @protected
      */
     serialize: function ()
     {
@@ -77,7 +130,7 @@ export default Ractive.components['core-document'].extend({
 
     /** 
      * Deserializes document data (called when document data has been loaded).
-     * @private
+     * @protected
      */
     deserialize: function (data)
     {
@@ -87,7 +140,7 @@ export default Ractive.components['core-document'].extend({
         }
         else
         {
-            var parsed = JSON.parse(data);
+            let parsed = JSON.parse(data);
 
             if (!parsed.v)
             {
@@ -102,7 +155,7 @@ export default Ractive.components['core-document'].extend({
 
                 if (parsed.targets)
                 {
-                    parsed.targets.map(function (target)
+                    parsed.targets.map(target =>
                     {
                         target.path = target.exportPath;
                         delete target.exportPath;
@@ -163,62 +216,12 @@ export default Ractive.components['core-document'].extend({
     },
 
     /**
-     * Selects global export path.
-     * @private
-     */
-    selectGlobalPath: function ()
-    {
-        return Promise.bind(this).then(function ()
-        {
-            // Get document path
-            return application.photoshop.getDocumentPath();
-
-        }).then(function (documentPath)
-        {
-            // Get open folder parameters
-            var initialPath = this.get('path'),
-                parsedDocumentPath = (documentPath !== null) ? nodePath.dirname(documentPath) : null;
-
-            return {
-                title: 'Select export folder...',
-                initialPath: String.isEmpty(initialPath) ? parsedDocumentPath : initialPath,
-                basePath: parsedDocumentPath,
-                convertToRelative: application.settings.get('useRelativePaths'),
-            };
-
-        }).then(function (params)
-        {
-            // Let user select the new export path
-            return application.fs.showOpenFolderDialog(params.title, params.initialPath, params.basePath, params.convertToRelative);
-
-        }).then(function (exportPath)
-        {
-            if (!String.isEmpty(exportPath))
-            {
-                this.set('path', exportPath);
-            }
-
-        }).catch(function (error)
-        {
-            const msg = `Error while selecting global export path. ${error.message}`;
-
-            if (RELEASE)
-            {
-                application.cep.alert(msg);
-            }
-
-            application.logger.error(msg);
-
-        });
-    },
-
-    /**
      * Gets a valid save folder.
      * @private
      */
     getSaveFolder: function (basePath, savePath)
     {
-        var folder;
+        let folder;
 
         // If user did not specify a path, fallback to relative path
         if (String.isEmpty(savePath))
@@ -275,21 +278,21 @@ export default Ractive.components['core-document'].extend({
         }
         else
         {
-            return Promise.bind(this).then(function ()
+            return Promise.try(() =>
             {
                 // Get document path
                 return application.photoshop.getDocumentPath();
 
-            }).then(function (documentPath)
+            }).then(documentPath =>
             {
                 application.ui.setBusy(true, 'Exporting all targets...');
 
                 // Export targets
-                var targets = JSON.parse(JSON.stringify(this.get('targets'))); // Poor man copy
+                let targets = JSON.parse(JSON.stringify(this.get('targets'))); // Poor man copy
                 this.resolveExportPaths(targets, documentPath);
                 return application.imageExporter.run(targets);
 
-            }).catch(function (error)
+            }).catch(error =>
             {
                 const msg = `Unable to export targets. ${error.message}`;
 
@@ -300,7 +303,7 @@ export default Ractive.components['core-document'].extend({
 
                 application.logger.error(msg);
 
-            }).finally(function ()
+            }).finally(() =>
             {
                 application.ui.setBusy(false);
             });
@@ -319,22 +322,22 @@ export default Ractive.components['core-document'].extend({
         }
         else
         {
-            return Promise.bind(this).then(function ()
+            return Promise.try(() =>
             {
                 // Get document path
                 return application.photoshop.getDocumentPath();
 
-            }).then(function (documentPath)
+            }).then(documentPath =>
             {
                 application.ui.setBusy(true, 'Exporting selected targets...');
 
                 // Export targets (only the enabled ones)
-                var targets = JSON.parse(JSON.stringify(this.get('targets'))); // Poor man copy
+                let targets = JSON.parse(JSON.stringify(this.get('targets'))); // Poor man copy
                 targets = targets.filter(function (target) { return target.enabled; });
                 this.resolveExportPaths(targets, documentPath);
                 return application.imageExporter.run(targets);
 
-            }).catch(function (error)
+            }).catch(error =>
             {
                 const msg = `Unable to export selected targets. ${error.message}`;
 
@@ -345,7 +348,7 @@ export default Ractive.components['core-document'].extend({
 
                 application.logger.error(msg);
 
-            }).finally(function ()
+            }).finally(() =>
             {
                 application.ui.setBusy(false);
             });
@@ -364,28 +367,28 @@ export default Ractive.components['core-document'].extend({
         }
         else
         {
-            var suffix = this.get('targets')[index].suffix;
+            let suffix = this.get('targets')[index].suffix;
 
             if (!String.isEmpty(suffix))
             {
                 suffix = ' "' + suffix + '"';
             }
 
-            return Promise.bind(this).then(function ()
+            return Promise.try(() =>
             {
                 // Get document path
                 return application.photoshop.getDocumentPath();
 
-            }).then(function (documentPath)
+            }).then(documentPath =>
             {
                 application.ui.setBusy(true, `Exporting target${suffix}...`);
 
                 // Export specified target
-                var targets = [JSON.parse(JSON.stringify(this.get('targets')[index]))]; // Poor man copy
+                let targets = [JSON.parse(JSON.stringify(this.get('targets')[index]))]; // Poor man copy
                 this.resolveExportPaths(targets, documentPath);
                 return application.imageExporter.run(targets);
 
-            }).catch(function (error)
+            }).catch(error =>
             {
                 const msg = `Unable to export${suffix}. ${error.message}`;
 
@@ -396,7 +399,7 @@ export default Ractive.components['core-document'].extend({
 
                 application.logger.error(msg);
 
-            }).finally(function ()
+            }).finally(() =>
             {
                 application.ui.setBusy(false);
 
@@ -412,7 +415,7 @@ export default Ractive.components['core-document'].extend({
     {
         // Get document folder, filename without extension and resolve global
         // export path as it might come in handy while building export targets
-        var basePath = (documentPath === null) ? '' : nodePath.dirname(documentPath),
+        let basePath = (documentPath === null) ? '' : nodePath.dirname(documentPath),
             documentFileName = (documentPath === null) ? 'UnsavedDocument' : nodePath.basename(documentPath, '.psd');
 
         if (application.settings.get('useLowerCaseFileNames'))
@@ -420,10 +423,10 @@ export default Ractive.components['core-document'].extend({
             documentFileName = documentFileName.toLowerCase();
         }
 
-        var globalTargetFolder = this.getSaveFolder(basePath, this.get('path'));
+        const globalTargetFolder = this.getSaveFolder(basePath, this.get('path'));
 
         // Resolve export paths
-        targets.forEach(function (target)
+        targets.forEach(target =>
         {
             var targetFolder = (target.pathLocked) ? globalTargetFolder : this.getSaveFolder(basePath, target.path),
                 targetFile = documentFileName + target.suffix,
@@ -431,7 +434,7 @@ export default Ractive.components['core-document'].extend({
 
             target.path = nodePath.join(targetFolder, targetFile + '.' + targetExtension);
 
-        }, this);
+        });
     },
 
 });

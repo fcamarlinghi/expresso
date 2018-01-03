@@ -1,16 +1,13 @@
 ﻿
-'use strict';
-
-const spawn = require('child_process').spawn,
-      fs = require('fs'),
-      Promise = require('bluebird'),
-      ExportTarget = require('./ExportTarget.js');
+import { spawn } from 'child_process';
+import fs from 'fs';
+import ExportTarget from './ExportTarget.js';
 
 // Utilities
 /** Searches for the layer with the specified ID in a layer tree. */
 function _findLayerById(id, layers)
 {
-    for (var i = 0; i < layers.length; i++)
+    for (let i = 0; i < layers.length; i++)
     {
         if (layers[i].id === id)
         {
@@ -27,40 +24,40 @@ function _findLayerById(id, layers)
     }
 
     return null;
-};
+}
 
 /** Fills a channel of a pixel buffer with a color. */
 function _fillPixels(buffer, offset, color)
 {
-    for (var i = offset; i < buffer.length; i = i + 4)
+    for (let i = offset; i < buffer.length; i = i + 4)
     {
         buffer[i] = color;
     }
-};
+}
 
 /** Copies a channel from an input pixel buffer to an output pixel buffer. */
 function _copyPixels(input, output, inputOffset, outputOffset)
 {
     if (inputOffset === outputOffset)
     {
-        for (var i = inputOffset; i < output.length; i = i + 4)
+        for (let i = inputOffset; i < output.length; i = i + 4)
         {
             output[i] = input[i];
         }
     }
     else
     {
-        for (var i = 0; i < output.length; i = i + 4)
+        for (let i = 0; i < output.length; i = i + 4)
         {
             output[i + outputOffset] = input[i + inputOffset];
         }
     }
-};
+}
 
 /**
  * Image exporter.
  */
-function ImageExporter(application)
+export default function ImageExporter(application)
 {
     Object.defineProperties(this, {
 
@@ -71,13 +68,13 @@ function ImageExporter(application)
         logger: { value: application.logManager.createLogger('ImageExporter'), enumerable: true },
 
     });
-};
+}
 
 ImageExporter.prototype = Object.create(null);
 ImageExporter.constructor = ImageExporter;
 
 /** Supported export formats. */
-var FORMATS = ImageExporter.prototype.FORMATS = Object.freeze({
+const FORMATS = ImageExporter.prototype.FORMATS = Object.freeze({
 
     /** Raw pixels, used to export to memory (i.e. when loading a layer into the previewer). */
     RAW: 'raw',
@@ -288,8 +285,8 @@ ImageExporter.prototype.run = function (targets)
                         if (needsProcessing)
                         {
                             const source = pixmap.pixels,
-                                  sourceBounds = pixmap.bounds,
-                                  sourceRowBytes = pixmap.rowBytes;
+                                sourceBounds = pixmap.bounds,
+                                sourceRowBytes = pixmap.rowBytes;
 
                             // Create a completely black buffer of document size
                             const target = new Buffer(pixmapBufferSize);
@@ -318,7 +315,7 @@ ImageExporter.prototype.run = function (targets)
                                     {
                                         // Interpolate alpha
                                         const linearAlpha = alpha / 255,
-                                              i = targetIndex + sourceIndex;
+                                            i = targetIndex + sourceIndex;
 
                                         target[i] = alpha;
                                         target[i + 1] = Math.lerp(target[i + 1], source[sourceIndex + 1], linearAlpha);
@@ -473,7 +470,7 @@ ImageExporter.prototype.run = function (targets)
 ImageExporter.prototype._getConvertInputArgs = function (args, output)
 {
     const target = output.target,
-          hasAlpha = (target.channels[3] > -1);
+        hasAlpha = (target.channels[3] > -1);
 
     args.push(
         // In order to know the pixel boundaries, ImageMagick needs to know the resolution and pixel depth
@@ -785,5 +782,3 @@ ImageExporter.prototype.savePixelsToFile = function (pixels, width, height, save
     this._getConvertOutputArgs(args, saveFormat, true);
     return this._convertToFile(args, savePath, pixels);
 };
-
-module.exports = ImageExporter;

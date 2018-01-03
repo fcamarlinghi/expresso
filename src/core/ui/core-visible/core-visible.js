@@ -11,4 +11,4 @@ export default function (node, content)
             node.classList.remove('core-hidden');
         }
     }
-};
+}

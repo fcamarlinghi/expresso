@@ -4,7 +4,7 @@
   "license": "Apache-2.0",
   "private": true,
   "dependencies": {
-    "bluebird": "^2.11.0",
+    "bluebird": "^3.5.1",
     "extend": "^3.0.1",
     "fast.js": "latest",
     "path-is-absolute": "^1.0.1",

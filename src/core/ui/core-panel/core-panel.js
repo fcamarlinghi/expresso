@@ -44,8 +44,7 @@ export default Ractive.components['core-panel'] = Ractive.extend({
      */
     setBusy: function (status, message)
     {
-        var throbber = this.findComponent('core-throbber');
-
+        const throbber = this.findComponent('core-throbber');
         if (throbber)
         {
             throbber.set('visible', !!status);
@@ -59,7 +58,7 @@ export default Ractive.components['core-panel'] = Ractive.extend({
      */
     isBusy: function ()
     {
-        var throbber = this.findComponent('core-throbber');
+        const throbber = this.findComponent('core-throbber');
         return (throbber && throbber.get('visible'));
     },
 
@@ -76,7 +75,7 @@ export default Ractive.components['core-panel'] = Ractive.extend({
             // Make panel persistent in release mode
             application.cep.makePersistent();
 
-            // Avoid context menu
+            // Prevent context menu
             application.cep.setContextMenu('');
         }
 
@@ -85,7 +84,7 @@ export default Ractive.components['core-panel'] = Ractive.extend({
         application.photoshop.onPhotoshopEvent('imageChanged', this.imageChanged);
 
         // And do a first sync to see if there is already an active document
-        application.cep.evalScript('app.documents.length').bind(this).then(function (num)
+        application.cep.evalScript('app.documents.length').then(num =>
         {
             num = parseInt(num, 10);
 
@@ -103,7 +102,7 @@ export default Ractive.components['core-panel'] = Ractive.extend({
                     getCompLayerSettings: false,
                     getDefaultLayerFX: false
 
-                }).bind(this).then(function (document)
+                }).then(document =>
                 {
                     return this.activeDocumentChanged(document.id);
 
@@ -127,7 +126,7 @@ export default Ractive.components['core-panel'] = Ractive.extend({
     /** 
      * Creates the Javascript representation of a Photoshop document.
      * @param {Number} documentId Photoshop document ID.
-     * @private
+     * @protected
      */
     createDocumentModel: function (documentId)
     {
@@ -136,7 +135,7 @@ export default Ractive.components['core-panel'] = Ractive.extend({
 
     /**
      * Called when a 'imageChanged' event is fired by Photoshop.
-     * @private
+     * @protected
      */
     imageChanged: function (event)
     {
@@ -151,7 +150,7 @@ export default Ractive.components['core-panel'] = Ractive.extend({
         else
         {
             // Notify document it was modified
-            for (var i = 0; i < this.documents.length; i++)
+            for (let i = 0; i < this.documents.length; i++)
             {
                 if (this.documents[i].get('documentId') === event.id)
                 {
@@ -164,17 +163,17 @@ export default Ractive.components['core-panel'] = Ractive.extend({
 
     /**
      * Called when the currently active document has changed in Photoshop.
-     * @private
+     * @protected
      */
     activeDocumentChanged: function (newDocumentId)
     {
-        Promise.bind(this).then(function ()
+        Promise.try(() =>
         {
             this.setBusy(true, 'Loading document...');
 
             // Switch active document
             // Start by hiding any other visible document
-            var oldDocument = this.get('activeDocument');
+            const oldDocument = this.get('activeDocument');
 
             if (oldDocument)
             {
@@ -182,9 +181,9 @@ export default Ractive.components['core-panel'] = Ractive.extend({
             }
 
             // Search the cache for the document we need to show
-            var newDocument = null;
+            let newDocument = null;
 
-            for (var i = 0; i < this.documents.length; i++)
+            for (let i = 0; i < this.documents.length; i++)
             {
                 if (this.documents[i].get('documentId') === newDocumentId)
                 {
@@ -210,15 +209,12 @@ export default Ractive.components['core-panel'] = Ractive.extend({
             // Hack: force Ractive to render the document directly inside the DOM
             if (!newDocument.fragment.rendered)
             {
-                var div = window.document.createElement('div');
+                const div = window.document.createElement('div');
                 this.find('#documents').appendChild(div);
                 newDocument.render(div);
             }
 
-            // Let UI update...
-            return Promise.delay(100);
-
-        }).catch(function (error)
+        }).catch(error =>
         {
             const msg = `Error synchronizing the document list with Photoshop. ${error.message}`;
 
@@ -229,20 +225,24 @@ export default Ractive.components['core-panel'] = Ractive.extend({
 
             application.logger.error(msg);
 
-        }).finally(function ()
+        }).finally(() =>
         {
             this.setBusy(false);
         });
     },
 
+    /**
+     * Called when the specified document was closed in Photoshop.
+     * @protected
+     */
     documentClosed: function (closedDocumentId)
     {
-        Promise.bind(this).then(function ()
+        Promise.try(() =>
         {
             this.setBusy(true, 'Cleaning up...');
 
             // Handle case where we closed the currently active document
-            var activeDocument = this.get('activeDocument');
+            const activeDocument = this.get('activeDocument');
 
             if (activeDocument && activeDocument.get('documentId') === closedDocumentId)
             {
@@ -250,9 +250,9 @@ export default Ractive.components['core-panel'] = Ractive.extend({
             }
 
             // Delete UI for the document that has been closed
-            for (var i = 0; i < this.documents.length; i++)
+            for (let i = 0; i < this.documents.length; i++)
             {
-                var document = this.documents[i];
+                const document = this.documents[i];
 
                 if (document.get('documentId') === closedDocumentId)
                 {
@@ -263,10 +263,7 @@ export default Ractive.components['core-panel'] = Ractive.extend({
                 }
             }
 
-            // Let UI update...
-            return Promise.delay(100);
-
-        }).catch(function (error)
+        }).catch(error =>
         {
             const msg = `Error synchronizing the document list with Photoshop. ${error.message}`;
 
@@ -277,7 +274,7 @@ export default Ractive.components['core-panel'] = Ractive.extend({
 
             application.logger.error(msg, error);
 
-        }).finally(function ()
+        }).finally(() =>
         {
             this.setBusy(false);
         });

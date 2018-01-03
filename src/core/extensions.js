@@ -2,10 +2,10 @@
 if (RELEASE)
 {
     // Replace some base prototype functions with fast.js implementations for additional speed
-    var fast = require('fast.js'),
+    const fast = require('fast.js'),
         slice = Array.prototype.slice;
 
-    Array.prototype.concat = function () { var args = slice.call(arguments, 0); args.unshift(this); return fast.apply(fast['array'].concat, fast, args); };
+    Array.prototype.concat = function () { let args = slice.call(arguments, 0); args.unshift(this); return fast.apply(fast['array'].concat, fast, args); };
     Array.prototype.indexOf = function (item, start) { return fast['array'].indexOf.call(fast, this, item, start); };
     Array.prototype.lastIndexOf = function (item, start) { return fast['array'].lastIndexOf.call(fast, this, item, start); };
     Array.prototype.forEach = function (fn, context) { return fast['array'].forEach.call(fast, this, fn, context); };
@@ -13,7 +13,7 @@ if (RELEASE)
     Array.prototype.filter = function (fn, context) { return fast['array'].filter.call(fast, this, fn, context); };
     Array.prototype.reduce = function (fn, initial) { return fast['array'].reduce.call(fast, this, fn, initial); };
     Array.prototype.reduceRight = function (fn, initial) { return fast['array'].reduceRight.call(fast, this, fn, initial); };
-    Function.prototype.bind = function () { var args = slice.call(arguments, 0); args.unshift(this); return fast['function'].apply(fast.bind, fast, args); };
+    Function.prototype.bind = function () { let args = slice.call(arguments, 0); args.unshift(this); return fast['function'].apply(fast.bind, fast, args); };
 }
 
 // Add some useful functions to built-in types

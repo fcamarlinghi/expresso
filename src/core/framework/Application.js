@@ -1,14 +1,12 @@
 ﻿
-'use strict';
-
 const LogManager = require('./Log.js').LogManager,
-      Theme = require('./Theme.js'),
-      CEP = require('./CEP'),
-      FileSystem = require('./FileSystem.js'),
-      Photoshop = require('../photoshop/Photoshop.js'),
-      ImageExporter = require('../exporter/ImageExporter.js');
+    CEP = require('./CEP');
 
+import FileSystem from './FileSystem.js';
+import ImageExporter from '../exporter/ImageExporter.js';
+import Photoshop from '../photoshop/Photoshop.js';
 import Settings from './Settings.js';
+import Theme from './Theme.js';
 
 import path from 'path';
 import sanitize from 'sanitize-filename';
@@ -28,7 +26,7 @@ function getLogDirectory(info)
     {
         return path.join(process.env.HOME || '', info.vendor, info.name, 'logs');
     }
-};
+}
 
 /** Gets data directory path. */
 function getDataDirectory(info)
@@ -45,7 +43,7 @@ function getDataDirectory(info)
     {
         return path.join(process.env.HOME || '', info.vendor, info.name);
     }
-};
+}
 
 // Application singleton
 var application = Object.create(null),
