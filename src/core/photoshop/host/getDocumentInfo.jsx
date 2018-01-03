@@ -1,6 +1,6 @@
 var idNS = stringIDToTypeID('sendDocumentInfoToNetworkClient'),
 	desc = new ActionDescriptor();
-desc.putString(stringIDToTypeID('version'), '1.0.1');
+desc.putString(stringIDToTypeID('version'), '1.3.0');
 
 for (var key in params.flags)
 {
