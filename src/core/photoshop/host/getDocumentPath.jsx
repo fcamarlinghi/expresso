@@ -7,7 +7,7 @@ try
     {
         for (var i = 0, l = app.documents.length; i < l; i++)
         {
-            if (app.documents[i].id === documentId)
+            if (app.documents[i].id === params.documentId)
             {
                 documentPath = app.documents[i].fullName.fsName;
                 break;
