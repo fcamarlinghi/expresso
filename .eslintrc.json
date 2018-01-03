@@ -1,0 +1,30 @@
+{
+    "extends": "eslint:recommended",
+    "globals": {
+        "RELEASE": false,
+        "VERSION": false,
+        "WEBSITE": false,
+        "CSInterface": false,
+        "CSEvent": false
+    },
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "node": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "impliedStrict": true
+        }
+    },
+    "rules": {
+        "no-empty": "warn",
+        "no-undef": "warn",
+        "no-unreachable": "warn",
+        "no-unused-vars": "warn",
+        "valid-typeof": "warn"
+    }
+}
