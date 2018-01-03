@@ -1,6 +1,6 @@
 ﻿{{#if model}}
 {{#with model}}
-<core-container css="core-layout horizontal center exporter-target">
+<div class="core-container core-layout horizontal center exporter-target">
     <core-icon-button icon="arrow-right4" iconactive="arrow-down4" tooltip="{{expanded ? 'Collapse' : 'Expand'}}" toggleable="true" active="{{expanded}}"></core-icon-button>
     <core-checkbox value="{{enabled}}" tooltip="If checked, export the target on 'Export Selected'"></core-checkbox>
     <core-textbox css="flex{{showNeedsSuffixError ? ' error' : ''}}" placeholder="[Suffix]" value="{{suffix}}" tooltip="Export suffix"></core-textbox>
@@ -8,7 +8,7 @@
     <core-dropdown value="{{scale}}" options="{{targetScalings}}" tooltip="Export scaling"></core-dropdown>
     <core-icon-button icon="cross2" tooltip="Delete target" on-tap="deleteTarget"></core-icon-button>
     <core-icon-button icon="disk" tooltip="Export single target" on-tap="exportTarget"></core-icon-button>
-</core-container>
+</div>
 
 <div class="core-container exporter-target target-details" as-core-visible="expanded">
     <div class="core-container">
@@ -43,7 +43,7 @@
             <core-combobox css="flex" value="{{channels[3]}}" options="{{layers}}" labelkey="name" valuekey="id" tooltip="Layer to use as the '[[ targetChannels[3] ]]' channel"></core-combobox>
         </div>
     </div>
-    <core-container css="core-layout horizontal center">
+    <div class="core-container core-layout horizontal center">
         <label>Filters</label>
         <core-label>
             <core-checkbox value="{{filters.blur}}" tooltip="If selected, blur the target on export"></core-checkbox>
@@ -57,8 +57,8 @@
             <core-checkbox value="{{filters.invert}}" tooltip="If selected, invert the target on export"></core-checkbox>
             Invert
         </core-label>
-    </core-container>
-    <core-container css="core-layout horizontal center">
+    </div>
+    <div class="core-container core-layout horizontal center">
         <label>Normals</label>
         <core-label>
             <core-checkbox value="{{normal.normalize}}" tooltip="If selected, normalize on export"></core-checkbox>
@@ -72,12 +72,12 @@
             <core-checkbox value="{{normal.flipY}}" tooltip="If selected, flip the Y channel on export"></core-checkbox>
             Flip Y
         </core-label>
-    </core-container>
-    <core-container css="core-layout horizontal center">
+    </div>
+    <div class="core-container core-layout horizontal center">
         <core-textbox css="flex" value="{{path}}" disabled="{{pathLocked}}" tooltip="If specified, overrides the global export folder for the current target" placeholder="[Override export folder...]"></core-textbox>
         <core-icon-button icon="folder" tooltip="Select export folder" disabled="{{pathLocked}}" on-tap="selectLocalPath"></core-icon-button>
         <core-icon-button toggleable="true" icon="lock-open" iconactive="lock" tooltip="{{pathLocked ? 'Use local export path' : 'Use global export path'}}" active="{{pathLocked}}"></core-icon-button>
-    </core-container>
+    </div>
 </div>
 {{/with}}
 {{/if}}
