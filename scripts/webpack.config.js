@@ -4,7 +4,8 @@
 const path = require('path'),
     extend = require('extend'),
     webpack = require('webpack'),
-    ExtractTextPlugin = require('extract-text-webpack-plugin');
+    ExtractTextPlugin = require('extract-text-webpack-plugin'),
+    UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 /**
  * Gets webpack configuration based on specified build mode.
@@ -64,13 +65,9 @@ const getConfig = function (mode, folder)
         // Release
         config.plugins[0].definitions.RELEASE = true;
 
-        config.plugins.push(new webpack.optimize.UglifyJsPlugin({
+        config.plugins.push(new UglifyJsPlugin({
 
-            compress: {
-                screw_ie8: true,
-                unsafe: true,
-                dead_code: true,
-            },
+            parallel: true,
 
         }));
     }
