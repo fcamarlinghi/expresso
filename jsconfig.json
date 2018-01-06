@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "es2016",
+        "baseUrl": "./src/",
+        "paths": {
+            "core/*": ["core/*"],
+            "photoshop/*": ["photoshop/*"],
+            "exporter-main/*": ["exporter-main/*"],
+            "exporter-settings/*": ["exporter-settings/*"],
+        }
+    }
+}
