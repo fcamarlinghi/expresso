@@ -4,9 +4,19 @@
         {
             "type": "chrome",
             "request": "attach",
-            "name": "Attach to Photoshop",
+            "name": "Exporter Main",
             "port": 8000,
-            "webRoot": "${workspaceRoot}/build/exporter/index.html",
+            "webRoot": "${workspaceRoot}/build/com.expresso.exporter/exporter/main.html",
+            "sourceMapPathOverrides": {
+                "webpack:///*": "${workspaceRoot}/*"
+            }
+        },
+        {
+            "type": "chrome",
+            "request": "attach",
+            "name": "Exporter Settings",
+            "port": 8100,
+            "webRoot": "${workspaceRoot}/build/com.expresso.exporter/exporter/settings.html",
             "sourceMapPathOverrides": {
                 "webpack:///*": "${workspaceRoot}/*"
             }
