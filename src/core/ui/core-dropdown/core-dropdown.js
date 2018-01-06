@@ -1,6 +1,6 @@
 ﻿
 import CoreField from '../core-field/core-field.js';
-import application from '../../framework/Application.js';
+import CEP from '../../CEP.js';
 import './core-dropdown.less';
 
 export const separator = '---';
@@ -58,9 +58,9 @@ export default CoreField.extend({
         label: function ()
         {
             const value = this.get('value'),
-                  options = this.get('options'),
-                  labelkey = this.get('labelkey'),
-                  index = this.valueToIndex(value);
+                options = this.get('options'),
+                labelkey = this.get('labelkey'),
+                index = this.valueToIndex(value);
 
             if (index > -1)
             {
@@ -134,11 +134,7 @@ export default CoreField.extend({
         document.body.click();
 
         // Detect some events that might close the menu
-        setTimeout((context) =>
-        {
-            context.addEventListeners();
-
-        }, 0, this);
+        setTimeout(() => { this.addEventListeners() }, 0);
 
         this.updateDropdown();
     },
@@ -159,7 +155,7 @@ export default CoreField.extend({
         if (index > -1)
         {
             const valuekey = this.get('valuekey'),
-                  option = this.get('options')[index];
+                option = this.get('options')[index];
 
             this.set('value', option[valuekey]);
         }
@@ -173,7 +169,7 @@ export default CoreField.extend({
     {
         // FIXME: there is a bug in Ractive 0.7.3 that prevents us from simply doing: event.context.value
         const value = event.original.currentTarget.dataset['value'],
-              index = this.valueToIndex(value);
+            index = this.valueToIndex(value);
 
         this.updateSelectedValue(index);
         this.closeMenu();
@@ -182,8 +178,8 @@ export default CoreField.extend({
     valueToIndex: function (value)
     {
         const labelkey = this.get('labelkey'),
-              valuekey = this.get('valuekey'),
-              options = this.get('options');
+            valuekey = this.get('valuekey'),
+            options = this.get('options');
 
         let index = -1
 
@@ -212,8 +208,7 @@ export default CoreField.extend({
     addEventListeners: function ()
     {
         // Detect ENTER/ESC keys
-        // FIXME: ESC doesn't work (is not intercepted correctly by CEP?)
-        application.cep.registerKeyEventsInterest({ keyCode: 13 }, { keyCode: 27 });
+        CEP.registerKeyEventsInterest({ keyCode: 13 }, { keyCode: 27 });
         window.addEventListener('keydown', this.eventRequestClose);
 
         // Detect clicks, resize, blur
@@ -224,7 +219,7 @@ export default CoreField.extend({
 
     removeEventListeners: function ()
     {
-        application.cep.unregisterKeyEventsInterest({ keyCode: 13 }, { keyCode: 27 });
+        CEP.unregisterKeyEventsInterest({ keyCode: 13 }, { keyCode: 27 });
         window.removeEventListener('keydown', this.eventRequestClose);
 
         window.removeEventListener('click', this.eventRequestClose);
@@ -273,7 +268,7 @@ export default CoreField.extend({
         menuNode.style.maxHeight = '';
 
         const parentBounds = this.find('div').getBoundingClientRect(),
-              menuBounds = menuNode.getBoundingClientRect();
+            menuBounds = menuNode.getBoundingClientRect();
 
         // Find out optimal menu size and location based on window size
         let left = parentBounds.left,

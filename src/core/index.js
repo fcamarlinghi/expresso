@@ -11,21 +11,16 @@
 // Main stylesheet
 import './ui/css/core.less';
 
-// Extensions
-import './extensions.js';
-
-// Ractive setup
-import Ractive from 'ractive';
-Ractive.DEBUG = !RELEASE;
+// Language extensions
+import './mixins.js';
 
 // Components, decorators, events
-import CorePanel from './ui/core-panel/core-panel.js';
 import CoreButton from './ui/core-button/core-button.js';
 import CoreCheckbox from './ui/core-checkbox/core-checkbox.js';
 import CoreColorbox from './ui/core-colorbox/core-colorbox.js';
 import CoreCombobox from './ui/core-combobox/core-combobox.js';
-import CoreDocument from './ui/core-document/core-document.js';
 import CoreDropdown from './ui/core-dropdown/core-dropdown.js';
+import CoreExtension from './ui/core-extension/core-extension.js';
 import CoreIcon from './ui/core-icon/core-icon.js';
 import CoreIconButton from './ui/core-icon-button/core-icon-button.js';
 import CoreLabel from './ui/core-label/core-label.js';
@@ -44,13 +39,15 @@ import CoreVisible from './ui/core-visible/core-visible.js';
 
 import RactiveTap from 'ractive-events-tap';
 
-Ractive.components['core-panel'] = CorePanel;
+// Ractive setup
+import Ractive from 'ractive';
+Ractive.DEBUG = !RELEASE;
 Ractive.components['core-button'] = CoreButton;
 Ractive.components['core-checkbox'] = CoreCheckbox;
 Ractive.components['core-colorbox'] = CoreColorbox;
 Ractive.components['core-combobox'] = CoreCombobox;
-Ractive.components['core-document'] = CoreDocument;
 Ractive.components['core-dropdown'] = CoreDropdown;
+Ractive.components['core-extension'] = CoreExtension;
 Ractive.components['core-icon'] = CoreIcon;
 Ractive.components['core-icon-button'] = CoreIconButton;
 Ractive.components['core-label'] = CoreLabel;
@@ -68,7 +65,3 @@ Ractive.decorators['core-tooltip'] = CoreTooltip;
 Ractive.decorators['core-visible'] = CoreVisible;
 
 Ractive.events['tap'] = RactiveTap;
-
-// Export the application module
-import application from './framework/Application.js';
-export { application };

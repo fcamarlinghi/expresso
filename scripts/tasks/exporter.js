@@ -9,7 +9,7 @@ const Promise = require('bluebird'),
       cepy = require('cepy'),
       rimraf = Promise.promisify(require('rimraf'));
 
-const buildPath = 'build/exporter';
+const buildPath = 'build/com.expresso.exporter';
 
 const run = function (mode)
 {
@@ -41,17 +41,17 @@ const run = function (mode)
         return new Promise((resolve, reject) =>
         {
             // Prepare webpack config
-            let webpackConfig = require('../webpack.config.js').getConfig(mode);
+            let webpackConfig = require('../webpack.config.js').getConfig(mode, 'exporter');
             extend(true, webpackConfig, {
 
                 output: {
                     path: path.resolve(buildPath),
-                    publicPath: buildPath + '/',
                     library: 'Exporter',
                 },
 
                 entry: {
-                    exporter: path.resolve('src/exporter/index.js'),
+                    'exporter-main': './src/exporter-main/index.js',
+                    'exporter-settings': './src/exporter-settings/index.js',
                 },
 
             });
@@ -60,6 +60,13 @@ const run = function (mode)
                 VERSION: JSON.stringify(cepyConfig.builds['exporter'].extensions[0].version),
                 WEBSITE: JSON.stringify(cepyConfig.builds['exporter'].extensions[0].homepage),
             });
+
+            webpackConfig.plugins.push(
+                new webpack.optimize.CommonsChunkPlugin({
+                    name: 'exporter-core',
+                    filename: 'exporter/exporter-core.js',
+                })
+            );
 
             // Run the compiler
             const compiler = webpack(webpackConfig),

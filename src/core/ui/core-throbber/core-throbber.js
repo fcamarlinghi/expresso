@@ -64,6 +64,7 @@ export default CoreBase.extend({
         this.imageElement = this.find('#image');
         this.spinnerElement = this.find('#spinner');
         this.messageElement = this.find('#message');
+        this.center();
     },
 
     onunrender: function ()
@@ -82,7 +83,12 @@ export default CoreBase.extend({
 
     center: function ()
     {
-        var size = this.get('size'),
+        if (!this.imageElement || !this.spinnerElement || !this.messageElement)
+        {
+            return;
+        }
+
+        const size = this.get('size'),
             halfSize = size / 2;
 
         // Center to window

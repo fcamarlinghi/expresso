@@ -1,0 +1,30 @@
+<core-extension css="core-layout vertical center justify-center">
+    <div class="core-container scrollbar vertical">
+        <div class="core-container core-layout horizontal center settings-group-title">
+            <core-icon-button icon="arrow-right4" iconactive="arrow-down4" tooltip="{{generalSettingsVisible ? 'Collapse' : 'Expand'}}"
+                toggleable="true" active="{{generalSettingsVisible}}"></core-icon-button>
+            <strong class="flex">General Settings</strong>
+        </div>
+        <div as-core-visible="generalSettingsVisible" class="settings-group">
+            <div class="core-container core-layout horizontal center">
+                <core-checkbox value="{{settings.useLowerCaseExtension}}" tooltip="If selected, lower case file extensions will be enforced on export"></core-checkbox>
+                <core-label>Use lower case file extensions</core-label>
+            </div>
+            <div class="core-container core-layout horizontal center">
+                <core-checkbox value="{{settings.useLowerCaseFileNames}}" tooltip="If selected, lower case file names will be enforced on export"></core-checkbox>
+                <core-label>Use lower case file names</core-label>
+            </div>
+            <div class="core-container core-layout horizontal center">
+                <core-checkbox value="{{settings.saveOriginalAfterExport}}" tooltip="If selected, the original document will be auto-saved after export"></core-checkbox>
+                <core-label>Auto-save original document after export</core-label>
+            </div>
+            <div class="core-container core-layout horizontal center">
+                <core-checkbox value="{{settings.useRelativePaths}}" tooltip="If selected, relative export paths will be preferred to absolute paths (when possible)"></core-checkbox>
+                <core-label>Use relative export paths when possible</core-label>
+            </div>
+        </div>
+    </div>
+    <div class="core-layout horizontal center-justified settings-toolbar">
+        <core-button label="Close" tooltip="Close" on-tap="@.close()"></core-button>
+    </div>
+</core-extension>

@@ -1,0 +1,38 @@
+@import "~core/ui/css/_variables.less";
+@import "~core/ui/css/_common.less";
+.theme(common);
+
+.core-extension label {
+    display: inline-block;
+    margin-right: @baseMargin;
+    vertical-align: middle;
+}
+
+.core-extension *:last-child {
+    margin-right: 0px;
+}
+
+.settings-group, .settings-group-title {
+    & > *{
+        margin-bottom: 0;
+    }
+}
+
+.settings-toolbar {
+    padding: @basePadding;
+}
+
+.settings-group(@theme) {
+    .theme(@theme);
+
+    .@{theme} {
+        .settings-group, .settings-group .core-container {
+            background: darken(@bodyBackground, 3%);
+        }
+    }
+}
+
+.settings-group(dark);
+.settings-group(medium-dark);
+.settings-group(light);
+.settings-group(medium-light);

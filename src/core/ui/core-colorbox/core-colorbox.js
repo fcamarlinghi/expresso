@@ -1,6 +1,8 @@
 ﻿
+import CEP from '../../CEP.js';
+import { defaultLogger as logger } from '../../Extension.js';
 import CoreField from '../core-field/core-field.js';
-import application from '../../framework/Application.js';
+
 import host from './host.jsx';
 import './core-colorbox.less';
 
@@ -24,68 +26,42 @@ export default CoreField.extend({
 
     },
 
-    oninit: function ()
-    {
-        this._super();
+    on: {
 
-        this.observe('value', function (newValue)
+        colorClick: function ()
         {
-            if (this.field)
+            if (this.get('disabled'))
             {
-                this.field.style.background = newValue;
+                return;
             }
 
-        }), { init: false };
+            this.set('disabled', true);
 
-        this.colorClickHandler = this.colorClickHandler.bind(this);
+            // Open Photoshop color picker
+            CEP.evalScript(host, { baseColor: this.get('value') }).then((color) =>
+            {
+                this.set('disabled', false);
+
+                if (typeof color === 'string' && color.length === 7)
+                {
+                    this.set('value', color);
+                }
+                else
+                {
+                    throw new TypeError(`Invalid color: ${color}`);
+                }
+
+            }).catch((e) =>
+            {
+                logger.error('Error while opening color picker', e);
+            });
+        },
+
     },
 
-    onrender: function ()
-    {
-        this._super();
-        this.field.addEventListener('click', this.colorClickHandler);
-        this.field.style.background = this.get('value');
-    },
-
-    onunrender: function ()
-    {
-        this.field.removeEventListener('click', this.colorClickHandler);
-        this._super();
-    },
-
-    cacheFieldElement: function ()
+    cacheFieldElement()
     {
         this.field = this.find('div');
-    },
-
-    colorClickHandler: function (e)
-    {
-        if (this.get('disabled'))
-        {
-            return;
-        }
-
-        this.set('disabled', true);
-
-        // Open Photoshop color picker
-        application.cep.evalScript(host, { baseColor: this.get('value') }).bind(this).then(function (color)
-        {
-            this.set('disabled', false);
-
-            if (typeof color === 'string' && color.length === 7)
-            {
-                this.set('value', color);
-            }
-            else
-            {
-                throw new TypeError('Invalid color: ' + color);
-            }
-
-        }).catch(function (e)
-        {
-            application.logger.error('Error while opening color picker', e);
-
-        });
     },
 
 });

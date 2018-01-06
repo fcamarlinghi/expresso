@@ -1,5 +1,6 @@
 ﻿
 import CoreDropdown, { separator } from '../core-dropdown/core-dropdown.js';
+import CEP from '../../CEP.js';
 import './core-combobox.less';
 
 export default CoreDropdown.extend({
@@ -143,6 +144,12 @@ export default CoreDropdown.extend({
         this.update();
     },
 
+    onMenuOpen: function ()
+    {
+        this._super();
+        this.searchbox.focus();
+    },
+
     onMenuClosed: function ()
     {
         this._super();
@@ -150,21 +157,18 @@ export default CoreDropdown.extend({
         // Reset search and label
         this.search(false);
         this.searchbox.value = this.get('label');
+        this.searchbox.blur();
     },
 
     addEventListeners: function ()
     {
-        window.addEventListener('click', this.eventRequestClose);
-        window.addEventListener('resize', this.eventResizeThrottler);
-        window.addEventListener('blur', this.eventRequestClose);
+        this._super();
         this.searchbox.addEventListener('keydown', this.eventRequestClose);
     },
 
     removeEventListeners: function ()
     {
-        window.removeEventListener('click', this.eventRequestClose);
-        window.removeEventListener('resize', this.eventResizeThrottler);
-        window.removeEventListener('blur', this.eventRequestClose);
+        this._super();
         this.searchbox.removeEventListener('keydown', this.eventRequestClose);
     },
 
@@ -177,7 +181,6 @@ export default CoreDropdown.extend({
             {
                 // Close and blur the search field on ENTER/ESC
                 // or if clicking outside the panel
-                this.searchbox.blur();
                 this.closeMenu();
             }
             else if (event.type === 'click' && event.target !== this.searchbox)

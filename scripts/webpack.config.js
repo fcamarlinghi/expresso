@@ -2,26 +2,28 @@
 'use strict';
 
 const path = require('path'),
-      extend = require('extend'),
-      webpack = require('webpack'),
-      ExtractTextPlugin = require('extract-text-webpack-plugin');
+    extend = require('extend'),
+    webpack = require('webpack'),
+    ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 /**
  * Gets webpack configuration based on specified build mode.
  */
-const getConfig = function (mode)
+const getConfig = function (mode, folder)
 {
     let config = {
 
         target: 'node-webkit',
 
         output: {
-            filename: '[name]/[name].js',
+            filename: folder + '/[name].js',
+            publicPath: folder + '/',
         },
 
         resolve: {
             alias: {
                 'core': path.resolve('src/core'),
+                'photoshop': path.resolve('src/photoshop'),
                 'ractive': 'ractive/runtime.js',
             },
         },
@@ -39,10 +41,8 @@ const getConfig = function (mode)
         plugins: [
             // NOTE: order matters! Plugin definitions might be overridden later on during the build process
             new webpack.DefinePlugin({}),
-            new ExtractTextPlugin('[name]/[name].css'),
-            new webpack.ProvidePlugin({
-                Promise: 'bluebird',
-            }),
+            new ExtractTextPlugin(folder + '/[name].css'),
+            new webpack.ProvidePlugin({ Promise: 'bluebird' }),
         ],
 
     };
@@ -56,12 +56,14 @@ const getConfig = function (mode)
             devtool: 'source-map',
         });
 
-        config.plugins.push(new webpack.LoaderOptionsPlugin({debug: true})); // REVIEW: useful?
         config.plugins[0].definitions.RELEASE = false;
+        config.plugins.push(new webpack.LoaderOptionsPlugin({ debug: true })); // REVIEW: useful?
     }
     else
     {
         // Release
+        config.plugins[0].definitions.RELEASE = true;
+
         config.plugins.push(new webpack.optimize.UglifyJsPlugin({
 
             compress: {
@@ -71,8 +73,6 @@ const getConfig = function (mode)
             },
 
         }));
-
-        config.plugins[0].definitions.RELEASE = true;
     }
 
     return config;
