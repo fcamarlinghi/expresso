@@ -53,7 +53,7 @@ export default CorePhotoshopPanel.extend({
                 }
                 else if (event.data.menuId === 'openSettings')
                 {
-                    CEP.dispatchEvent('com.expresso.exporter.settings.open');
+                    CEP.requestOpenExtension(RELEASE ? 'com.expresso.exporter.settings' : 'com.expresso.exporter.settings.debug');
                 }
             }
         });

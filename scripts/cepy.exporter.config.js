@@ -54,13 +54,9 @@ const config = Object.freeze({
                 {
                     version: info.version,
                     id: 'com.expresso.exporter.settings',
-                    name: 'Expresso Exporter - Settings',
                     author: info.author,
                     homepage: info.homepage,
                     type: 'ModalDialog',
-                    lifecycle: {
-                        events: ['com.expresso.exporter.settings.open'],
-                    },
                     size: {
                         normal: { width: 300, height: 400 },
                         min: { width: 300, height: 400 },
