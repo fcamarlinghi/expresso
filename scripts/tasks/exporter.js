@@ -6,7 +6,6 @@ const Promise = require('bluebird'),
       path = require('path'),
       webpack = require('webpack'),
       cpy = require('cpy'),
-      cepy = require('cepy'),
       rimraf = Promise.promisify(require('rimraf'));
 
 const buildPath = 'build/com.expresso.exporter';
@@ -14,7 +13,7 @@ const buildPath = 'build/com.expresso.exporter';
 const run = function (mode)
 {
     const cepyConfig = require('../cepy.exporter.config.js');
-    let packager = cepy(cepyConfig);
+    let packager = require('cepy')(cepyConfig);
 
     return Promise.resolve()
     .then(() =>
@@ -100,11 +99,11 @@ const run = function (mode)
                             }
                         }
 
-                        process.stdout.write(stats.toString({
+                        console.log(stats.toString({
                             chunks: false,
                             colors: true,
                         }));
-                        process.stdout.write('\n\n');
+                        console.log('');
 
                         if (mode === 'release')
                         {
@@ -130,8 +129,7 @@ const run = function (mode)
         {
             return packager.pack(false);
         }
-    })
-    .catch(err => { throw err; });
+    });
 };
 
 module.exports = {

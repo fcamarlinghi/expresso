@@ -15,12 +15,15 @@ else
     // Find target task file
     const task = require(`../scripts/tasks/${taskName}.js`);
 
+    // Enable verbose output
+    process.env.DEBUG = 'cepy';
+
     // And run it with the specified mode
     task.run(mode)
         .then(process.exit)
         .catch(err =>
         {
-            console.error(err.toString());
+            console.error(err);
             process.exit(1);
         });
 }
