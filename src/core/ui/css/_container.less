@@ -11,12 +11,12 @@
     display: block;
     flex: 1;
 
-    &.core-container-horizontal {
-        height: 100%;
+    + .core-container, > .core-container {
+        border-top: 0 !important;
     }
 
-    + .core-container {
-        border-top: 0 !important;
+    > .core-container {
+        background: darken(@bodyBackground, 3%);
     }
 }
 
