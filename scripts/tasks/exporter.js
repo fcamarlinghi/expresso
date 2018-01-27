@@ -1,4 +1,4 @@
-
+/* eslint-disable no-console */
 'use strict';
 
 const Promise = require('bluebird'),
@@ -8,30 +8,28 @@ const Promise = require('bluebird'),
       cpy = require('cpy'),
       rimraf = Promise.promisify(require('rimraf'));
 
-const buildPath = 'build/com.expresso.exporter';
-
 const run = function (mode)
 {
-    const cepyConfig = require('../cepy.exporter.config.js');
-    let packager = require('cepy')(cepyConfig);
+    const cepyConfig = require('../cepy.exporter.config.js'),
+        buildPath = path.resolve(cepyConfig.builds['exporter'].source),
+        packager = require('cepy')(cepyConfig);
 
-    return Promise.resolve()
-    .then(() =>
+    return Promise.try(() =>
     {
         // Cleanup
-        return rimraf(buildPath + '/*');
+        return rimraf(buildPath + '/*', { glob: { dot: true } });
     })
     .then(() =>
     {
         // Copy bundle files
-        return cpy(['exporter/**/*.*', 'CSInterface*.js'], path.resolve(buildPath), { cwd: 'bundle/', parents: true });
+        return cpy(['exporter/**/*.*', 'CSInterface*.js'], buildPath, { cwd: 'bundle/', parents: true });
     })
     .then(() =>
     {
-        // Generate manifest and debug files if needed
+        // Generate manifest and debug files
         if (mode === 'debug')
         {
-            return packager.compile('exporter', path.resolve(buildPath), true);
+            return packager.decorate('exporter', true);
         }
     })
     .then(() =>
@@ -44,7 +42,7 @@ const run = function (mode)
             extend(true, webpackConfig, {
 
                 output: {
-                    path: path.resolve(buildPath),
+                    path: buildPath,
                     library: 'Exporter',
                 },
 
@@ -124,10 +122,10 @@ const run = function (mode)
     })
     .then(() =>
     {
-        // Generate ZXP file if needed
+        // Generate ZXP package
         if (mode === 'release')
         {
-            return packager.pack(false);
+            return packager.pack();
         }
     });
 };
