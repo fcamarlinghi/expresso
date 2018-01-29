@@ -220,7 +220,7 @@ export default class Logger
     constructor(category, level, css)
     {
         assertType(!String.isEmpty(category), 'Log category needs to be a non-empty string.');
-        level || (level = RELEASE ? LogLevels.INFO : LogLevels.DEBUG);
+        level || (level = LogLevels.DEBUG);
         css || (css = 'color:#000');
 
         // Initialize properties
