@@ -3,39 +3,42 @@
 .theme(common);
 
 .core-throbber-veil {
+    .unselectable;
     position: absolute;
     z-index: 999999;
     top: 0;
     bottom: 0;
     right: 0;
     left: 0;
-    mouse-events: none;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
-.core-throbber {
-    background: no-repeat center url('./throbber.png');
+.core-throbber-image {
+    background-image: url('./throbber.png');
+    background-size: 75%;
+    background-position: center 20%;
+    background-repeat: no-repeat;
     position: fixed;
-    background-size: cover;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .core-throbber-animation {
     // Based on: http://projects.lukehaas.me/css-loaders/
-    font-size: 10px;
-    text-indent: -9999em;
     animation: core-throbber-keys 1.5s infinite linear;
     border-radius: 50%;
-    position: fixed;
     border: 8px solid transparent;
-    overflow: hidden;
+    transform: translate(-50%, -50%);
 }
 
 .core-throbber-message {
-    position: fixed;
+    margin-top: 16px;
     text-align: center;
-    left: 0;
+    pointer-events: none;
 }
 
 .throbber(@theme) {
@@ -63,12 +66,10 @@
 
 @keyframes core-throbber-keys {
     0% {
-        -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
 
     100% {
-        -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
     }
 }
