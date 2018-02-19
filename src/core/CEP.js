@@ -227,7 +227,7 @@ export default class CEP
     static getHostEnvironment()
     {
         logger.debug('getHostEnvironment');
-        return csInterface.hostEnvironment;
+        return csInterface.getHostEnvironment();
     }
 
     /**
