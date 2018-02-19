@@ -41,6 +41,10 @@ const getConfig = function (mode, folder)
                         'postcss-loader',
                         'less-loader'
                     ])
+                },
+                {
+                    test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+                    loader: 'url-loader',
                 }
             ],
         },
