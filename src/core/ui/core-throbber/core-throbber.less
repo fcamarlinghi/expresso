@@ -25,20 +25,17 @@
     // Based on: http://projects.lukehaas.me/css-loaders/
     font-size: 10px;
     text-indent: -9999em;
-    -webkit-animation: core-throbber-keys 1.5s infinite linear;
     animation: core-throbber-keys 1.5s infinite linear;
     border-radius: 50%;
     position: fixed;
     border: 8px solid transparent;
     overflow: hidden;
-    -webkit-filter: none;
 }
 
 .core-throbber-message {
     position: fixed;
     text-align: center;
     left: 0;
-    -webkit-filter: none;
 }
 
 .throbber(@theme) {
@@ -63,18 +60,6 @@
 .throbber(medium-dark);
 .throbber(light);
 .throbber(medium-light);
-
-@-webkit-keyframes core-throbber-keys {
-    0% {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
 
 @keyframes core-throbber-keys {
     0% {
