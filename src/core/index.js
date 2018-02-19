@@ -12,6 +12,7 @@
 import './ui/css/core.less';
 
 // Language extensions
+import './polyfills.js';
 import './mixins.js';
 
 // Components, decorators, events

@@ -1,6 +1,9 @@
 {
     "presets": [
-        ["env", { "targets": { "chrome": "41" } }]
+        ["env", { "targets": { "chrome": "27" } }]
     ],
-    "plugins": ["transform-strict-mode"]
+    "plugins": [
+        "transform-strict-mode", 
+        ["transform-es2015-for-of", { "loose": true }]
+    ]
 }

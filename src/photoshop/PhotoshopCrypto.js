@@ -57,7 +57,7 @@ class PhotoshopCrypto
 
 export function createPhotoshopCrypto(password, callback)
 {
-    pbkdf2(password, SALT, NUM_ITERATIONS, KEY_LENGTH, 'sha1', function (err, derivedKey)
+    const pbkdf2Callback = function (err, derivedKey)
     {
         if (err)
         {
@@ -67,5 +67,15 @@ export function createPhotoshopCrypto(password, callback)
         {
             callback(null, new PhotoshopCrypto(derivedKey));
         }
-    });
+    };
+
+    // Phothoshop CC 2015 ships with NodeJS 0.8.2 which doesn't support the [digest] parameter in the function signature
+    if (process.version === 'v0.8.22')
+    {
+        pbkdf2(password, SALT, NUM_ITERATIONS, KEY_LENGTH, pbkdf2Callback);
+    }
+    else
+    {
+        pbkdf2(password, SALT, NUM_ITERATIONS, KEY_LENGTH, 'sha1', pbkdf2Callback);
+    }
 }

@@ -35,7 +35,13 @@ const getConfig = function (mode, folder)
                 { test: /\.html$/, use: path.resolve(__dirname, 'webpack.loader.ractive.js') },
                 { test: /\.jsx$/, use: path.resolve(__dirname, 'webpack.loader.jsx.js') },
                 { test: /\.fx$/, use: 'raw-loader' },
-                { test: /\.less$/, use: ExtractTextPlugin.extract(['css-loader?minimize', 'less-loader']) }
+                {
+                    test: /\.less$/, use: ExtractTextPlugin.extract([
+                        { loader: 'css-loader', options: { importLoaders: 1 } },
+                        'postcss-loader',
+                        'less-loader'
+                    ])
+                }
             ],
         },
 
