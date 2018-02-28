@@ -30,6 +30,8 @@ function parseLayers(inlayers, outlayers, padding)
  */
 export default CoreBase.extend({
 
+    append: true,
+
     data: function ()
     {
         return {

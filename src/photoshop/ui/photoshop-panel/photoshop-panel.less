@@ -1,0 +1,48 @@
+@import "~core/ui/css/_variables.less";
+@import "~core/ui/css/_common.less";
+.theme(common);
+
+.connection-error {
+    padding: @basePadding;
+    font-size: @largeFontSize;
+    line-height: @largeLineHeight;
+
+    .title {
+        font-weight: bold;
+    }
+
+    .details {
+        color: @errorColor;
+    }
+
+    .settings {
+        display: flex;
+
+        label {
+            width: 25%;
+        }
+        .core-textbox {
+            flex: 1;
+        }
+    }
+
+    .retry {
+        text-align: center;
+    }
+}
+
+.photoshop-panel(@theme) {
+    .theme(@theme);
+
+    .@{theme} {
+        .connection-error .title {
+            color: @textTitleColor;
+        }
+    }
+}
+
+.photoshop-panel(dark);
+.photoshop-panel(medium-dark);
+.photoshop-panel(light);
+.photoshop-panel(medium-light);
+

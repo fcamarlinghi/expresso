@@ -1,21 +1,19 @@
 ﻿<core-extension css="core-layout vertical center justify-center">
     <div class="core-container scrollbar vertical">
-        <div style="padding:4px; font-size:1.2em;line-height:1.2;" as-core-visible="connectionError">
-            <p>
-                <strong>Can't connect to Photoshop.</strong>
+        <div class="connection-error" as-core-visible="connectionError">
+            <p class="title">Can't connect to Photoshop.</p>
+            <p class="details">{{connectionError}}</p>
+            <p>Please check that "Enable Remote Connection" is checked in "Preferences &gt; Plug-Ins" and that the configuration
+                matches the following one:</p>
+            <p class="settings">
+                <label>Service Name:</label>
+                <core-textbox readonly="true" value="Photoshop Server"></core-textbox>
             </p>
-            <pre style="color:red">{{connectionErrorDetails}}</pre>
-            <p>Please check that "Enable Generator" and "Enable Remote Connection" are checked in "Preferences &rarr; Plug-Ins"
-                and that the configuration matches the following one:</p>
-            <p class="core-layout horizontal center">
-                <strong class="flex three">Service Name:</strong>
-                <span class="flex nine">Photoshop Server</span>
+            <p class="settings">
+                <label>Password:</label>
+                <core-textbox readonly="true" value="password"></core-textbox>
             </p>
-            <p class="core-layout horizontal center">
-                <strong class="flex three">Password:</strong>
-                <span class="flex nine">password</span>
-            </p>
-            <p style="text-align:center">
+            <p class="retry">
                 <core-button label="Retry" tooltip="Retry connecting to Photoshop" on-tap="@.connectToPhotoshop()"></core-button>
             </p>
         </div>

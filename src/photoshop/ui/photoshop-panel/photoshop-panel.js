@@ -3,6 +3,7 @@ import Ractive from 'ractive';
 import CEP from 'core/CEP.js';
 import Extension, { defaultLogger as logger } from 'core/Extension.js';
 import SlowTask from 'core/SlowTask.js';
+import './photoshop-panel.less';
 
 export default Ractive.extend({
 
@@ -22,18 +23,11 @@ export default Ractive.extend({
         activeDocument: null,
 
         /**
-         * Whether a connection error happened with Photoshop.
-         * @type {Boolean}
-         * @default false
-         */
-        connectionError: false,
-
-        /**
-         * Details about a connection error.
+         * Connection error with Photoshop.
          * @type {String}
-         * @default ''
+         * @default null
          */
-        connectionErrorDetails: '',
+        connectionError: null,
 
     },
 
@@ -68,6 +62,10 @@ export default Ractive.extend({
             CEP.setContextMenu('');
         }
 
+        // Bind functions
+        this.imageChanged = this.imageChanged.bind(this);
+        this.connectionClosed = this.connectionClosed.bind(this);
+
         // Open the connection with Photoshop
         this.connectToPhotoshop();
     },
@@ -101,8 +99,7 @@ export default Ractive.extend({
     connectToPhotoshop: function ()
     {
         // Hide any previous error
-        this.set('connectionError', false);
-        this.set('connectionErrorDetails', '');
+        this.set('connectionError', null);
 
         Promise.try(() =>
         {
@@ -112,8 +109,8 @@ export default Ractive.extend({
         }).then(() =>
         {
             // Setup Photoshop handles
-            this.imageChanged = this.imageChanged.bind(this);
             Extension.get().photoshop.onPhotoshopEvent('imageChanged', this.imageChanged);
+            Extension.get().photoshop.once('close', this.connectionClosed)
 
             // And do a first sync to see if there is already an active document
             return CEP.evalScript('app.documents.length').then(num =>
@@ -144,13 +141,35 @@ export default Ractive.extend({
         }).catch((err) =>
         {
             // Show error
-            this.set('connectionError', true);
-            this.set('connectionErrorDetails', err.toString());
+            this.set('connectionError', err.toString());
 
         }).finally(() =>
         {
             SlowTask.complete();
         });
+    },
+
+    /**
+     * Called when the connection with Photoshop is closed.
+     * @protected
+     */
+    connectionClosed: function ()
+    {
+        // Close all the documents to prevent them from becoming stale
+        this.set('activeDocument', null);
+
+        for (let document of this.documents)
+        {
+            if (document)
+            {
+                document.fire('closed', document);
+                document.teardown();
+            }
+        }
+        this.documents = [];
+
+        // Notify the user
+        this.set('connectionError', 'Connection closed.');
     },
 
     /**
@@ -170,11 +189,11 @@ export default Ractive.extend({
         else
         {
             // Notify document it was modified
-            for (let i = 0; i < this.documents.length; i++)
+            for (let document of this.documents)
             {
-                if (this.documents[i].get('documentId') === event.id)
+                if (document.get('documentId') === event.id)
                 {
-                    this.documents[i].fire('imageChanged', event);
+                    document.fire('imageChanged', event);
                     break;
                 }
             }
@@ -203,11 +222,11 @@ export default Ractive.extend({
             // Search the cache for the document we need to show
             let newDocument = null;
 
-            for (let i = 0; i < this.documents.length; i++)
+            for (let document of this.documents)
             {
-                if (this.documents[i].get('documentId') === newDocumentId)
+                if (document.get('documentId') === newDocumentId)
                 {
-                    newDocument = this.documents[i];
+                    newDocument = document;
                     break;
                 }
             }
@@ -233,12 +252,10 @@ export default Ractive.extend({
             newDocument.set('visible', true);
             newDocument.fire('activated', newDocument);
 
-            // Hack: force Ractive to render the document directly inside the DOM
+            // Make Ractive render the document
             if (!newDocument.fragment.rendered)
             {
-                const div = window.document.createElement('div');
-                this.find('#documents').appendChild(div);
-                newDocument.render(div);
+                newDocument.render('#documents');
             }
 
         }).catch(error =>
