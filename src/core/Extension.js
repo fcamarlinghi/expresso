@@ -146,13 +146,6 @@ export default class Extension extends EventEmitter
                 enumerable: true,
             },
 
-            /**
-             * Active slow task.
-             * @type {SlowTask}
-             * @private
-             */
-            _slowTask: { value: null, writable: true },
-
         });
 
         // Initialize the log manager
