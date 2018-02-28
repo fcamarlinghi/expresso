@@ -2,14 +2,13 @@
 @import "~core/ui/css/_common.less";
 .theme(common);
 
-.core-extension label {
-    display: inline-block;
-    margin-right: @baseMargin;
-    vertical-align: middle;
+.core-extension {
+    font-size: @largeFontSize;
+    line-height: @largeLineHeight;
 }
 
-.core-extension *:last-child {
-    margin-right: 0px;
+.core-container {
+    min-height: 30px;
 }
 
 .settings-group, .settings-group-title {
@@ -18,21 +17,38 @@
     }
 }
 
+.settings-group-title {
+    .core-button-base {
+        margin-right: @baseMargin * 2;
+    }
+}
+
+.settings-group {
+    .core-checkbox {
+        margin-left: @baseMargin;
+        margin-right: @baseMargin * 2;
+    }
+}
+
 .settings-toolbar {
     padding: @basePadding;
 }
 
-.settings-group(@theme) {
+.settings-panel(@theme) {
     .theme(@theme);
 
     .@{theme} {
+        .settings-group-title {
+            color: @textTitleColor;
+        }
+
         .settings-group, .settings-group .core-container {
             background: darken(@bodyBackground, 3%);
         }
     }
 }
 
-.settings-group(dark);
-.settings-group(medium-dark);
-.settings-group(light);
-.settings-group(medium-light);
+.settings-panel(dark);
+.settings-panel(medium-dark);
+.settings-panel(light);
+.settings-panel(medium-light);

@@ -13,6 +13,7 @@
         padding: 0 0 0 @basePadding;
         cursor: default;
         min-height: 20px !important;
+        border-radius: @baseBorderRadius;
     }
 }
 
@@ -27,6 +28,7 @@
             &:not(:disabled):active,
             &[data-active=true] {
                 .button-down;
+                border-color: @outlineColor;
             }
 
             &:disabled {

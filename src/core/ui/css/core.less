@@ -33,6 +33,16 @@ p {
     margin-bottom: @baseMargin;
 }
 
+label {
+    .box-sizing;
+    .unselectable;
+    display: inline-block;
+    min-width: 40px;
+    margin-right: @baseMargin;
+    padding-right: @basePadding;
+    vertical-align: middle;
+}
+
 // ********************************************
 // Theme-specific styling (colors, etc.)
 .global(@theme) {
@@ -53,6 +63,12 @@ p {
 
             &:hover {
                 color: @linkColorHover;
+            }
+        }
+
+        label {
+            &[data-disabled="true"] {
+                color: @textDisabledColor;
             }
         }
 

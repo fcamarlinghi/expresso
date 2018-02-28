@@ -4,7 +4,6 @@ import Extension from 'core/Extension.js';
 
 import ExporterDocument from '../exporter-document/exporter-document.js';
 import CorePhotoshopPanel from 'photoshop/ui/photoshop-panel/photoshop-panel.js'
-import './exporter-panel.less';
 
 /**
  * The Expresso Exporter panel.

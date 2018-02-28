@@ -18,9 +18,7 @@
             <core-combobox css="flex" value="{{channels[0]}}" options="{{layers}}" labelkey="name" valuekey="id" tooltip="Layer to use as the 'RGB' channel"></core-combobox>
             <core-icon-button toggleable="true" active="{{channelsLocked}}" icon="lock-open" iconactive="lock" tooltip="Unlock RGB channels"></core-icon-button>
         </div>
-        {{/if}}
-
-        {{#if channelsLocked === false}}
+        {{ else }}
         <div class="core-layout horizontal center">
             <label>[[ targetChannels[0] ]]</label>
             <core-combobox css="flex" value="{{channels[0]}}" options="{{layers}}" labelkey="name" valuekey="id" tooltip="Layer to use as the '[[ targetChannels[0] ]]' channel"></core-combobox>
@@ -45,33 +43,33 @@
     </div>
     <div class="core-container core-layout horizontal center">
         <label>Filters</label>
-        <core-label>
+        <label>
             <core-checkbox value="{{filters.blur}}" tooltip="If selected, blur the target on export"></core-checkbox>
             Blur
-        </core-label>
-        <core-label>
+        </label>
+        <label>
             <core-checkbox value="{{filters.sharpen}}" tooltip="If selected, sharpen the target on export"></core-checkbox>
             Sharpen
-        </core-label>
-        <core-label>
+        </label>
+        <label>
             <core-checkbox value="{{filters.invert}}" tooltip="If selected, invert the target on export"></core-checkbox>
             Invert
-        </core-label>
+        </label>
     </div>
     <div class="core-container core-layout horizontal center">
         <label>Normals</label>
-        <core-label>
+        <label>
             <core-checkbox value="{{normal.normalize}}" tooltip="If selected, normalize on export"></core-checkbox>
             Normalize
-        </core-label>
-        <core-label>
+        </label>
+        <label>
             <core-checkbox value="{{normal.flipX}}" tooltip="If selected, flip the X channel on export"></core-checkbox>
             Flip X
-        </core-label>
-        <core-label>
+        </label>
+        <label>
             <core-checkbox value="{{normal.flipY}}" tooltip="If selected, flip the Y channel on export"></core-checkbox>
             Flip Y
-        </core-label>
+        </label>
     </div>
     <div class="core-container core-layout horizontal center">
         <core-textbox css="flex" value="{{path}}" disabled="{{pathLocked}}" tooltip="If specified, overrides the global export folder for the current target" placeholder="[Override export folder...]"></core-textbox>
