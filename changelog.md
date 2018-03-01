@@ -1,6 +1,10 @@
 # What's New
 
 ## Exporter
+### 0.5.1
+- Fixed various issues preventing the extension from working on CC 2015.
+- Minor UI fixes and improvements.
+
 ### 0.5.0
 - Major rewrite of the old extension.
 - Improved export capabilities:
@@ -9,7 +13,7 @@
     - Exporting documents with non power-of-two sizes is now supported.
 - New dropdown menu makes it easier to select the group you want to export by providing the ability to search for it by name (or using regular expressions). Should help when working with complex PSDs.
 - Slightly faster exports thanks to a new export engine. The panel now uses Photoshop Remote Server to connect to Photoshop instead of relying on a Generator plugin, which proved to be buggy and hard to maintain.
-- Updated UI themes to match the ones introduced in CC 2015.
+- Updated UI themes to match the ones introduced in CC 2015.5.
 - Supports Photoshop CC 2015, CC 2015.5, CC2017 and CC2018. Dropped support for previous versions.
 
 ## Older Versions

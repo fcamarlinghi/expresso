@@ -3,7 +3,7 @@
 
 // Exporter info
 const info = {
-    version: '0.5.0',
+    version: '0.5.1',
     author: 'Francesco Camarlinghi',
     homepage: 'http://minifloppy.it/portfolio/expresso/',
 };
