@@ -5,7 +5,7 @@
 const info = {
     version: '0.5.0',
     author: 'Francesco Camarlinghi',
-    homepage: 'http://minifloppy.it/expresso',
+    homepage: 'http://minifloppy.it/portfolio/expresso/',
 };
 
 // Exporter extension configuration
