@@ -96,16 +96,16 @@ export default CoreField.extend({
         }
     },
 
-    keydownAction: function (e)
+    keydownAction: function (event)
     {
         if (this.get('disabled') || this.get('readonly'))
         {
             return;
         }
 
-        e.original.stopPropagation();
+        event.stopPropagation();
 
-        if (e.original.keyCode === 13)
+        if (event.keyCode === 13)
         {
             this.field.blur();
         }

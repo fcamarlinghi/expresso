@@ -76,7 +76,7 @@ export default CoreField.extend({
         this.set('focused', false);
     },
 
-    downAction: function (e)
+    downAction: function ()
     {
         if (this.get('disabled'))
         {
@@ -87,7 +87,7 @@ export default CoreField.extend({
         this.set('focused', false);
     },
 
-    clickAction: function (e)
+    clickAction: function (event)
     {
         if (this.get('disabled'))
         {
@@ -97,17 +97,17 @@ export default CoreField.extend({
         // HACK: when core-checkbox is wrapped into a <label>
         // we need to filter the location clicked by the user
         // to avoid double toggling the checkbox
-        if (e.original.target !== this.field)
+        if (event.target !== this.field)
         {
             // This is based on the fact that when a label is clicked,
             // the event target is actually the checkbox input field
-            e.original.preventDefault();
+            event.preventDefault();
             this.toggle('value');
             this.fire('toggle', this.get('value'));
         }
     },
 
-    upAction: function (e)
+    upAction: function ()
     {
         if (this.get('disabled'))
         {
