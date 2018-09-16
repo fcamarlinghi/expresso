@@ -111,15 +111,31 @@ export default CoreDropdown.extend({
         {
             // Filter out the results
             const labelkey = this.get('labelkey'),
-                paddingkey = this.get('paddingkey'),
+                paddingkey = this.get('paddingkey');
+
+            let regex = null;
+            try
+            {
                 regex = new RegExp(query, 'gi');
+            }
+            catch (error)
+            {
+                // We'll fall back to a simple text search
+            }
 
             let parents = [];
 
             for (let i = 0; i < options.length; i++)
             {
                 let option = options[i];
-                option[visiblekey] = (option[labelkey] !== separator) && (option[labelkey].search(regex) > -1);
+                if (option[labelkey] !== separator)
+                {
+                    option[visiblekey] = regex ? (option[labelkey].search(regex) > -1) : (option[labelkey].indexOf(regex) > -1);
+                }
+                else
+                {
+                    option[visiblekey] = false;
+                }
 
                 // Remember the parents of this option so they get shown as-well
                 if (parents.length === 0 || parents[parents.length - 1][paddingkey] < option[paddingkey])
