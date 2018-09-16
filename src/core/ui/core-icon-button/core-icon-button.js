@@ -47,7 +47,7 @@ export default CoreButton.extend({
             const disabledIcon = this.get('icondisabled'),
                 activeIcon = this.get('iconactive'),
                 disabled = this.get('disabled'),
-                active = (this.field === document.activeElement) || this.get('active');
+                active = this.get('active');
     
             let icon = this.get('icon');
             if (disabled && disabledIcon.length)

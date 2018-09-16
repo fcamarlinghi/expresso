@@ -2,11 +2,11 @@
 'use strict';
 
 const Promise = require('bluebird'),
-      extend = require('extend'),
-      path = require('path'),
-      webpack = require('webpack'),
-      cpy = require('cpy'),
-      rimraf = Promise.promisify(require('rimraf'));
+    extend = require('extend'),
+    path = require('path'),
+    webpack = require('webpack'),
+    cpy = require('cpy'),
+    rimraf = Promise.promisify(require('rimraf'));
 
 const run = function (mode)
 {
@@ -51,19 +51,22 @@ const run = function (mode)
                     'exporter-settings': './src/exporter-settings/index.js',
                 },
 
+                optimization: {
+                    splitChunks: {
+                        chunks: 'all',
+                        name: 'exporter-core',
+                        cacheGroups: {
+                            vendor: false,
+                        },
+                    },
+                },
+
             });
 
             extend(webpackConfig.plugins[0].definitions, {
                 VERSION: JSON.stringify(cepyConfig.builds['exporter'].extensions[0].version),
                 WEBSITE: JSON.stringify(cepyConfig.builds['exporter'].extensions[0].homepage),
             });
-
-            webpackConfig.plugins.push(
-                new webpack.optimize.CommonsChunkPlugin({
-                    name: 'exporter-core',
-                    filename: 'exporter/exporter-core.js',
-                })
-            );
 
             // Run the compiler
             const compiler = webpack(webpackConfig),

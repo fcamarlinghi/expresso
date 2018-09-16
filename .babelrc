@@ -1,9 +1,9 @@
 {
     "presets": [
-        ["env", { "targets": { "chrome": "27" } }]
+        ["@babel/env", { "targets": { "chrome": "27" } }]
     ],
     "plugins": [
-        "transform-strict-mode", 
-        ["transform-es2015-for-of", { "loose": true }]
+        "@babel/transform-strict-mode", 
+        ["@babel/plugin-transform-for-of", { "loose": true }]
     ]
 }
