@@ -56,6 +56,10 @@ export default CorePhotoshopPanel.extend({
                 }
             }
         });
+
+        // Support calling from ExtendScript, other extensions or keyboard shortcuts
+        CEP.addEventListener('com.expresso.exporter.exportAll', () => { this.exportAll(); });
+        CEP.addEventListener('com.expresso.exporter.exportEnabled', () => { this.exportEnabled(); });
     },
 
     /** 

@@ -3,7 +3,7 @@
 
 // Exporter info
 const info = {
-    version: '0.5.1',
+    version: '0.6.0',
     author: 'Francesco Camarlinghi',
     homepage: 'http://minifloppy.it/portfolio/expresso/',
 };
@@ -73,6 +73,10 @@ const config = Object.freeze({
         output: `release/expresso_exporter_${info.version}.zxp`,
         timestampURL: 'http://timestamp.digicert.com/',
         certificate: require('./distrib/cepy.certificate.js'),
+        files: [
+            { source: 'scripts/**/*', options: { cwd: 'bundle/', parents: true, } }
+        ],
+        mxi: 'bundle/manifest.mxi.xml',
     }
 });
 

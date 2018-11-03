@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<macromedia-extension id="{%= bundle.id %}" name="{%= bundle.name %}" version="{%= bundle.version %}" requires-restart="true">
+  <author name="{%= bundle.author %}" />
+  <description><![CDATA[{%= bundle.description %}]]></description>
+  <license-agreement><![CDATA[{%= bundle.license %}]]></license-agreement>
+  <products>
+    {% productList.forEach(function (product) { %}
+    {%= product %}
+    {% }); %}
+  </products>
+  <files>
+    {% fileList.forEach(function (file) { %}
+    {%= file %}
+    {% }); %}
+    <file source="scripts/" destination="$scripts/" file-type="ordinary" />
+  </files>
+</macromedia-extension>
