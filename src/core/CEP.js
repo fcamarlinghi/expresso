@@ -522,7 +522,7 @@ export default class CEP
         // Get valid events from arguments
         for (let i = 0; i < arguments.length; i++)
         {
-            if (typeof arguments[i] === 'object')
+            if (typeof arguments[i] === 'object' && arguments[i].keyCode > 0)
             {
                 events.push(extend({
 
