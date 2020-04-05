@@ -5,7 +5,6 @@
                 "advanced",
                 {
                     "autoprefixer": {
-                        "browsers": [ "Chrome >= 27" ],
                         "add": true
                     },
                     "reduceIdents": true

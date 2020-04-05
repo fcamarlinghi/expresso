@@ -1,7 +1,6 @@
 ﻿
 import path from 'path';
 import fs from 'fs';
-import pathIsAbsolute from 'path-is-absolute';
 import Logger from './Logger.js';
 
 // Promisify some Node functions
@@ -262,4 +261,4 @@ FileSystem.getAbsolutePath = path.resolve;
  * @return {Boolean} True if the path is absolute; otherwise, false.
  * @remarks This is a polyfill for the 'path.isAbsolute' function that is missing in Node 0.8.22.
  */
-FileSystem.isAbsolutePath = pathIsAbsolute;
+FileSystem.isAbsolutePath = path.isAbsolute;
