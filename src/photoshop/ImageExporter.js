@@ -100,9 +100,10 @@ export default class ImageExporter
     /**
      * Exports the specified targets out of Photoshop.
      * @param {ExportTarget[]} targets Targets to export.
+     * @param {ExportOptions[]} options Export options.
      * @return {Promise} A promise that is fullfilled once all the targets have been exported.
      */
-    run(targets)
+    run(targets, options)
     {
         const startTime = performance.now();
 
@@ -436,7 +437,7 @@ export default class ImageExporter
             // 6 - Let ImageMagick process the outputs in parallel
             return Promise.all(outputs.map((output) =>
             {
-                const args = this._getConvertInputArgs([], output);
+                const args = this._getConvertInputArgs(output, options);
 
                 if (output.target.format === FORMATS.RAW)
                 {
@@ -471,11 +472,12 @@ export default class ImageExporter
      * Gets input arguments for ImageMagick.
      * @private
      */
-    _getConvertInputArgs(args, output)
+    _getConvertInputArgs(output, options)
     {
         const target = output.target,
             hasAlpha = (target.channels[3] > -1);
 
+        var args = [];
         args.push(
             // In order to know the pixel boundaries, ImageMagick needs to know the resolution and pixel depth
             // Must be set BEFORE 'rgba:-' and other arguments
@@ -579,14 +581,14 @@ export default class ImageExporter
         }
 
         // Output format
-        return this._getConvertOutputArgs(args, target.format, hasAlpha);
+        return this._getConvertOutputArgs(args, target.format, hasAlpha, options);
     }
 
     /**
      * Gets output arguments for ImageMagick.
      * @private
      */
-    _getConvertOutputArgs(args, format, hasAlpha)
+    _getConvertOutputArgs(args, format, hasAlpha, options)
     {
         switch (format)
         {
@@ -617,6 +619,10 @@ export default class ImageExporter
                 break;
 
             case FORMATS.TGA:
+                if (options && options.enableTGACompression)
+                {
+                    args.push('-compress', 'RLE');
+                }
                 args.push('tga:-');
                 break;
 

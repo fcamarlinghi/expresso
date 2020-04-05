@@ -238,9 +238,10 @@ export default CorePhotoshopDocument.extend({
             }).then(documentPath =>
             {
                 // Export targets
+                const options = this.getExportOptions();
                 let targets = JSON.parse(JSON.stringify(this.get('targets'))); // Poor man copy
                 this.resolveExportPaths(targets, documentPath);
-                return Extension.get().imageExporter.run(targets);
+                return Extension.get().imageExporter.run(targets, options);
 
             }).catch(error =>
             {
@@ -282,10 +283,11 @@ export default CorePhotoshopDocument.extend({
             }).then(documentPath =>
             {
                 // Export targets (only the enabled ones)
+                const options = this.getExportOptions();
                 let targets = JSON.parse(JSON.stringify(this.get('targets'))); // Poor man copy
                 targets = targets.filter(function (target) { return target.enabled; });
                 this.resolveExportPaths(targets, documentPath);
-                return Extension.get().imageExporter.run(targets);
+                return Extension.get().imageExporter.run(targets, options);
 
             }).catch(error =>
             {
@@ -333,9 +335,10 @@ export default CorePhotoshopDocument.extend({
             }).then(documentPath =>
             {
                 // Export specified target
+                const options = this.getExportOptions();
                 let targets = [JSON.parse(JSON.stringify(this.get('targets')[index]))]; // Poor man copy
                 this.resolveExportPaths(targets, documentPath);
-                return Extension.get().imageExporter.run(targets);
+                return Extension.get().imageExporter.run(targets, options);
 
             }).catch(error =>
             {
@@ -364,7 +367,7 @@ export default CorePhotoshopDocument.extend({
         // Get document folder, filename without extension and resolve global
         // export path as it might come in handy while building export targets
         let basePath = (documentPath === null) ? '' : nodePath.dirname(documentPath),
-            documentFileName = (documentPath === null) ? 'UnsavedDocument' : nodePath.basename(documentPath, '.psd');
+            documentFileName = (documentPath === null) ? 'UnsavedDocument' : nodePath.basename(documentPath, nodePath.extname(documentPath));
 
         if (Extension.get().settings.get('useLowerCaseFileNames'))
         {
@@ -433,6 +436,19 @@ export default CorePhotoshopDocument.extend({
             logger.error(msg);
 
         });
+    },
+
+    /**
+     * Gets the export options from plugin settings.
+     * @private
+     */
+    getExportOptions: function ()
+    {
+        const settings = Extension.get().settings;
+        
+        return {
+            enableTGACompression: settings.get('enableTGACompression')
+        };
     },
 
 });

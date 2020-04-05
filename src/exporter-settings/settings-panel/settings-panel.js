@@ -16,6 +16,7 @@ export default Ractive.extend({
         settings: null,
 
         generalSettingsVisible: true,
+        tgaSettingsVisible: true,
 
     },
 

@@ -2,5 +2,6 @@
     "useLowerCaseExtension": true,
     "useLowerCaseFileNames": false,
     "saveOriginalAfterExport": false,
-    "useRelativePaths": true
+    "useRelativePaths": true,
+    "enableTGACompression": false
 }
