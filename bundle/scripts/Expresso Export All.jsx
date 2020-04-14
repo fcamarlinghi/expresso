@@ -11,16 +11,16 @@ try
 
     // Trigger event
     const eventObj = new CSXSEvent(); 
-    eventObj.type='com.expresso.exporter.exportAll'; 
-    eventObj.data=''; 
+    eventObj.type = 'com.expresso.exporter.exportAll'; 
+    eventObj.data = ''; 
     eventObj.dispatch();
 }
 catch (error) {}
 finally
 {
     // Unload PlugPlug
-    if (typeof ExternalObject.AdobeXMPScript === 'object')
+    if (typeof ExternalObject.PlugPlugExternalObject === 'object')
     {
-        ExternalObject.AdobeXMPScript = undefined;
+        ExternalObject.PlugPlugExternalObject = undefined;
     }
 }
