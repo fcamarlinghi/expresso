@@ -1,6 +1,27 @@
 # What's New
 
 ## Exporter
+### 0.6.0
+- Added support for keyboard shortcuts: *Export All* and *Export Enabled*. They can be configured inside the *Edit &rarr; Keyboard Shortcuts* dialog, in the *File &rarr; Scripts* section.
+- The same shortcuts are also available in the *File &rarr; Scripts* menu.
+- Added support for exporting compressed TGA files. It can be enabled in settings (default behavior is unchanged).
+- Added support for triggering export from ExtendScript, useful to integrate Expresso into your scripts.
+```js
+// Load PlugPlug
+ExternalObject.PlugPlugExternalObject = new ExternalObject('lib:PlugPlugExternalObject');
+
+// Trigger export
+const eventObj = new CSXSEvent(); 
+eventObj.type = 'com.expresso.exporter.exportAll'; // Or 'com.expresso.exporter.exportEnabled'
+eventObj.data = ''; 
+eventObj.dispatch();
+
+// Unload PlugPlug
+ExternalObject.PlugPlugExternalObject = undefined;
+```
+- Fixed naming convention when exporting from non PSD files (i.e. PSB).
+- Fixed error when trying to export enabled targets and no target is actually enabled.
+
 ### 0.5.1
 - Fixed various issues preventing the extension from working on CC 2015.
 - Minor UI fixes and improvements.
