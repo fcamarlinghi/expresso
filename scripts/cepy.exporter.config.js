@@ -46,6 +46,10 @@ const config = Object.freeze({
                         min: { width: 255, height: 200 },
                         max: { width: 2200, height: 2200 },
                     },
+                    lifecycle: {
+                        autoVisible: false,
+                        events: ['applicationActivate'],
+                    },
                     mainPath: './exporter/main.html',
                     cefParameters: ['--enable-nodejs', '--mixed-context'],
                 },
