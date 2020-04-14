@@ -282,11 +282,17 @@ export default CorePhotoshopDocument.extend({
 
             }).then(documentPath =>
             {
-                // Export targets (only the enabled ones)
-                const options = this.getExportOptions();
+                // Export targets (only enabled ones)
                 let targets = JSON.parse(JSON.stringify(this.get('targets'))); // Poor man copy
                 targets = targets.filter(function (target) { return target.enabled; });
+
+                if (targets.length === 0)
+                {
+                    throw new Error('No target selected.');
+                }
+
                 this.resolveExportPaths(targets, documentPath);
+                const options = this.getExportOptions();
                 return Extension.get().imageExporter.run(targets, options);
 
             }).catch(error =>
