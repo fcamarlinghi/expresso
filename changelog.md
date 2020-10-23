@@ -1,6 +1,9 @@
 # What's New
 
 ## Exporter
+### 0.6.1
+- Added support for Photoshop CC 2021.
+
 ### 0.6.0
 - Added configurable keyboard shortcuts for the *Export All* and *Export Enabled* actions. They can be customized inside the *Edit &rarr; Keyboard Shortcuts* dialog, in the *File &rarr; Scripts* section.
 - The same shortcuts are also available in the *File &rarr; Scripts* menu.
