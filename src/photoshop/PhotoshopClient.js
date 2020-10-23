@@ -94,6 +94,24 @@ function round(value, decimals)
     return Math.round(factor * value) / factor;
 }
 
+// Needed to fix "function not found" errors in CC 2021
+// See: https://github.com/Adobe-CEP/CEP-Resources/blob/master/CEP_10.x/Documentation/CEP%2010.0%20HTML%20Extension%20Cookbook.md#user-content-migration-from-cep-9-to-cep-10
+(function __compat()
+{
+    var Duplex = require('stream').Duplex;
+    var Writable = require('stream').Writable;
+
+    const keys = Object.keys(Writable.prototype);
+    for (var v = 0; v < keys.length; v++)
+    {     
+        const method = keys[v];
+        if (!Duplex.prototype[method])
+        {
+            Duplex.prototype[method] = Writable.prototype[method];
+        }
+    }
+})();
+
 /**
  * PhotoshopClient
  */
