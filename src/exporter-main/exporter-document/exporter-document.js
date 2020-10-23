@@ -275,7 +275,7 @@ export default CorePhotoshopDocument.extend({
         {
             return Promise.try(() =>
             {
-                SlowTask.start('Exporting selected targets...');
+                SlowTask.start('Exporting enabled targets...');
 
                 // Get document path
                 return Extension.get().photoshop.getDocumentPath();
