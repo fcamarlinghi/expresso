@@ -17,7 +17,7 @@
     "@babel/plugin-transform-for-of": "^7.12.1",
     "@babel/plugin-transform-strict-mode": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
-    "babel-loader": "^8.1.0",
+    "babel-loader": "^8.2.1",
     "cepy": "^0.2.2",
     "cpy": "^8.1.1",
     "css-loader": "^3.6.0",
