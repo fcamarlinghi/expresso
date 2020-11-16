@@ -1,6 +1,10 @@
 # What's New
 
 ## Exporter
+### 0.6.2
+- Mac: fixed unresponsive UI.
+- Mac: fixed invalid path being returned by *Open Folder* dialogs.
+
 ### 0.6.1
 - Added support for Photoshop CC 2021.
 
