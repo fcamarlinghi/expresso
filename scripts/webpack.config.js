@@ -67,7 +67,7 @@ const getConfig = function (mode, folder)
         extend(config, {
             mode: 'development',
             watch: true,
-            devtool: 'source-map',
+            devtool: 'eval-source-map',
         });
 
         config.plugins[0].definitions.RELEASE = false;

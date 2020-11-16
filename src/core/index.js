@@ -38,6 +38,15 @@ import CoreToolbar from './ui/core-toolbar/core-toolbar.js';
 import CoreTooltip from './ui/core-tooltip/core-tooltip.js';
 import CoreVisible from './ui/core-visible/core-visible.js';
 
+// Workaround for https://github.com/fcamarlinghi/expresso/issues/13
+// It seems PointerEvent support was added to CEP 9/Chromium 61 on Mac, but it doesn't
+// work correctly (i.e. 'pointerdown' event never fires). For now simply undefine
+// it so that ractive-tap falls back to emulating it (previous behavior)
+if (process.platform === 'darwin')
+{
+    window.PointerEvent = undefined;
+}
+
 import RactiveTap from 'ractive-events-tap';
 
 // Ractive setup

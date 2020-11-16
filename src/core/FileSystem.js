@@ -177,6 +177,12 @@ export default class FileSystem
             }
             else
             {
+                // On Mac, returned path starts with 'file://'
+                if (outPath.indexOf('file://') === 0)
+                {
+                    outPath = outPath.substr(7);
+                }
+
                 // Eventually convert the output path to relative
                 // On Windows, do not allow use of relative paths between different drives
                 if (!!convertToRelative
@@ -227,6 +233,12 @@ export default class FileSystem
             }
             else
             {
+                // On Mac, returned path starts with 'file://'
+                if (outPath.indexOf('file://') === 0)
+                {
+                    outPath = outPath.substr(7);
+                }
+
                 // Eventually convert the output path to relative
                 // On Windows, do not allow use of relative paths between different drives
                 if (!!convertToRelative
