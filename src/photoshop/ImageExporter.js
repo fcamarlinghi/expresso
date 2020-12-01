@@ -526,9 +526,9 @@ export default class ImageExporter
                 break;
         }
 
+        // Set alpha back on if needed
         if (hasAlpha)
         {
-            // Set alpha back on if needed, so filters will be applied to it, too
             args.push('-alpha', 'on');
         }
 
@@ -537,6 +537,7 @@ export default class ImageExporter
 
         if (filters)
         {
+            args.push('-channel', 'rgba');
             if (filters.blur === true)
             {
                 args.push('-blur', '1x1');
@@ -551,6 +552,7 @@ export default class ImageExporter
             {
                 args.push('-negate');
             }
+            args.push('+channel');
         }
 
         // Normal
