@@ -1,6 +1,9 @@
 # What's New
 
 ## Exporter
+### 0.6.3
+- Fixed alpha incorrectly masking out RGB when exporting to TGA with Blur or Sharpen enabled (see [issue #14](https://github.com/fcamarlinghi/expresso/issues/14)).
+
 ### 0.6.2
 - Mac: fixed unresponsive UI.
 - Mac: fixed invalid path being returned by *Open Folder* dialogs.
