@@ -1,6 +1,9 @@
 # What's New
 
 ## Exporter
+### 0.6.4
+- Display human readable error messages when trying to export with invalid settings.
+
 ### 0.6.3
 - Fixed alpha incorrectly masking out RGB when exporting to TGA with Blur or Sharpen enabled (see [issue #14](https://github.com/fcamarlinghi/expresso/issues/14)).
 
