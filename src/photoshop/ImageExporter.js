@@ -130,6 +130,8 @@ export default class ImageExporter
                 throw new Error('No export targets specified, nothing to export.');
             }
 
+            logger.info('Preparing to export... Targets:', JSON.stringify(targets), 'Options:', JSON.stringify(options));
+
         }).then(() =>
         {
             // 2 - Get document info
@@ -153,6 +155,8 @@ export default class ImageExporter
             documentInfo.height = rawDocumentInfo.bounds.bottom;
             // NOTE: for the moment always assume 8-bit depth as Pixmaps only support that
             //documentInfo.depth = rawDocumentInfo.depth;
+
+            logger.info('Got document info:', JSON.stringify(rawDocumentInfo));
 
             // We now have enough data to calculate the needed buffer size
             pixmapBufferSize = (documentInfo.width * documentInfo.height) * ((documentInfo.depth / 8) * 4);
@@ -222,7 +226,7 @@ export default class ImageExporter
                 }
 
                 // Setup an output for this target which is now guarateed to be valid
-                outputs.push({
+                const newOutput = {
                     documentInfo: documentInfo,
                     target: target,
                     pixels: null,
@@ -235,7 +239,11 @@ export default class ImageExporter
 
                         return array;
                     }, []),
-                });
+                };
+
+                logger.info('Export target ready for export. Target:', JSON.stringify(newOutput.target), 
+                    'Layers:', JSON.stringify(newOutput.layers));
+                outputs.push(newOutput);
             }
 
         }).then(() =>
@@ -251,6 +259,8 @@ export default class ImageExporter
                     {
                         pixmaps[channel] = null;
 
+                        logger.info('Requesting pixmap for Layer:', channel, 'Document:', documentInfo.id);
+
                         return this.photoshop.getPixmap(documentInfo.id, channel, {
                             includeAncestorMasks: false,
                             includeAdjustors: false,
@@ -260,14 +270,15 @@ export default class ImageExporter
                         }).then((pixmap) =>
                         {
                             // Eventually apply some processing
-                            let needsProcessing = false;
+                            let needsPadding = false;
+                            let needsAlphaInterpolation = false;
 
                             if (pixmap.height !== documentInfo.height || pixmap.width !== documentInfo.width)
                             {
                                 // If the resulting pixmap is smaller than the document size then the exported layer
                                 // didn't extend to document bounds. In this case padding should be applied to the
                                 // pixmap so it ends up fitting correctly into the exported files
-                                needsProcessing = true;
+                                needsPadding = true;
                             }
                             else
                             {
@@ -277,13 +288,17 @@ export default class ImageExporter
                                 {
                                     if (pixmap.pixels[i] < 255)
                                     {
-                                        needsProcessing = true;
+                                        needsAlphaInterpolation = true;
                                         break;
                                     }
                                 }
                             }
 
-                            if (needsProcessing)
+                            logger.info('Got pixmap for Layer', channel, 'Document:', documentInfo.id,
+                                'Width:', pixmap.width, 'Height:', pixmap.height,
+                                'NeedsPadding:', needsPadding, 'NeedsAlphaInterpolation:', needsAlphaInterpolation);
+
+                            if (needsPadding || needsAlphaInterpolation)
                             {
                                 const source = pixmap.pixels,
                                     sourceBounds = pixmap.bounds,
@@ -355,6 +370,9 @@ export default class ImageExporter
             // 5 - We have all the pixmaps, now we should merge them together based
             // on target channel data
             // NOTE: input and output are ARGB, keep that in mind!
+
+            logger.info('Got all pixmaps, merging output...');
+
             for (let targetIndex = 0; targetIndex < targets.length; targetIndex++)
             {
                 const target = targets[targetIndex];
@@ -434,6 +452,8 @@ export default class ImageExporter
 
         }).then(() =>
         {
+            logger.info('Saving output images...');
+
             // 6 - Let ImageMagick process the outputs in parallel
             return Promise.all(outputs.map((output) =>
             {
@@ -661,6 +681,7 @@ export default class ImageExporter
             });
 
             // Launch convert
+            logger.info('Launching "convert" for', filePath, 'at', this.photoshop.paths.convert, 'with args:', JSON.stringify(args));
             const convertProc = spawn(this.photoshop.paths.convert, args);
 
             const onImageMagickError = (err) =>
@@ -718,6 +739,7 @@ export default class ImageExporter
                 }
                 else
                 {
+                    logger.info('Saved', filePath);
                     resolve();
                 }
             });

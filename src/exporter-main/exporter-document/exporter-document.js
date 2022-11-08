@@ -189,7 +189,7 @@ export default CorePhotoshopDocument.extend({
             }
 
             folder = nodePath.join(basePath, savePath);
-            logger.debug(`Export folder is relative to document path ${folder} (${savePath})`);
+            logger.info(`Export folder is relative to document path ${folder} (${savePath})`);
         }
         else
         {

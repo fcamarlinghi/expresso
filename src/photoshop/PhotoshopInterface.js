@@ -101,7 +101,7 @@ export default class PhotoshopInterface extends EventEmitter
      */
     connect(options)
     {
-        logger.debug('Connecting to Photoshop...');
+        logger.info('Connecting to Photoshop...');
 
         return new Promise((resolve, reject) =>
         {

@@ -652,12 +652,12 @@ export default class CEP
 
             }, []);
 
-            logger.debug('Interesting key events:', events);
+            logger.debug('Interested in key events:', events);
             csInterface.registerKeyEventsInterest(JSON.stringify(events));
         }
         else
         {
-            logger.debug('Interesting key events: none.');
+            logger.debug('Removing interest in key events.');
             csInterface.registerKeyEventsInterest('');
         }
     }

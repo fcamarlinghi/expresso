@@ -155,11 +155,11 @@ export default CoreBase.extend({
         {
             if (String.isEmpty(data))
             {
-                logger.debug('Loaded XMP: no data found.');
+                logger.info('No XMP data found.');
             }
             else
             {
-                logger.debug('Loaded XMP:', data);
+                logger.info('Loaded XMP:', data);
             }
 
             // Parse data (deserialize may return a promise)
@@ -212,7 +212,7 @@ export default CoreBase.extend({
 
         }).then(data =>
         {
-            logger.debug('Saved XMP:', data);
+            logger.info('Saved XMP:', data);
             this.fire('saved', this);
 
         }).catch(error =>
