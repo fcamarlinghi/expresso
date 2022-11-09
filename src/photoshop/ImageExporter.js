@@ -677,7 +677,7 @@ export default class ImageExporter
             const fileStream = fs.createWriteStream(filePath);
             fileStream.on('error', (err) =>
             {
-                reject(`Could not create write stream for file ${filePath}. ${err}`);
+                reject(new Error(`Failed to write file ${filePath}. ${err}`));
             });
 
             // Launch convert
