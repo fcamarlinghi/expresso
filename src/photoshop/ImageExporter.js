@@ -672,6 +672,7 @@ export default class ImageExporter
         return new Promise((resolve, reject) =>
         {
             const filePath = output.target.path;
+            let stderr = '';
 
             // Setup a file stream to the output file
             const fileStream = fs.createWriteStream(filePath);
@@ -679,57 +680,58 @@ export default class ImageExporter
             {
                 reject(new Error(`Failed to write file ${filePath}. ${err}`));
             });
-
-            // Launch convert
-            logger.info('Launching "convert" for', filePath, 'at', this.photoshop.paths.convert, 'with args:', JSON.stringify(args));
-            const convertProc = spawn(this.photoshop.paths.convert, args);
-
-            const onImageMagickError = (err) =>
+            fileStream.on('open', () =>
             {
-                try
+                // Launch convert
+                logger.info('Launching "convert" for', filePath, 'at', this.photoshop.paths.convert, 'with args:', JSON.stringify(args));
+                const convertProc = spawn(this.photoshop.paths.convert, args);
+    
+                const onImageMagickError = (err) =>
                 {
-                    fileStream.close();
-                }
-                catch (e)
-                {
-                    logger.error('Error when closing file stream', e);
-                }
-
-                try
-                {
-                    if (fs.existsSync(filePath))
+                    try
                     {
-                        fs.unlinkSync(filePath);
+                        fileStream.close();
                     }
+                    catch (e)
+                    {
+                        logger.error('Error when closing file stream', e);
+                    }
+    
+                    try
+                    {
+                        if (fs.existsSync(filePath))
+                        {
+                            fs.unlinkSync(filePath);
+                        }
+                    }
+                    catch (e)
+                    {
+                        logger.error('Error when deleting file', filePath, e);
+                    }
+    
+                    reject(new Error(err));
                 }
-                catch (e)
+    
+                // Handle errors
+                convertProc.on('error', (err) => { onImageMagickError(`Error with convert: ${err}`); });
+                convertProc.stdin.on('error', (err) => { onImageMagickError(`Error with convert STDIN: ${err}`); });
+                convertProc.stdout.on('error', (err) => { onImageMagickError(`Error with convert STDOUT: ${err}`); });
+                convertProc.stderr.on('error', (err) => { onImageMagickError(`Error with convert STDERR: ${err}`); });
+                // fileStream.on('error', (err) => { onImageMagickError(`Error with stream to temporary file: ${err}`); });
+    
+                // Capture STDERR
+                convertProc.stderr.on('data', (chunk) =>
                 {
-                    logger.error('Error when deleting file', filePath, e);
-                }
-
-                reject(new Error(err));
-            }
-
-            // Handle errors
-            convertProc.on('error', (err) => { onImageMagickError(`Error with convert: ${err}`); });
-            convertProc.stdin.on('error', (err) => { onImageMagickError(`Error with convert STDIN: ${err}`); });
-            convertProc.stdout.on('error', (err) => { onImageMagickError(`Error with convert STDOUT: ${err}`); });
-            convertProc.stderr.on('error', (err) => { onImageMagickError(`Error with convert STDERR: ${err}`); });
-            fileStream.on('error', (err) => { onImageMagickError(`Error with stream to temporary file: ${err}`); });
-
-            // Capture STDERR
-            let stderr = '';
-            convertProc.stderr.on('data', (chunk) =>
-            {
-                stderr += chunk;
+                    stderr += chunk;
+                });
+    
+                // Pipe convert's output (the produced image) into the file stream
+                convertProc.stdout.pipe(fileStream);
+    
+                // Send the pixmap to convert
+                convertProc.stdin.end(output.pixels);
             });
-
-            // Pipe convert's output (the produced image) into the file stream
-            convertProc.stdout.pipe(fileStream);
-
-            // Send the pixmap to convert
-            convertProc.stdin.end(output.pixels);
-
+    
             // Wait until convert is done (pipe from the last utility will close the stream)
             fileStream.on('close', () =>
             {
