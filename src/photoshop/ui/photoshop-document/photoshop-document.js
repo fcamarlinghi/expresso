@@ -155,11 +155,11 @@ export default CoreBase.extend({
         {
             if (String.isEmpty(data))
             {
-                logger.info('No XMP data found.');
+                logger.info('No XMP data found in document', this.get('documentId'));
             }
             else
             {
-                logger.info('Loaded XMP:', data);
+                logger.info('Loaded XMP data in document', this.get('documentId'), 'Data:', data);
             }
 
             // Parse data (deserialize may return a promise)
@@ -212,7 +212,7 @@ export default CoreBase.extend({
 
         }).then(data =>
         {
-            logger.info('Saved XMP:', data);
+            logger.info('Saved XMP for document', this.get('documentId'), '. Data:', data);
             this.fire('saved', this);
 
         }).catch(error =>

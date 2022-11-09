@@ -206,6 +206,8 @@ export default Ractive.extend({
      */
     activeDocumentChanged: function (newDocumentId)
     {
+        logger.info('Active document changed, new document id:', newDocumentId);
+
         Promise.try(() =>
         {
             SlowTask.start('Loading document...');
@@ -240,6 +242,7 @@ export default Ractive.extend({
                 newDocument.fire('opened', newDocument);
 
                 // Load document data
+                logger.info('Loading layers and data for document', newDocumentId);
                 return Promise.all([newDocument.fetchLayers(), newDocument.load()]).then(() => newDocument);
             }
 
@@ -271,6 +274,7 @@ export default Ractive.extend({
 
         }).finally(() =>
         {
+            logger.info('Panel switched to document', newDocumentId);
             SlowTask.complete();
         });
     },
@@ -281,6 +285,8 @@ export default Ractive.extend({
      */
     documentClosed: function (closedDocumentId)
     {
+        logger.info('Document closed', closedDocumentId);
+
         Promise.try(() =>
         {
             SlowTask.start(1, 'Cleaning up...');
@@ -320,6 +326,7 @@ export default Ractive.extend({
 
         }).finally(() =>
         {
+            logger.info('Removed document', closedDocumentId, 'from panel');
             SlowTask.complete();
         });
     },
