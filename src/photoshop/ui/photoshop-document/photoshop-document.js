@@ -82,6 +82,9 @@ export default CoreBase.extend({
     /** Timeout handle for layers updates. */
     layersUpdateHandle: null,
 
+    /** Promise created during the last call to fetchLayers. */
+    fetchLayersPromise: null,
+
     /**
      * Called on component initialization.
      * @private
@@ -105,6 +108,13 @@ export default CoreBase.extend({
      */
     teardown: function ()
     {
+        if (this.fetchLayersPromise)
+        {
+            // Cancel any pending request. The Photoshop document has likely been 
+            // closed and the request will likely fail
+            this.fetchLayersPromise.cancel();    
+        }
+
         this.off('imageChanged');
         this._super();
     },
@@ -281,8 +291,14 @@ export default CoreBase.extend({
             this.layersUpdateHandle = null;
         }
 
+        if (this.fetchLayersPromise)
+        {
+            // Cancel the previous request
+            this.fetchLayersPromise.cancel();    
+        }
+
         // We're interested in all layer sets
-        return Extension.get().photoshop.getDocumentInfo(this.get('documentId'), {
+        this.fetchLayersPromise = Extension.get().photoshop.getDocumentInfo(this.get('documentId'), {
 
             compInfo: false,
             imageInfo: false,
@@ -301,6 +317,8 @@ export default CoreBase.extend({
             this.set('layers', layers, { compare: 'id', shuffle: true });
             return this.get('layers');
         });
+
+        return this.fetchLayersPromise;
     },
 
 });

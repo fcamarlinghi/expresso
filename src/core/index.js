@@ -75,3 +75,9 @@ Ractive.decorators['core-tooltip'] = CoreTooltip;
 Ractive.decorators['core-visible'] = CoreVisible;
 
 Ractive.events['tap'] = RactiveTap;
+
+// Bluebird setup
+import Bluebird from 'bluebird';
+Bluebird.config({
+    cancellation: true,
+});

@@ -263,7 +263,7 @@ export default Ractive.extend({
 
         }).catch(error =>
         {
-            const msg = `Error synchronizing the document list with Photoshop. ${error.message}`;
+            const msg = `Error synchronizing the document list with Photoshop after active document changed to ${newDocumentId}. ${error.message || error}`;
 
             if (RELEASE)
             {
@@ -315,7 +315,7 @@ export default Ractive.extend({
 
         }).catch(error =>
         {
-            const msg = `Error synchronizing the document list with Photoshop. ${error.message}`;
+            const msg = `Error synchronizing the document list with Photoshop after document ${closedDocumentId} has been closed. ${error.message || error}`;
 
             if (RELEASE)
             {
