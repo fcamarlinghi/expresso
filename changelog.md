@@ -1,6 +1,11 @@
 # What's New
 
 ## Exporter
+### 0.6.5
+- Improved logging to more effectively help with issues when they are reported.
+- Improved error message when writing output files fails (i.e. because user hasn't permission to write to a specific path).
+- Fixed an edge case where an error would be shown when closing all documents at the same time without having opened the plugin's panel at least once.
+
 ### 0.6.4
 - Display human readable error messages when trying to export with invalid settings.
 
