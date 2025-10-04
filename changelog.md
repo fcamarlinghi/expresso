@@ -1,6 +1,9 @@
 # What's New
 
 ## Exporter
+### 0.6.6
+- Fixed panel buttons not working on MacOS.
+
 ### 0.6.5
 - Improved logging to more effectively help with issues when they are reported.
 - Improved error message when writing output files fails (i.e. because user hasn't permission to write to a specific path).
@@ -29,9 +32,9 @@
 ExternalObject.PlugPlugExternalObject = new ExternalObject('lib:PlugPlugExternalObject');
 
 // Trigger export
-const eventObj = new CSXSEvent(); 
+const eventObj = new CSXSEvent();
 eventObj.type = 'com.expresso.exporter.exportAll'; // Or 'com.expresso.exporter.exportEnabled'
-eventObj.data = ''; 
+eventObj.data = '';
 eventObj.dispatch();
 
 // Unload PlugPlug
