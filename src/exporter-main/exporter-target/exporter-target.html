@@ -6,8 +6,8 @@
     <core-textbox css="flex{{showNeedsSuffixError ? ' error' : ''}}" placeholder="[Suffix]" value="{{suffix}}" tooltip="Export suffix"></core-textbox>
     <core-dropdown value="{{format}}" options="{{targetFormats}}" tooltip="Export format"></core-dropdown>
     <core-dropdown value="{{scale}}" options="{{targetScalings}}" tooltip="Export scaling"></core-dropdown>
-    <core-icon-button icon="cross2" tooltip="Delete target" on-tap="@.deleteTarget()"></core-icon-button>
-    <core-icon-button icon="disk" tooltip="Export single target" on-tap="@.exportTarget()"></core-icon-button>
+    <core-icon-button icon="cross2" tooltip="Delete target" on-click="@.deleteTarget()"></core-icon-button>
+    <core-icon-button icon="disk" tooltip="Export single target" on-click="@.exportTarget()"></core-icon-button>
 </div>
 
 <div class="core-container exporter-target target-details" as-core-visible="expanded">
@@ -73,7 +73,7 @@
     </div>
     <div class="core-container core-layout horizontal center">
         <core-textbox css="flex" value="{{path}}" disabled="{{pathLocked}}" tooltip="If specified, overrides the global export folder for the current target" placeholder="[Override export folder...]"></core-textbox>
-        <core-icon-button icon="folder" tooltip="Select export folder" disabled="{{pathLocked}}" on-tap="@.selectLocalPath()"></core-icon-button>
+        <core-icon-button icon="folder" tooltip="Select export folder" disabled="{{pathLocked}}" on-click="@.selectLocalPath()"></core-icon-button>
         <core-icon-button toggleable="true" icon="lock-open" iconactive="lock" tooltip="{{pathLocked ? 'Use local export path' : 'Use global export path'}}" active="{{pathLocked}}"></core-icon-button>
     </div>
 </div>

@@ -47,8 +47,6 @@ if (process.platform === 'darwin')
     window.PointerEvent = undefined;
 }
 
-import RactiveTap from 'ractive-events-tap';
-
 // Ractive setup
 import Ractive from 'ractive';
 Ractive.DEBUG = !RELEASE;
@@ -73,8 +71,6 @@ Ractive.components['core-toolbar'] = CoreToolbar;
 
 Ractive.decorators['core-tooltip'] = CoreTooltip;
 Ractive.decorators['core-visible'] = CoreVisible;
-
-Ractive.events['tap'] = RactiveTap;
 
 // Bluebird setup
 import Bluebird from 'bluebird';

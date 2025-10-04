@@ -36,7 +36,7 @@ export default CoreField.extend({
 
     on: {
 
-        tap: function (event)
+        click: function (event)
         {
             if (!this.get('disabled') && this.get('toggleable'))
             {

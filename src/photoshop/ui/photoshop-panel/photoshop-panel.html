@@ -14,7 +14,7 @@
                 <core-textbox readonly="true" value="password"></core-textbox>
             </p>
             <p class="retry">
-                <core-button label="Retry" tooltip="Retry connecting to Photoshop" on-tap="@.connectToPhotoshop()"></core-button>
+                <core-button label="Retry" tooltip="Retry connecting to Photoshop" on-click="@.connectToPhotoshop()"></core-button>
             </p>
         </div>
         <div id="documents" as-core-visible="!connectionError"></div>

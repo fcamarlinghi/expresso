@@ -167,8 +167,7 @@ export default CoreField.extend({
 
     select: function (event)
     {
-        // FIXME: there is a bug in Ractive 0.7.3 that prevents us from simply doing: event.context.value
-        const value = event.original.currentTarget.dataset['value'],
+        const value = event.original.target.dataset['value'],
             index = this.valueToIndex(value);
 
         this.updateSelectedValue(index);
