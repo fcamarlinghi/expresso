@@ -1,10 +1,15 @@
 # *Expresso!*
+
+> **This is the legacy version of *Expresso!*. It's no longer being developed.** It remains free and [available for download](https://minifloppy.gumroad.com/l/expresso-exporter), but it will stop working once Adobe removes CEP (the system the plugin uses) from Photoshop.
+>
+> *Expresso!* 2.0 is a rewrite for Photoshop 2025 and newer, with faster exports and support for grayscale, 16-bit and 32-bit documents. It is a paid release. [See the website](https://minifloppy.it/tools/expresso/) for details.
+
 *Expresso!* is a free extension for Photoshop CC that tries to improve the texturing workflow for 3D Artists.
 
 It provides a set of utility panels that integrates directly into Photoshop to enhance your productivity by speeding up slow, repetitive and error-prone tasks.
 
 ## Getting *Expresso!*
-A compiled version of the plugin is [available for download](http://minifloppy.it/portfolio/expresso/). See what's new in the [changelog](http://github.com/fcamarlinghi/expresso/blob/master/changelog.md). Please note that only the **Exporter** panel is currently available in the repository.
+A compiled version of the plugin is [available for download](http://minifloppy.it/tools/expresso/). See what's new in the [changelog](http://github.com/fcamarlinghi/expresso/blob/master/changelog.md). Please note that only the **Exporter** panel is currently available in the repository.
 
 ### Building From Source
 You will need a recent version of NodeJS and NPM on Windows or Mac to build the plugin.
